@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shoes {
+  id               String              @id @default(uuid())
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  rubberId         String
+  brandId          String
+  name             String              @unique @db.VarChar(255)
+  veganType        VeganType
+  price            PriceType
+  volume           VolumeType
+  closure          ClosureType
+  hooking          HookingType
+  asymmetry        AsymmetryType
+  profile          ProfileType
+  rubber_thickness RubberThicknessType
+  midsole          StiffnessType
+  ankle_protection Boolean             @default(false)
+  description      String
+  url              String              @db.VarChar(255)
+  image            String              @default("https://webstockreview.net/images/hiking-clipart-climbed-17.png") @db.VarChar(255)
+
+  rubber Rubber @relation(fields: [rubberId], references: [id])
+  brand  Brand  @relation(fields: [brandId], references: [id])
+}
+
+model Rubber {
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  brandId     String
+  name        String        @unique @db.VarChar(255)
+  stiffness   StiffnessType
+  description String
+  Shoes       Shoes[]
+
+  brand Brand @relation(fields: [brandId], references: [id])
+}
+
+model Brand {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique @db.VarChar(255)
+
+  Shoes  Shoes[]
+  Rubber Rubber[]
+}
+
+enum VeganType {
+  IS
+  IS_NOT
+  POSSIBLY
+}
+
+enum PriceType {
+  ECONMIC
+  AVERAGE
+  HIGH
+}
+
+enum VolumeType {
+  LOW
+  AVERAGE
+  WIDE
+  KIDS
+}
+
+enum ClosureType {
+  SLIPPER
+  VELCRO
+  LASES
+}
+
+enum HookingType {
+  LOW
+  AVERAGE
+  SPECAIZED
+}
+
+enum AsymmetryType {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ProfileType {
+  FLAT
+  MODERATE
+  AGGRESSIVE
+}
+
+enum RubberThicknessType {
+  THINER
+  THICKER
+}
+
+enum StiffnessType {
+  SOFT
+  AVERAGE
+  STIFF
+}
