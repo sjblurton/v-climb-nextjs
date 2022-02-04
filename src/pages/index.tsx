@@ -1,6 +1,9 @@
-import { getProps } from "../service/getProps";
 import { Brand, Rubber, Shoes } from "@prisma/client";
-import { Accordion, Layout, Seo } from "../components";
+import { Accordion, Card, Layout, Seo } from "../components";
+import { VolumeType } from "@prisma/client";
+import { climberWeight, recommendFor } from "../data/filters";
+import { RadioContainer } from "../components/radio_container";
+import { shoes } from "../data/shoeSeedData";
 
 interface Props {
   brands: Brand;
@@ -9,7 +12,7 @@ interface Props {
 }
 
 const Home = (props: Props) => {
-  console.log(props);
+  console.log(shoes);
   return (
     <>
       <Seo />
@@ -26,13 +29,49 @@ const Home = (props: Props) => {
             and the animals.
           </p>
         </article>
-        <div className="container flex px-2 mx-auto">
-          <Accordion
-            title="Filters"
-            content={
-              <Accordion title="Recommend For" content="content goes here" />
-            }
-          />
+        <div className="container flex px-2 mx-auto flex-col md:flex-row">
+          <div className="flex-none">
+            <Accordion
+              title="Filters"
+              content={
+                <>
+                  <Accordion
+                    title="Climber Weight"
+                    content={
+                      <RadioContainer
+                        radioDefault="55kg to 75kg"
+                        list={climberWeight}
+                      />
+                    }
+                  />
+
+                  <Accordion
+                    title="Recommend For"
+                    content={
+                      <RadioContainer
+                        radioDefault="View All"
+                        list={recommendFor}
+                      />
+                    }
+                  />
+                  <Accordion
+                    title="Volume"
+                    content={
+                      <RadioContainer
+                        radioDefault="average"
+                        list={Object.values(VolumeType).map((word) =>
+                          word.toLowerCase()
+                        )}
+                      />
+                    }
+                  />
+                </>
+              }
+            />
+          </div>
+          <div className="flex-1 flex flex-wrap mt-4">
+            <Card />
+          </div>
         </div>
       </Layout>
     </>
@@ -41,4 +80,5 @@ const Home = (props: Props) => {
 
 export default Home;
 
-export const getServerSideProps = async () => await getProps.getAllData();
+// TODO: uncomment why i start adding data to the databases
+// export const getServerSideProps = async () => await getProps.getAllData();

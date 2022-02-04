@@ -9,7 +9,7 @@ export function openGraph({
   siteName,
   templateTitle,
   description,
-  logo = '/public/images/logo.svg',
+  logo = "/images/logo.svg",
 }: OpenGraphType): string {
   const ogLogo = encodeURIComponent(logo);
   const ogSiteName = encodeURIComponent(siteName.trim());
@@ -19,6 +19,6 @@ export function openGraph({
   const ogDesc = encodeURIComponent(description.trim());
 
   return `https://og.thcl.dev/api/general?siteName=${ogSiteName}&description=${ogDesc}&logo=${ogLogo}${
-    ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ''
+    ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ""
   }`;
 }

@@ -13,11 +13,11 @@ export const Accordion = ({ title, content }: Props) => {
   function toggleAccordion() {
     setActive((prevState) => !prevState);
     // @ts-ignore
-    setHeight(active ? "0px" : `${contentSpace.current.scrollHeight}px`);
+    setHeight(active ? "0px" : `2000px`);
     setRotate(
       active
-        ? "transform duration-700 ease"
-        : "transform duration-700 ease rotate-180"
+        ? "transform duration-500 ease"
+        : "transform duration-500 ease rotate-180"
     );
   }
 

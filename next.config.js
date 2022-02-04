@@ -4,6 +4,9 @@ const nextConfig = {
     dirs: ["src"],
   },
   reactStrictMode: true,
+  images: {
+    domains: ["cdn11.bigcommerce.com"],
+  },
 };
 
 module.exports = nextConfig;

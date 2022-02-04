@@ -59,13 +59,13 @@ model Brand {
 }
 
 enum VeganType {
-  IS
-  IS_NOT
+  VEGAN
   POSSIBLY
+  NOT
 }
 
 enum PriceType {
-  ECONMIC
+  ECONOMIC
   AVERAGE
   HIGH
 }
