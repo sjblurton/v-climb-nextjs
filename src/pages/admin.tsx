@@ -1,13 +1,15 @@
-import React from "react";
-import { SingedIn } from "../components/signed_in";
+import { Layout, Seo } from "../components";
 
 type Props = {};
 
 const Admin = (props: Props) => {
   return (
-    <div>
-      <SingedIn />
-    </div>
+    <>
+      <Seo templateTitle="Admin Login page" />
+      <Layout>
+        <h1>hello world</h1>
+      </Layout>
+    </>
   );
 };
 
