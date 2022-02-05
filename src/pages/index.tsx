@@ -29,7 +29,7 @@ const Home = (props: Props) => {
             and the animals.
           </p>
         </article>
-        <div className="container flex px-2 mx-auto flex-col md:flex-row">
+        <div className="container flex px-2 mx-auto flex-col sm:flex-row">
           <div className="flex-none">
             <Accordion
               title="Filters"
