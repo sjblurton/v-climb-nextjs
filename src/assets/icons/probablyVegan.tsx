@@ -2,8 +2,8 @@ export const ProbablyVegan = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="888"
-      height="888"
+      width="64"
+      height="64"
       fill="none"
       viewBox="0 0 888 888"
     >

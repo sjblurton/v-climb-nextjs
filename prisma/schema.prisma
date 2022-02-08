@@ -86,7 +86,7 @@ enum ClosureType {
 enum HookingType {
   LOW
   AVERAGE
-  SPECAIZED
+  SPECIALIZED
 }
 
 enum AsymmetryType {
@@ -102,7 +102,7 @@ enum ProfileType {
 }
 
 enum RubberThicknessType {
-  THINER
+  THINNER
   THICKER
 }
 

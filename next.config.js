@@ -5,7 +5,11 @@ const nextConfig = {
   },
   reactStrictMode: true,
   images: {
-    domains: ["cdn11.bigcommerce.com"],
+    domains: [
+      "cdn11.bigcommerce.com",
+      "lcdn.sportiva.com",
+      "assets.adidas.com",
+    ],
   },
 };
 

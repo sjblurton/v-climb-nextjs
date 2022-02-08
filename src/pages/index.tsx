@@ -12,7 +12,6 @@ interface Props {
 }
 
 const Home = (props: Props) => {
-  console.log(shoes);
   return (
     <>
       <Seo />
@@ -69,8 +68,10 @@ const Home = (props: Props) => {
               }
             />
           </div>
-          <div className="flex-1 flex flex-wrap mt-4">
-            <Card />
+          <div className="flex-1 gap-1 flex flex-wrap mt-4">
+            {shoes.map((shoe, i) => (
+              <Card key={i} shoes={shoe} />
+            ))}
           </div>
         </div>
       </Layout>

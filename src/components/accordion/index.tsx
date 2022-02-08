@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { UpChevron } from "../../assets/icons/up-chevron";
 
 type Props = { title: ReactNode; content: ReactNode };
@@ -7,8 +7,14 @@ export const Accordion = ({ title, content }: Props) => {
   const [active, setActive] = useState(false);
   const [height, setHeight] = useState("0px");
   const [rotate, setRotate] = useState("transform duration-700 ease");
-
   const contentSpace = useRef(null);
+
+  const breakpoint = 640;
+  useEffect(() => {
+    if (title === "Filters" && window.innerWidth > breakpoint) {
+      toggleAccordion();
+    }
+  }, []);
 
   function toggleAccordion() {
     setActive((prevState) => !prevState);
