@@ -28,8 +28,8 @@ const Home = (props: Props) => {
             and the animals.
           </p>
         </article>
-        <div className="container flex px-2 mx-auto flex-col sm:flex-row">
-          <div className="flex-none">
+        <div className="w-3/12 flex flex-wrap w-full h-screen">
+          <div>
             <Accordion
               title="Filters"
               content={
@@ -68,7 +68,7 @@ const Home = (props: Props) => {
               }
             />
           </div>
-          <div className="flex-1 gap-1 flex flex-wrap mt-4">
+          <div className="w-9/12 flex-1 gap-1 flex flex-wrap mt-4">
             {shoes.map((shoe, i) => (
               <Card key={i} shoes={shoe} />
             ))}

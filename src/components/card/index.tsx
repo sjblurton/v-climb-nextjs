@@ -15,7 +15,7 @@ export const Card = ({ shoes }: Props) => {
   };
 
   return (
-    <div className="gap-1 relative cursor-pointer flex mx-auto max-w-sm sm:max-w-xs flex-1  lg:border-l-0 lg:border-t lg:border-gray-400 bg-olive-50 rounded p-4 justify-center flex-col">
+    <div className="max-h-80 gap-1 relative cursor-pointer flex mx-auto max-w-sm sm:max-w-xs flex-1  lg:border-l-0 lg:border-t lg:border-gray-400 bg-olive-50 rounded p-4 justify-center flex-col">
       <div className="absolute top-2 left-20 z-10">
         {veganImage(shoes.veganType)}
       </div>
