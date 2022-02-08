@@ -13,6 +13,6 @@ export const objectWithStringifiedDates = (
 };
 
 export const envString = (string: string) =>
-  process.env[string] === "string"
+  typeof process.env[string] === "string"
     ? process.env[string]
     : undefined && console.error("environmental variable is undefined");
