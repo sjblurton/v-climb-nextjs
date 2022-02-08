@@ -15,8 +15,8 @@ export const Card = ({ shoes }: Props) => {
   };
 
   return (
-    <div className="max-h-80 gap-1 relative cursor-pointer flex mx-auto max-w-sm sm:max-w-xs flex-1  lg:border-l-0 lg:border-t lg:border-gray-400 bg-olive-50 rounded p-4 justify-center flex-col">
-      <div className="absolute top-2 left-20 z-10">
+    <div className="h-64 w-full max-w-xs gap-1 relative cursor-pointer flex mx-auto  sm:max-w-xs flex-1  lg:border-l-0 lg:border-t lg:border-gray-400 bg-olive-50 rounded p-4 justify-center flex-col">
+      <div className="absolute top-2 left-2 z-10">
         {veganImage(shoes.veganType)}
       </div>
       <div className="gap-1 flex items-center">
@@ -39,11 +39,6 @@ export const Card = ({ shoes }: Props) => {
             price: {shoes.price}
           </h6>
         </div>
-      </div>
-      <div className="flex flex-wrap">
-        {whatIsItGoodFor(shoes).map((pill) => (
-          <Pill key={pill} name={pill} />
-        ))}
       </div>
     </div>
   );

@@ -7,11 +7,13 @@ export const Accordion = ({ title, content }: Props) => {
   const [active, setActive] = useState(false);
   const [height, setHeight] = useState("0px");
   const [rotate, setRotate] = useState("transform duration-700 ease");
+  const [innerWidth, setInnerWidth] = useState(640);
   const contentSpace = useRef(null);
 
   const breakpoint = 640;
   useEffect(() => {
-    if (title === "Filters" && window.innerWidth > breakpoint) {
+    setInnerWidth(window.innerWidth);
+    if (title === "Filters" && innerWidth > breakpoint) {
       toggleAccordion();
     }
   }, []);
@@ -28,7 +30,7 @@ export const Accordion = ({ title, content }: Props) => {
   }
 
   return (
-    <div className="flex flex-col min-w-fit">
+    <div className="flex flex-col md:min-w-fit">
       <button
         className="border-b-2 border-olive-500 py-2 box-border appearance-none cursor-pointer gap-4 focus:outline-none flex items-center justify-between"
         onClick={toggleAccordion}
