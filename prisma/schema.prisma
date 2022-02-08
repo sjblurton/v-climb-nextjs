@@ -16,7 +16,8 @@ model Shoes {
   updatedAt        DateTime            @updatedAt
   rubberId         String
   brandId          String
-  name             String              @unique @db.VarChar(255)
+  name             String              @db.VarChar(255)
+  slug             String              @unique @db.VarChar(255)
   veganType        VeganType
   price            PriceType
   volume           VolumeType

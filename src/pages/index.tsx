@@ -3,15 +3,24 @@ import { Accordion, Card, Layout, Seo } from "../components";
 import { VolumeType } from "@prisma/client";
 import { climberWeight, recommendFor } from "../data/filters";
 import { RadioContainer } from "../components/radio_container";
-import { shoes } from "../data/shoeSeedData";
+import { getProps } from "../service/getProps";
+import { BrandList, RubberList, ShoesCards } from "../interface";
 
 interface Props {
-  brands: Brand;
-  rubbers: Rubber;
-  shoes: Shoes;
+  brands: BrandList[];
+  rubbers: RubberList[];
+  shoes: ShoesCards[];
 }
 
-const Home = (props: Props) => {
+const Home = ({ shoes, brands }: Props) => {
+  const shoesCardData = shoes.map((shoe) => {
+    const brandName = brands.filter((brand) => brand.id === shoe.brandId);
+    return {
+      ...shoe,
+      brand: brandName[0].name,
+    };
+  });
+
   return (
     <>
       <Seo />
@@ -69,8 +78,8 @@ const Home = (props: Props) => {
             />
           </div>
           <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-lx mt-4">
-            {shoes.map((shoe, i) => (
-              <Card key={i} shoes={shoe} />
+            {shoesCardData.map((shoe) => (
+              <Card key={shoe.slug} shoe={shoe} />
             ))}
           </div>
         </div>
@@ -81,5 +90,7 @@ const Home = (props: Props) => {
 
 export default Home;
 
-// TODO: uncomment why i start adding data to the databases
-// export const getServerSideProps = async () => await getProps.getAllData();
+export const getServerSideProps = async () => {
+  const props = await getProps.getAllData();
+  return { props };
+};

@@ -9,6 +9,8 @@ const nextConfig = {
       "cdn11.bigcommerce.com",
       "lcdn.sportiva.com",
       "assets.adidas.com",
+      "eb-climbing.com",
+      "cdn.shopify.com",
     ],
   },
 };

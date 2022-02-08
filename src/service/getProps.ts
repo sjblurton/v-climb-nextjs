@@ -3,46 +3,39 @@ import { prisma } from "../lib/prisma";
 
 export const getProps = {
   getAllBrands: async () => {
-    const brands = await prisma.brand.findMany();
-    const brandsWithDates = brands.map((brand) => {
-      return {
-        ...brand,
-        ...objectWithStringifiedDates(brand.createdAt, brand.updatedAt),
-      };
+    const brands = await prisma.brand.findMany({
+      select: { id: true, name: true },
     });
-
-    return { props: { brands: brandsWithDates } };
+    return brands;
   },
   getAllRubber: async () => {
-    const rubbers = await prisma.rubber.findMany();
-    const rubberWithDates = rubbers.map((rubber) => {
-      return {
-        ...rubber,
-        ...objectWithStringifiedDates(rubber.createdAt, rubber.updatedAt),
-      };
+    const rubbers = await prisma.rubber.findMany({
+      select: { id: true, name: true },
     });
-    return { props: { rubbers: rubberWithDates } };
+    return rubbers;
   },
   getAllShoes: async () => {
-    const shoes = await prisma.shoes.findMany();
-    const shoesWithDates = shoes.map((shoe) => {
-      return {
-        ...shoes,
-        ...objectWithStringifiedDates(shoe.createdAt, shoe.updatedAt),
-      };
+    const shoes = await prisma.shoes.findMany({
+      select: {
+        id: true,
+        name: true,
+        brandId: true,
+        veganType: true,
+        image: true,
+        price: true,
+        slug: true,
+      },
     });
-    return { props: { shoes: shoesWithDates } };
+    return shoes;
   },
   getAllData: async () => {
     const brands = await getProps.getAllBrands();
     const rubbers = await getProps.getAllRubber();
     const shoes = await getProps.getAllShoes();
     return {
-      props: {
-        brands: brands.props.brands,
-        rubbers: rubbers.props.rubbers,
-        shoes: shoes.props.shoes,
-      },
+      brands,
+      rubbers,
+      shoes,
     };
   },
 };

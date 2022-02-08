@@ -1,33 +1,27 @@
-import {
-  AsymmetryType,
-  ClosureType,
-  HookingType,
-  PriceType,
-  ProfileType,
-  RubberThicknessType,
-  StiffnessType,
-  VeganType,
-  VolumeType,
-} from "@prisma/client";
+import { PriceType, VeganType } from "@prisma/client";
 
-export interface Shoes {
-  brand: string;
+export interface ShoesCards {
+  id: string;
   name: string;
+  brandId: string;
   veganType: VeganType;
-  price: PriceType;
-  volume: VolumeType;
-  closure: ClosureType;
-  hooking: HookingType;
-  asymmetry: AsymmetryType;
-  rubber: StiffnessType;
-  profile: ProfileType;
-  rubber_thickness: RubberThicknessType;
-  midsole: StiffnessType;
-  ankle_protection: boolean;
-  description: string;
-  url: string;
   image: string;
+  price: PriceType;
+  slug: string;
 }
+[];
+
+export interface ShoesCardData extends ShoesCards {
+  brand: string;
+}
+[];
+
+export interface BrandList {
+  id: string;
+  name: string;
+}
+
+export type RubberList = BrandList;
 
 export type GoodFor =
   | "Beginners"
