@@ -1,9 +1,9 @@
 import { PriceType, VeganType } from "@prisma/client";
 
-export interface ShoesCards {
+export interface ShoesCard {
   id: string;
-  name: string;
   brandId: string;
+  name: string;
   veganType: VeganType;
   image: string;
   price: PriceType;
@@ -11,17 +11,10 @@ export interface ShoesCards {
 }
 [];
 
-export interface ShoesCardData extends ShoesCards {
-  brand: string;
-}
-[];
-
 export interface BrandList {
   id: string;
   name: string;
 }
-
-export type RubberList = BrandList;
 
 export type GoodFor =
   | "Beginners"

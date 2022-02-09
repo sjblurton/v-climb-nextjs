@@ -1,26 +1,15 @@
-import { Brand, Rubber, Shoes } from "@prisma/client";
 import { Accordion, Card, Layout, Seo } from "../components";
-import { VolumeType } from "@prisma/client";
-import { climberWeight, recommendFor } from "../data/filters";
-import { RadioContainer } from "../components/radio_container";
 import { getProps } from "../service/getProps";
-import { BrandList, RubberList, ShoesCards } from "../interface";
+import { brandNameFromId } from "../helper/stringify";
+import { Brand, Rubber, Shoes } from "@prisma/client";
 
 interface Props {
-  brands: BrandList[];
-  rubbers: RubberList[];
-  shoes: ShoesCards[];
+  brands: Brand[];
+  shoes: Shoes[];
+  rubbers: Rubber[];
 }
 
 const Home = ({ shoes, brands }: Props) => {
-  const shoesCardData = shoes.map((shoe) => {
-    const brandName = brands.filter((brand) => brand.id === shoe.brandId);
-    return {
-      ...shoe,
-      brand: brandName[0].name,
-    };
-  });
-
   return (
     <>
       <Seo />
@@ -42,44 +31,26 @@ const Home = ({ shoes, brands }: Props) => {
             <Accordion
               title="Filters"
               content={
-                <>
-                  <Accordion
-                    title="Climber Weight"
-                    content={
-                      <RadioContainer
-                        radioDefault="55kg to 75kg"
-                        list={climberWeight}
-                      />
-                    }
-                  />
-
-                  <Accordion
-                    title="Recommend For"
-                    content={
-                      <RadioContainer
-                        radioDefault="View All"
-                        list={recommendFor}
-                      />
-                    }
-                  />
-                  <Accordion
-                    title="Volume"
-                    content={
-                      <RadioContainer
-                        radioDefault="average"
-                        list={Object.values(VolumeType).map((word) =>
-                          word.toLowerCase()
-                        )}
-                      />
-                    }
-                  />
-                </>
+                <Accordion
+                  title="Brand"
+                  content={
+                    <>
+                      {brands.map((brand) => (
+                        <li key={brand.id}>{brand.name}</li>
+                      ))}
+                    </>
+                  }
+                />
               }
             />
           </div>
           <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-lx mt-4">
-            {shoesCardData.map((shoe) => (
-              <Card key={shoe.slug} shoe={shoe} />
+            {shoes.map((shoe) => (
+              <Card
+                key={shoe.slug}
+                shoe={shoe}
+                brand={brandNameFromId(brands, shoe.brandId)}
+              />
             ))}
           </div>
         </div>
@@ -90,7 +61,7 @@ const Home = ({ shoes, brands }: Props) => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
-  const props = await getProps.getAllData();
+export const getStaticProps = async () => {
+  const props = await getProps.getHomePageData();
   return { props };
 };
