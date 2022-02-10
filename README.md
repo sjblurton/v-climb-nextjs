@@ -44,4 +44,4 @@ link to the live site... TBA
 
 "The code in this project is is all my own work and Copyrighted to Simon Blurton."
 
-[logo] : https://raw.githubusercontent.com/sjblurton/v-climb-nextjs/8e8f2b0b38834076dfc9af3416425d43d0a0c4f7/public/images/logo.svg
+[logo] : https://github.com/sjblurton/v-climb-nextjs/blob/main/public/images/logo.svg
