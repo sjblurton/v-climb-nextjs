@@ -1,7 +1,9 @@
 import { Rubber, Shoes } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import { Layout, Seo } from "../components";
+import { priceConverter, veganToString } from "../helper/helper";
 import { getProps } from "../service/getProps";
 
 type Props = {
@@ -12,12 +14,29 @@ type Props = {
 };
 
 const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
-  const templateTitle = ``;
+  const { name: shoeName, veganType, image, price } = shoe;
+  const templateTitle = `The ${shoeName} climbing shoes by ${shoeBrand} are ${veganToString(
+    veganType
+  )}`;
   return (
     <>
-      <Seo templateTitle={`hello`} />
+      <Seo templateTitle={templateTitle} />
       <Layout>
-        <>{JSON.stringify(shoe)}</>
+        <div className="container">
+          <h2 className="m-3 text-olive-50 capitalize text-4xl font-bold text-center">
+            {shoeBrand} - {shoeName}
+          </h2>
+          <Image
+            width={500}
+            height={500}
+            layout="intrinsic"
+            src={image}
+            alt={`${veganToString(veganType)} - ${shoeBrand} - ${shoeName}`}
+          />
+          <h3 className="m-3 text-olive-50 capitalize text-3xl font-bold">
+            Price: {priceConverter(price)}
+          </h3>
+        </div>
       </Layout>
     </>
   );

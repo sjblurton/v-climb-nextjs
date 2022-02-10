@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![logo]([logo])
 
-## Getting Started
+# V-Climb
 
-First, run the development server:
+> V-Climb an interactive guide to buying vegan climbing shoes
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+V-Climb is a database of all the confirmed vegan climbing shoes there is on the market today. I plan to make the database an open source rest API in the future. This is my first full Typescript project, and I'm now only going to be using Typescript going forward.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Demo
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+> TBA
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Screenshots
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+> TBA
 
-## Learn More
+> TBA
 
-To learn more about Next.js, take a look at the following resources:
+## Getting started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+link to the live site... TBA
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- Next.js
+- Single page, static SEO, and speed optimized.
+- PostgreSQL REST database
+- Typescript
+- PWA, working offline?
+- Tailwind
+- Formik?
+- Yup form validation?
+- Fully responsive, Mobile first.
+- SVG art work
+- Figma design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<!-- - Project homepage: https://big-6-next-js.vercel.app
+- Repository: https://github.com/sjblurton/Big-6-Next-js
+- Figma: https://www.figma.com/file/2bjSoKqP1rj1mDrlMOTuWp/The-Big-6-Calisthenics?node-id=7%3A11 -->
+
+## Licensing
+
+"The code in this project is is all my own work and Copyrighted to Simon Blurton."
+
+[logo] : https://raw.githubusercontent.com/sjblurton/v-climb-nextjs/8e8f2b0b38834076dfc9af3416425d43d0a0c4f7/public/images/logo.svg
