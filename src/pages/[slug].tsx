@@ -2,7 +2,8 @@ import { Rubber, Shoes } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
-import { Layout, Seo } from "../components";
+import { GoBack } from "../assets/icons";
+import { Features, Layout, Seo } from "../components";
 import { priceConverter, veganToString } from "../helper/helper";
 import { getProps } from "../service/getProps";
 
@@ -14,18 +15,43 @@ type Props = {
 };
 
 const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
-  const { name: shoeName, veganType, image, price } = shoe;
+  const {
+    name: shoeName,
+    veganType,
+    image,
+    price,
+    description,
+    midsole,
+    profile,
+    rubber_thickness,
+    asymmetry,
+    volume,
+  } = shoe;
+
   const templateTitle = `The ${shoeName} climbing shoes by ${shoeBrand} are ${veganToString(
     veganType
   )}`;
+
+  const array = [
+    { title: "profile", value: profile },
+    { title: "midsole", value: midsole },
+    { title: "rubber", value: rubber_thickness },
+    { title: "asymmetry", value: asymmetry },
+    { title: "volume", value: volume },
+  ];
   return (
     <>
       <Seo templateTitle={templateTitle} />
       <Layout>
         <div className="container">
-          <h2 className="m-3 text-olive-50 capitalize text-4xl font-bold text-center">
-            {shoeBrand} - {shoeName}
-          </h2>
+          <div className="flex items-center justify-between p-3">
+            <h2 className="text-olive-50 capitalize text-4xl text-center">
+              <span className="font-bold">{shoeBrand}</span> - {shoeName}{" "}
+            </h2>
+            <div>
+              <GoBack />
+            </div>
+          </div>
           <Image
             width={500}
             height={500}
@@ -33,9 +59,10 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
             src={image}
             alt={`${veganToString(veganType)} - ${shoeBrand} - ${shoeName}`}
           />
-          <h3 className="m-3 text-olive-50 capitalize text-3xl font-bold">
+          <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
             Price: {priceConverter(price)}
           </h3>
+          <Features values={array} />
         </div>
       </Layout>
     </>
