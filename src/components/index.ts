@@ -5,3 +5,5 @@ export { SingedIn } from "./signed_in";
 export { Accordion } from "./accordion";
 export { Card } from "./card";
 export { Features } from "./carousel";
+export { VeganImage } from "./vegan";
+export { RubberData } from "./rubber";

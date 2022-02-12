@@ -44,6 +44,7 @@ model Rubber {
   name        String        @unique @db.VarChar(255)
   stiffness   StiffnessType
   description String
+  image       String
   Shoes       Shoes[]
 
   brand Brand @relation(fields: [brandId], references: [id])

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { priceConverter, veganImage } from "../../helper/helper";
+import { priceConverter } from "../../helper/helper";
 import { ShoesCard } from "../../interface";
+import { VeganImage } from "../";
 
 type Props = { shoe: ShoesCard; brand: string };
 
@@ -12,7 +13,7 @@ export const Card = ({ shoe, brand }: Props) => {
     <Link href={`/${slug}`} passHref>
       <div className="h-44 w-full max-w-xs gap-1 relative cursor-pointer flex mx-auto flex-1  lg:border-l-0 lg:border-t lg:border-gray-400 bg-olive-50 rounded p-4 justify-center flex-col">
         <div className="absolute top-2 left-2 z-10">
-          {veganImage(veganType)}
+          {VeganImage(veganType)}
         </div>
         <div className="gap-1 flex items-center">
           <Image

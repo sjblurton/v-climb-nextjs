@@ -8,10 +8,19 @@ type Props = { values: { title: string; value: string }[] };
 export const Features = ({ values }: Props) => {
   const settings = {
     dots: true,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
+      {
+        breakpoint: 1224,
+        settings: {
+          dots: true,
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {

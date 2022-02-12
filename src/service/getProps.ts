@@ -16,6 +16,7 @@ const shoeSelect = {
   profile: true,
   rubber_thickness: true,
   volume: true,
+  description: true,
 };
 
 export const getProps = {
@@ -47,7 +48,13 @@ export const getProps = {
   getRubberById: async (id: string) => {
     const rubber = await prisma.rubber.findUnique({
       where: { id: id },
-      select: { name: true, brandId: true, stiffness: true, description: true },
+      select: {
+        name: true,
+        brandId: true,
+        stiffness: true,
+        description: true,
+        image: true,
+      },
     });
     return rubber;
   },

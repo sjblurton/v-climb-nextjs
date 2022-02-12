@@ -44,7 +44,7 @@ const Home = ({ shoes, brands }: Props) => {
               }
             />
           </div>
-          <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-lx mt-4">
+          <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-lx my-4">
             {shoes.map((shoe) => (
               <Card
                 key={shoe.slug}

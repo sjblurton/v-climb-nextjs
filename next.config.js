@@ -11,6 +11,7 @@ const nextConfig = {
       "assets.adidas.com",
       "eb-climbing.com",
       "cdn.shopify.com",
+      "www.eb-escalade.com",
     ],
   },
 };
