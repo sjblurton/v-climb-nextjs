@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { Layout, Seo } from "../components";
+import { AddBrand } from "../components/forms/addBrand";
 
 type Props = {};
 
@@ -11,6 +12,7 @@ const Admin = (props: Props) => {
         <Seo templateTitle="Admin Login page" />
         <Layout>
           <p>Signed in as {session?.user?.email}</p>
+          <AddBrand />
         </Layout>
       </>
     );

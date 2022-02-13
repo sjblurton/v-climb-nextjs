@@ -1,8 +1,6 @@
 import { prisma } from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import { getProps } from "../../../../service/getProps";
-import { BrandList } from "../../../../interface";
 import { Brand } from "@prisma/client";
 
 type Data =
@@ -11,14 +9,12 @@ type Data =
     }
   | { error: string }
   | { brands: { id: string; name: string }[] }
-  | { data: Brand };
+  | Brand;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // const session = await getSession({ req });
-
   if (req.method === "GET") {
     const brands = await getProps.getBrandNames();
     res.send({ brands: brands });
@@ -26,17 +22,10 @@ export default async function handler(
 
   if (req.method === "POST") {
     const brandData = req.body;
-
     const savedBrand = await prisma.brand.create({
-      data: {
-        name: "Mad rock",
-      },
+      data: brandData,
     });
-
-    res.send({ content: "hello" });
-  } else {
-    res.send({
-      error: "not a post or get req",
-    });
+    res.send(savedBrand);
   }
+  res.send({ error: `currently not taking ${req.method} methods` });
 }
