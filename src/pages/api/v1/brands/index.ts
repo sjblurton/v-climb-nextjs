@@ -21,7 +21,7 @@ export default async function handler(
   }
 
   if (req.method === "POST") {
-    const brandData = req.body;
+    const brandData = JSON.parse(req.body);
     const savedBrand = await prisma.brand.create({
       data: brandData,
     });

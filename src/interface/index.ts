@@ -30,3 +30,7 @@ export type GoodFor =
   | "Steep Sandstone"
   | "under 75kg"
   | "over 55kg";
+
+export interface BrandInput {
+  name: string;
+}
