@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react";
-import { CustomTab, Layout, Seo } from "../components";
-import { AddBrand } from "../components/forms/addBrand";
+import { CustomTab, Layout, Seo, AddRubber, AddBrand } from "../components";
 import { Tab } from "@headlessui/react";
 
 type Props = {};
@@ -39,7 +38,9 @@ const Admin = (props: Props) => {
                 <Tab.Panel>
                   <AddBrand />
                 </Tab.Panel>
-                <Tab.Panel>Add Rubber</Tab.Panel>
+                <Tab.Panel>
+                  <AddRubber />
+                </Tab.Panel>
                 <Tab.Panel>Add Shoe</Tab.Panel>
               </Tab.Panels>
             </Tab.Group>

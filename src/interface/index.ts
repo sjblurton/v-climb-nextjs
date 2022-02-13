@@ -1,4 +1,4 @@
-import { PriceType, VeganType } from "@prisma/client";
+import { PriceType, StiffnessType, VeganType } from "@prisma/client";
 
 export interface ShoesCard {
   id: string;
@@ -14,6 +14,14 @@ export interface ShoesCard {
 export interface BrandList {
   id: string;
   name: string;
+}
+
+export interface RubberList {
+  id: string;
+  name: string;
+  stiffness: StiffnessType;
+  brandId: string;
+  description: string;
 }
 
 export type GoodFor =

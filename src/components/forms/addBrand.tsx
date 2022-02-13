@@ -1,28 +1,31 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { BrandList } from "../../interface";
 import { Get, Post } from "../../service/database";
 
-type Props = {};
-
-type Errors = { brand?: string };
+interface Props {
+  brandList: { brands: BrandList[] };
+  setBrandList: Dispatch<
+    SetStateAction<{
+      brands: BrandList[];
+    }>
+  >;
+}
 
 export const AddBrand = (props: Props) => {
-  const [brandList, setBrandList] = useState<string[]>([]);
+  const [brandList, setBrandList] = useState<{ brands: BrandList[] }>({
+    brands: [],
+  });
 
   useEffect(() => {
     const fetchBrandsList = async () => {
       const list = await Get.Brands();
       if (list) {
-        const names = list.brands.map((item) => item.name.toLowerCase());
-        setBrandList(names);
+        setBrandList(list);
       }
     };
     fetchBrandsList();
-    return () => {
-      setBrandList([]);
-    };
   }, []);
 
   return (
@@ -33,17 +36,19 @@ export const AddBrand = (props: Props) => {
           name: Yup.string()
             .max(20, "Must be 20 characters or less")
             .required("Required")
-            .test(
-              "existsCheck",
-              "Brand already exists",
-              (value) => !brandList.includes(value ? value.toLowerCase() : "")
+            .test("existsCheck", "Brand already exists", (value) =>
+              brandList.brands
+                .map((item) => item.name.toLowerCase())
+                .includes(value ? value.toLowerCase() : "")
             ),
         })}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           const res = await Post.Brand(values);
-          setBrandList([...brandList, values.name]);
-          setSubmitting(false);
           console.log(res);
+
+          // setBrandList([...brandList, res]);
+          setSubmitting(false);
+          resetForm({ values: { name: "" } });
         }}
       >
         {({ isSubmitting }) => (
@@ -72,6 +77,29 @@ export const AddBrand = (props: Props) => {
           </Form>
         )}
       </Formik>
+      <table className="table-auto my-4 text-olive-50 w-full">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {brandList &&
+            brandList.brands.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>
+                  <button className="btn btn-olive">edit</button>
+                </td>
+                <td>
+                  <button className="btn btn-olive">delete</button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -9,12 +9,12 @@ export const CustomTab = ({ selected, children }: Props) => {
   const notSelectedStyles = " border-transparent";
   console.log(selected);
   return (
-    <button
+    <div
       className={
         selected ? baseStyles + selectedStyles : baseStyles + notSelectedStyles
       }
     >
       {children}
-    </button>
+    </div>
   );
 };

@@ -8,3 +8,5 @@ export { Features } from "./carousel";
 export { VeganImage } from "./vegan";
 export { RubberData } from "./rubber";
 export { CustomTab } from "./tab";
+export { AddBrand } from "./forms/addBrand";
+export { AddRubber } from "./forms/addRubber";

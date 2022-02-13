@@ -27,7 +27,7 @@ export const getProps = {
     return brands;
   },
   getRubberNames: async () => {
-    const brands = await prisma.rubber.findMany({
+    const rubber = await prisma.rubber.findMany({
       select: {
         id: true,
         name: true,
@@ -36,7 +36,7 @@ export const getProps = {
         description: true,
       },
     });
-    return brands;
+    return rubber;
   },
   getBrandById: async (id: string) => {
     const brand = await prisma.brand.findUnique({
