@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
-import { Layout, Seo } from "../components";
+import { CustomTab, Layout, Seo } from "../components";
 import { AddBrand } from "../components/forms/addBrand";
+import { Tab } from "@headlessui/react";
 
 type Props = {};
 
@@ -11,8 +12,38 @@ const Admin = (props: Props) => {
       <>
         <Seo templateTitle="Admin Login page" />
         <Layout>
-          <p>Signed in as {session?.user?.email}</p>
-          <AddBrand />
+          <div className="container mx-auto w-fit">
+            <Tab.Group>
+              <Tab.List
+                className="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4"
+                id="tabs-tab"
+                role="tablist"
+              >
+                <Tab>
+                  {({ selected }) => (
+                    <CustomTab selected={selected}>Add Brand</CustomTab>
+                  )}
+                </Tab>
+                <Tab>
+                  {({ selected }) => (
+                    <CustomTab selected={selected}>Add Rubber</CustomTab>
+                  )}
+                </Tab>
+                <Tab>
+                  {({ selected }) => (
+                    <CustomTab selected={selected}>Add Shoe</CustomTab>
+                  )}
+                </Tab>
+              </Tab.List>
+              <Tab.Panels>
+                <Tab.Panel>
+                  <AddBrand />
+                </Tab.Panel>
+                <Tab.Panel>Add Rubber</Tab.Panel>
+                <Tab.Panel>Add Shoe</Tab.Panel>
+              </Tab.Panels>
+            </Tab.Group>
+          </div>
         </Layout>
       </>
     );

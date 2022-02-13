@@ -20,6 +20,9 @@ export const AddBrand = (props: Props) => {
       }
     };
     fetchBrandsList();
+    return () => {
+      setBrandList([]);
+    };
   }, []);
 
   return (

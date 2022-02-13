@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.3",
     "@prisma/client": "3.9.1",
     "@types/react-slick": "^0.23.8",
     "formik": "^2.2.9",

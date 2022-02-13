@@ -7,3 +7,4 @@ export { Card } from "./card";
 export { Features } from "./carousel";
 export { VeganImage } from "./vegan";
 export { RubberData } from "./rubber";
+export { CustomTab } from "./tab";
