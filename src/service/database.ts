@@ -28,6 +28,6 @@ export const Get = {
     });
 
     if (!res.ok) throw new Error(res.statusText);
-    return (await res.json()) as { brands: BrandList[] };
+    if (res.ok) return (await res.json()) as { brands: BrandList[] };
   },
 };

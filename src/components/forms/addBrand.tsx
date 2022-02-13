@@ -14,8 +14,10 @@ export const AddBrand = (props: Props) => {
   useEffect(() => {
     const fetchBrandsList = async () => {
       const list = await Get.Brands();
-      const names = list.brands.map((item) => item.name.toLowerCase());
-      setBrandList(names);
+      if (list) {
+        const names = list.brands.map((item) => item.name.toLowerCase());
+        setBrandList(names);
+      }
     };
     fetchBrandsList();
   }, []);

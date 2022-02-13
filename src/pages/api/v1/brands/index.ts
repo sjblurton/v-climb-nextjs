@@ -17,7 +17,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const brands = await getProps.getBrandNames();
-    res.send({ brands: brands });
+    if (brands) res.send({ brands: brands });
   }
 
   if (req.method === "POST") {
@@ -27,5 +27,4 @@ export default async function handler(
     });
     res.send(savedBrand);
   }
-  res.send({ error: `currently not taking ${req.method} methods` });
 }
