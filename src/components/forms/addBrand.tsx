@@ -1,8 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import * as Yup from "yup";
 import { BrandList } from "../../interface";
-import { Get, Post } from "../../service/database";
+import { Post } from "../../service/database";
+import { MyDialog } from "../modal";
 
 interface Props {
   brandList: { brands: BrandList[] };
@@ -13,40 +14,46 @@ interface Props {
   >;
 }
 
-export const AddBrand = (props: Props) => {
-  const [brandList, setBrandList] = useState<{ brands: BrandList[] }>({
-    brands: [],
-  });
-
-  useEffect(() => {
-    const fetchBrandsList = async () => {
-      const list = await Get.Brands();
-      if (list) {
-        setBrandList(list);
-      }
-    };
-    fetchBrandsList();
-  }, []);
+export const AddBrand = ({ brandList, setBrandList }: Props) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [data, setData] = useState({ id: "", name: "" });
+  const handleClick = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    data: { id: string; name: string }
+  ) => {
+    e.preventDefault();
+    setData(data);
+    setIsOpen(true);
+  };
 
   return (
     <div className="w-full max-w-sm">
+      <MyDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        data={data}
+        setBrandList={setBrandList}
+        brandList={brandList}
+      />
       <Formik
         initialValues={{ name: "" }}
         validationSchema={Yup.object({
           name: Yup.string()
             .max(20, "Must be 20 characters or less")
             .required("Required")
-            .test("existsCheck", "Brand already exists", (value) =>
-              brandList.brands
-                .map((item) => item.name.toLowerCase())
-                .includes(value ? value.toLowerCase() : "")
+            .test(
+              "existsCheck",
+              "Brand already exists",
+              (value) =>
+                !brandList.brands
+                  .map((item) => item.name.toLowerCase())
+                  .includes(value ? value.toLowerCase() : "")
             ),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           const res = await Post.Brand(values);
-          console.log(res);
-
-          // setBrandList([...brandList, res]);
+          const newList = { brands: [...brandList.brands, res] };
+          setBrandList(newList);
           setSubmitting(false);
           resetForm({ values: { name: "" } });
         }}
@@ -55,14 +62,14 @@ export const AddBrand = (props: Props) => {
           <Form>
             <div className="flex items-center border-b border-olive-200 py-2">
               <Field
-                className="placeholder-olive-200 appearance-none bg-transparent border-none w-full text-olive-50 mr-3 py-1 px-2 leading-tight focus:ring-0"
+                className="text-input"
                 placeholder="Add a new brand..."
                 autoComplete="off"
                 type="text"
                 name="name"
               />
               <button
-                className="btn btn-olive"
+                className="btn-olive"
                 type="submit"
                 disabled={isSubmitting}
               >
@@ -87,17 +94,25 @@ export const AddBrand = (props: Props) => {
         </thead>
         <tbody>
           {brandList &&
-            brandList.brands.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>
-                  <button className="btn btn-olive">edit</button>
-                </td>
-                <td>
-                  <button className="btn btn-olive">delete</button>
-                </td>
-              </tr>
-            ))}
+            brandList.brands.map((item) => {
+              const data = { id: item.id, name: item.name };
+              return (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>
+                    <button className="btn-olive">edit</button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={(e) => handleClick(e, data)}
+                      className="btn-danger"
+                    >
+                      delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

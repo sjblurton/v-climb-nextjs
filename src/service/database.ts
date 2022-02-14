@@ -38,3 +38,13 @@ export const Get = {
     if (res.ok) return (await res.json()) as { rubbers: RubberList[] };
   },
 };
+
+export const DeleteEntry = {
+  Brand: async (id: string) => {
+    const res = await fetch(`/api/v1/brands/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error(res.statusText);
+    return await res.json();
+  },
+};

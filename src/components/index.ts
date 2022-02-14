@@ -10,3 +10,5 @@ export { RubberData } from "./rubber";
 export { CustomTab } from "./tab";
 export { AddBrand } from "./forms/addBrand";
 export { AddRubber } from "./forms/addRubber";
+export { MyDialog } from "./modal";
+export { default as AlertTemplate } from "./AlertTemplate";
