@@ -1,16 +1,22 @@
+import { Brand, Rubber, Shoes } from "@prisma/client";
 import superjson from "superjson";
 import { BrandList } from "../interface";
 
 const stringifyDate = (date: Date) => superjson.stringify(date).split('"')[3];
 
-export const objectWithStringifiedDates = (
-  createdAt: Date,
-  updatedAt: Date
-) => {
-  return {
-    createdAt: stringifyDate(createdAt),
-    updatedAt: stringifyDate(updatedAt),
-  };
+type ArrayOfObjects = Shoes[] | Rubber[] | Brand[];
+
+export const stringifyTheDates = (array: ArrayOfObjects) => {
+  const newArray = array.map((item) => {
+    const createDate = stringifyDate(item.createdAt);
+    const updatedDate = stringifyDate(item.updatedAt);
+    return {
+      ...item,
+      createdAt: createDate,
+      updatedAt: updatedDate,
+    };
+  });
+  return newArray;
 };
 
 export const envString = (string: string) =>

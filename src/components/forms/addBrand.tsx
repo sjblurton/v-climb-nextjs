@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const AddBrand = ({ brandList, setBrandList }: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({ id: "", name: "" });
   const handleClick = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,

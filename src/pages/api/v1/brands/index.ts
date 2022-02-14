@@ -1,30 +1,43 @@
 import { prisma } from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getProps } from "../../../../service/getProps";
-import { Brand } from "@prisma/client";
+import { stringifyTheDates } from "../../../../helper/stringify";
+import { BrandWithStringDates } from "../../../../interface";
+import { ApiError } from "../../../../interface";
 
-type Data =
-  | {
-      content: string;
-    }
-  | { error: string }
-  | { brands: { id: string; name: string }[] }
-  | Brand;
+type Data = {
+  brands: BrandWithStringDates[];
+};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data | ApiError>
 ) {
   if (req.method === "GET") {
-    const brands = await getProps.getBrandNames();
-    if (brands) res.send({ brands: brands });
+    try {
+      const brands = await prisma.brand.findMany();
+      const datesAsStrings = stringifyTheDates(
+        brands
+      ) as BrandWithStringDates[];
+      res.status(200).json({ brands: datesAsStrings });
+    } catch (error) {
+      // TODO Add alert
+      res.status(500).json({ error: `server error` });
+    }
   }
 
   if (req.method === "POST") {
-    const brandData = JSON.parse(req.body);
-    const savedBrand = await prisma.brand.create({
-      data: brandData,
-    });
-    res.send(savedBrand);
+    try {
+      const brandData = JSON.parse(req.body);
+      const savedBrand = await prisma.brand.create({
+        data: brandData,
+      });
+      const datesAsStrings = stringifyTheDates([
+        savedBrand,
+      ]) as BrandWithStringDates[];
+      res.status(200).json({ brands: datesAsStrings });
+    } catch (error) {
+      // TODO Add alert
+      res.status(500).json({ error: `server error` });
+    }
   }
 }
