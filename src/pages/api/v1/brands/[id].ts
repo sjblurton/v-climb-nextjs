@@ -28,6 +28,7 @@ export default async function handler(
       res.status(500).json({ error: `server error` });
     }
   }
+
   if (req.method === "DELETE") {
     try {
       const brand = await prisma.brand.delete({
@@ -36,7 +37,9 @@ export default async function handler(
         },
       });
       if (brand) {
-        const datesAsStrings = stringifyTheDates([brand]);
+        const datesAsStrings = stringifyTheDates([
+          brand,
+        ]) as BrandWithStringDates[];
         res.status(200).json({ brands: datesAsStrings });
       } else {
         res.status(404).json({ error: `couldn't brand find id: ${ID}` });

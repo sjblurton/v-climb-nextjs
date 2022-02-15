@@ -1,27 +1,23 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import {
   BrandWithStringDates,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
 
+axios.defaults.baseURL = "http://localhost:3000";
+
 export const getAllData = async () => {
-  try {
-    const shoes: ShoeWithStringDates[] = await axios.get("/api/v1/shoes/");
-    const rubbers: RubberWithStringDates[] = await axios.get("/api/v1/rubbers");
-    const brands: BrandWithStringDates[] = await axios.get("/api/v1/brands");
+  const shoes: AxiosResponse<{ shoes: ShoeWithStringDates }, any> =
+    await axios.get("/api/v1/shoes/");
+  const rubbers: AxiosResponse<{ rubbers: RubberWithStringDates }, any> =
+    await axios.get("/api/v1/rubbers");
+  const brands: AxiosResponse<{ brands: BrandWithStringDates }, any> =
+    await axios.get("/api/v1/brands");
 
-    return { shoes };
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getAllShoes = async () => {
-  try {
-    const shoes: ShoeWithStringDates[] = await axios.get("/api/v1/shoes");
-    return shoes;
-  } catch (error) {
-    console.log(error);
-  }
+  return {
+    brands: brands.data.brands,
+    shoes: shoes.data.shoes,
+    rubbers: rubbers.data.rubbers,
+  };
 };

@@ -2,14 +2,22 @@ import { Accordion, Card, Layout, Seo } from "../components";
 import { getProps } from "../service/getProps";
 import { brandNameFromId } from "../helper/stringify";
 import { Brand, Rubber, Shoes } from "@prisma/client";
+import {
+  BrandWithStringDates,
+  RubberWithStringDates,
+  ShoeWithStringDates,
+} from "../interface";
+import { getAllData } from "../service/axios";
+import axios, { AxiosError } from "axios";
 
 interface Props {
-  brands: Brand[];
-  shoes: Shoes[];
-  rubbers: Rubber[];
+  brands: BrandWithStringDates[];
+  shoes: ShoeWithStringDates[];
+  rubbers: RubberWithStringDates[];
 }
 
-const Home = ({ shoes, brands }: Props) => {
+const Home = (props: Props) => {
+  console.log(props);
   return (
     <>
       <Seo />
@@ -26,7 +34,7 @@ const Home = ({ shoes, brands }: Props) => {
             and the animals.
           </p>
         </article>
-        <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
+        {/* <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
             <Accordion
               title="Filters"
@@ -39,7 +47,8 @@ const Home = ({ shoes, brands }: Props) => {
                         <li key={brand.id}>{brand.name}</li>
                       ))}
                     </>
-                  }
+                  }  error: string;
+
                 />
               }
             />
@@ -53,7 +62,7 @@ const Home = ({ shoes, brands }: Props) => {
               />
             ))}
           </div>
-        </div>
+        </div> */}
       </Layout>
     </>
   );
@@ -62,6 +71,6 @@ const Home = ({ shoes, brands }: Props) => {
 export default Home;
 
 export const getStaticProps = async () => {
-  const props = await getProps.getHomePageData();
-  return { props };
+  const props = await getAllData();
+  return { props: props };
 };
