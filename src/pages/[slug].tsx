@@ -1,4 +1,3 @@
-import { Rubber, Shoes } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
@@ -6,16 +5,17 @@ import { GoBack } from "../assets/icons";
 import { Features, Layout, RubberData, Seo } from "../components";
 import { VeganImage } from "../components/";
 import { priceConverter, veganToString } from "../helper/helper";
-import { getProps } from "../service/getProps";
+import { RubberWithStringDates, ShoeWithStringDates } from "../interface";
+import { axiosGet } from "../service/axios";
 
 type Props = {
-  shoe: Shoes;
-  rubber: Rubber;
+  shoe: ShoeWithStringDates;
+  rubber: RubberWithStringDates;
   shoeBrand: string;
   rubberBrand: string;
 };
 
-const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
+const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
   const {
     name: shoeName,
     veganType,
@@ -27,6 +27,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
     rubber_thickness,
     asymmetry,
     volume,
+    updatedAt,
   } = shoe;
 
   const templateTitle = `${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
@@ -41,8 +42,6 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
     { title: "volume", value: volume },
     { title: rubber.name, value: rubber.image },
   ];
-
-  shoe;
 
   return (
     <>
@@ -76,6 +75,11 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
               {description}
             </p>
           </div>
+          <div className="container">
+            <p className="p-3 text-olive-50 text-sm font-bold">
+              Up-to-date as of: {updatedAt}
+            </p>
+          </div>
           <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
             Price: {priceConverter(price)}
           </h3>
@@ -89,8 +93,12 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
 export default Product;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await getProps.getShoePaths();
-
+  const response = await axiosGet.getShoes();
+  const paths =
+    // @ts-ignore
+    response.shoes.map((shoe) => {
+      return { params: { slug: shoe.slug } };
+    });
   return {
     paths,
     fallback: false,
@@ -103,6 +111,25 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as IParams;
-  const props = await getProps.getSinglePageData(slug);
+  let props = {};
+  const shoeRes = await axiosGet.getShoeBySlug(slug);
+
+  if (shoeRes.shoe) {
+    const brandRes = await axiosGet.getBrandById(shoeRes.shoe.brandId);
+
+    const rubberRes = await axiosGet.getRubberById(shoeRes.shoe.rubberId);
+
+    const rubberBrandRes = rubberRes.rubber
+      ? await axiosGet.getBrandById(rubberRes.rubber?.brandId)
+      : { brandName: "" };
+
+    props = {
+      ...props,
+      ...shoeRes,
+      ...rubberRes,
+      shoeBrand: brandRes.brandName,
+      rubberBrand: rubberBrandRes.brandName,
+    };
+  }
   return { props };
 };

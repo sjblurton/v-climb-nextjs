@@ -11,17 +11,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data | ApiError>
 ) {
-  const ID = req.query.id.toString();
+  const Slug = req.query.slug.toString();
   if (req.method === "GET") {
     try {
-      const shoe = await prisma.shoes.findUnique({ where: { id: ID } });
+      const shoe = await prisma.shoes.findUnique({ where: { slug: Slug } });
       if (shoe) {
         const datesAsStrings = stringifyTheDates([
           shoe,
         ]) as ShoeWithStringDates[];
         res.status(200).json({ shoes: datesAsStrings });
       } else {
-        res.status(404).json({ error: `couldn't rubber find id: ${ID}` });
+        res.status(404).json({ error: `couldn't shoe find slug: ${Slug}` });
       }
     } catch (error) {
       // TODO Add alert
