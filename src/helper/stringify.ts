@@ -1,7 +1,7 @@
-import superjson from "superjson";
+import { format } from "date-fns";
 import { BrandList } from "../interface";
 
-const stringifyDate = (date: Date) => superjson.stringify(date).split('"')[3];
+const stringifyDate = (date: Date) => format(new Date(date), "do MMMM yyyy");
 
 interface Data {
   createdAt: Date;
