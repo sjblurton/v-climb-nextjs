@@ -7,32 +7,44 @@ import {
 
 axios.defaults.baseURL = "http://localhost:3000";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-
 export const getAllData = async () => {
-  const shoes: AxiosResponse<{ shoes: ShoeWithStringDates }, any> =
-    await axios.get("/api/v1/shoes/");
-  const rubbers: AxiosResponse<{ rubbers: RubberWithStringDates }, any> =
-    await axios.get("/api/v1/rubbers");
-  const brands: AxiosResponse<{ brands: BrandWithStringDates }, any> =
-    await axios.get("/api/v1/brands");
+  const shoesRes = await axiosGet.getShoes();
+  const RubbersRes = await axiosGet.getRubber();
+  const brandsRes = await axiosGet.getBrands();
 
   return {
-    brands: brands.data.brands,
-    shoes: shoes.data.shoes,
-    rubbers: rubbers.data.rubbers,
+    ...shoesRes,
+    ...RubbersRes,
+    ...brandsRes,
   };
 };
 
 const axiosGet = {
   getShoes: async () => {
-    try {
-      const response: AxiosResponse<{ shoes: ShoeWithStringDates }, any> =
-        await axios.get("/api/v1/shoes/");
+    const response: AxiosResponse<{ shoes: ShoeWithStringDates }, any> =
+      await axios.get("/api/v1/shoes/");
+    if ("data" in response) {
       return { shoes: response.data.shoes };
-    } catch (error: any) {
-      console.log(error.response); // this is the main part. Use the response property from the error object
-      return error.response;
+    } else {
+      return { error: { shoes: "shoes failed to load" } };
+    }
+  },
+  getRubber: async () => {
+    const response: AxiosResponse<{ rubbers: RubberWithStringDates }, any> =
+      await axios.get("/api/v1/rubbers");
+    if ("data" in response) {
+      return { rubbers: response.data.rubbers };
+    } else {
+      return { error: { rubbers: "rubbers failed to load" } };
+    }
+  },
+  getBrands: async () => {
+    const response: AxiosResponse<{ brands: BrandWithStringDates }, any> =
+      await axios.get("/api/v1/brands");
+    if ("data" in response) {
+      return { brands: response.data.brands };
+    } else {
+      return { error: { brands: "brands failed to load" } };
     }
   },
 };
