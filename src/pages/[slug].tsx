@@ -77,7 +77,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
           </div>
           <div className="container">
             <p className="p-3 text-olive-50 text-sm font-bold">
-              Up-to-date as of: {updatedAt}
+              Up-to-date as of the {updatedAt}
             </p>
           </div>
           <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">

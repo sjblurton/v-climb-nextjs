@@ -1,46 +1,32 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { DeleteEntry } from "../../service/database";
 import { useAlert } from "react-alert";
-import { Brand } from "@prisma/client";
-import { BrandList } from "../../interface";
+import { axiosDelete } from "../../service/axios";
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setBrandList: Dispatch<
-    SetStateAction<{
-      brands: BrandList[];
-    }>
-  >;
-  brandList: { brands: BrandList[] };
   data: {
     id: string;
     name: string;
   };
 }
 
-export const MyDialog = ({
-  isOpen,
-  setIsOpen,
-  data,
-  setBrandList,
-  brandList,
-}: Props) => {
+export const MyDialog = ({ isOpen, setIsOpen, data }: Props) => {
   const alert = useAlert();
 
   const handelDelete = async (id: string) => {
-    const res: { brands: Brand[] } = await DeleteEntry.Brand(id);
+    const res = await axiosDelete.deleteBrand(id);
     setIsOpen(false);
-
-    if (res) {
-      alert.show(`${res.brands[0].name} had been delete.`);
-      const newBrandsList = brandList?.brands.filter(
-        (item) => item.id !== res.brands[0].id
-      );
-      setBrandList({ brands: newBrandsList });
+    console.log("deleteHandler: ", res);
+    if (res.brandName) {
+      alert.show(`${res.brandName} had been delete.`);
+    }
+    if (res.error) {
+      alert.show(`${res.error.brand} had been delete.`);
     }
   };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

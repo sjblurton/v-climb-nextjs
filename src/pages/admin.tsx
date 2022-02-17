@@ -1,27 +1,13 @@
 import { useSession } from "next-auth/react";
 import { CustomTab, Layout, Seo, AddRubber, AddBrand } from "../components";
 import { Tab } from "@headlessui/react";
-import { useEffect, useState } from "react";
-import { BrandList } from "../interface";
-import { Get } from "../service/database";
+import { useBrands } from "../hooks/custom";
 
 type Props = {};
 
 const Admin = (props: Props) => {
   const { data: session, status } = useSession();
-  const [brandList, setBrandList] = useState<{ brands: BrandList[] }>({
-    brands: [],
-  });
-
-  useEffect(() => {
-    const fetchBrandsList = async () => {
-      const list = await Get.Brands();
-      if (list) {
-        setBrandList(list);
-      }
-    };
-    fetchBrandsList();
-  }, []);
+  const { brandsData, isError, isLoading } = useBrands();
 
   if (session) {
     return (
@@ -53,7 +39,9 @@ const Admin = (props: Props) => {
               </Tab.List>
               <Tab.Panels>
                 <Tab.Panel>
-                  <AddBrand brandList={brandList} setBrandList={setBrandList} />
+                  {brandsData && <AddBrand />}
+                  {!isError && isLoading && <p>Loading...</p>}
+                  {isError && <p>{isError}</p>}
                 </Tab.Panel>
                 <Tab.Panel>
                   <AddRubber />

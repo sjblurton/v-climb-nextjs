@@ -91,6 +91,6 @@ export type GoodFor =
   | "under 75kg"
   | "over 55kg";
 
-export interface BrandInput {
+export interface BrandPut {
   name: string;
 }

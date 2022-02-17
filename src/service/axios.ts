@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import {
+  BrandPut,
   BrandWithStringDates,
   RubberWithStringDates,
   ShoeWithStringDates,
@@ -58,7 +59,7 @@ export const axiosGet = {
   },
   getBrandById: async (id: string) => {
     const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
-      await axios.get(`/api/v1/brands/9abf4a88-13f8-4b26-a948-39d7daac98b0`);
+      await axios.get(`/api/v1/brands/${id}`);
     if ("data" in response) {
       return { brandName: response.data.brands[0].name };
     } else {
@@ -72,6 +73,31 @@ export const axiosGet = {
       return { rubber: response.data.rubbers[0] };
     } else {
       return { error: { rubber: `rubber ${id} failed to load` } };
+    }
+  },
+};
+
+export const axiosPost = {
+  postShoes: async (data: BrandPut) => {
+    axios
+      .post("/api/v1/shoes/", data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+};
+
+export const axiosDelete = {
+  deleteBrand: async (id: string) => {
+    const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
+      await axios.delete(`/api/v1/brands/${id}`);
+    if ("data" in response) {
+      return { brandName: response.data.brands[0].name };
+    } else {
+      return { error: { brand: `brand id: ${id} failed delete` } };
     }
   },
 };
