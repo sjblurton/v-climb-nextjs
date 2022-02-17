@@ -8,7 +8,7 @@ import { MyDialog } from "../modal";
 export const AddBrand = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({ id: "", name: "" });
-  const { brandsData, isError, isLoading } = useBrands();
+  const { brandsData, isError, mutate } = useBrands();
 
   console.log(brandsData?.brands);
 
@@ -24,7 +24,12 @@ export const AddBrand = () => {
   if (brandsData) {
     return (
       <div className="w-full max-w-sm">
-        <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} data={data} />
+        <MyDialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          data={data}
+          mutate={mutate}
+        />
         <Formik
           initialValues={{ name: "" }}
           validationSchema={Yup.object({

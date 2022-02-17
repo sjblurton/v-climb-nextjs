@@ -1,6 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Dispatch, Fragment, SetStateAction } from "react";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { useAlert } from "react-alert";
+import { KeyedMutator } from "swr";
+import { BrandWithStringDates } from "../../interface";
 import { axiosDelete } from "../../service/axios";
 
 interface Props {
@@ -10,15 +12,21 @@ interface Props {
     id: string;
     name: string;
   };
+  mutate: KeyedMutator<{
+    brands: BrandWithStringDates[];
+  }>;
 }
 
-export const MyDialog = ({ isOpen, setIsOpen, data }: Props) => {
+export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
   const alert = useAlert();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handelDelete = async (id: string) => {
+    setIsDisabled(true);
     const res = await axiosDelete.deleteBrand(id);
+    setIsDisabled(false);
     setIsOpen(false);
-    console.log("deleteHandler: ", res);
+    mutate();
     if (res.brandName) {
       alert.show(`${res.brandName} had been delete.`);
     }
@@ -80,6 +88,7 @@ export const MyDialog = ({ isOpen, setIsOpen, data }: Props) => {
                 <button
                   type="button"
                   className="btn-danger"
+                  disabled={isDisabled}
                   onClick={() => handelDelete(data.id)}
                 >
                   DELETE!

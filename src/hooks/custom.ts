@@ -35,13 +35,14 @@ export const useRubbers = (id = "") => {
 };
 
 export const useBrands = (id = "") => {
-  const { data, error } = useSWR<{ brands: BrandWithStringDates[] }, any>(
-    `/api/v1/brands/${id}`,
-    fetcher
-  );
+  const { data, error, mutate } = useSWR<
+    { brands: BrandWithStringDates[] },
+    any
+  >(`/api/v1/brands/${id}`, fetcher);
   return {
     brandsData: data,
     isLoading: !error && !data,
     isError: error,
+    mutate,
   };
 };
