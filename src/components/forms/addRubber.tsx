@@ -31,9 +31,14 @@ export const AddRubber = () => {
   } = useBrands();
 
   if (isRubberError || isBrandsError)
-    return <p>server error please try again...</p>;
+    return (
+      <p className="text-olive-50 text-center w-full">
+        server error please try again...
+      </p>
+    );
 
-  if (isRubberLoading || isBrandsLoading) return <p>loading...</p>;
+  if (isRubberLoading || isBrandsLoading)
+    return <p className="text-olive-50 text-center w-full">loading...</p>;
 
   const initialValues: RubberPost = {
     name: "",
