@@ -78,15 +78,28 @@ export const axiosGet = {
 };
 
 export const axiosPost = {
-  postShoes: async (data: BrandPut) => {
-    axios
-      .post("/api/v1/shoes/", data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  // postShoes: async (data: ShoesPut) => {
+  //   axios
+  //     .post("/api/v1/shoes/", data)
+  //     .then(function (response) {
+  //       console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // },
+  postBrand: async (data: BrandPut) => {
+    const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
+      await axios.post("/api/v1/brands/", data);
+    if ("data" in response) {
+      return { brands: response.data.brands[0] };
+    } else {
+      return {
+        error: {
+          brands: `Brand ${data.name} did not add to database. please try again.`,
+        },
+      };
+    }
   },
 };
 

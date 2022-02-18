@@ -28,10 +28,10 @@ export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
     setIsOpen(false);
     mutate();
     if (res.brandName) {
-      alert.show(`${res.brandName} had been delete.`);
+      alert.show(`${res.brandName} has been delete.`, { type: "success" });
     }
     if (res.error) {
-      alert.show(`${res.error.brand} had been delete.`);
+      alert.show(`${res.error.brand} had been delete.`, { type: "error" });
     }
   };
 
@@ -87,7 +87,9 @@ export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
               <div className="mt-4 flex justify-between">
                 <button
                   type="button"
-                  className="btn-danger"
+                  className={
+                    isDisabled ? "btn-danger disabled-btn" : "btn-danger"
+                  }
                   disabled={isDisabled}
                   onClick={() => handelDelete(data.id)}
                 >

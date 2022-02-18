@@ -1,16 +1,17 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { MouseEvent, useState } from "react";
+import { useAlert } from "react-alert";
 import * as Yup from "yup";
 import { useBrands } from "../../hooks/custom";
+import { axiosPost } from "../../service/axios";
 import { Post } from "../../service/database";
 import { MyDialog } from "../modal";
 
 export const AddBrand = () => {
+  const alert = useAlert();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({ id: "", name: "" });
   const { brandsData, isError, mutate } = useBrands();
-
-  console.log(brandsData?.brands);
 
   const handleClick = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
@@ -46,10 +47,19 @@ export const AddBrand = () => {
               ),
           })}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
-            const res = await Post.Brand(values);
-            console.log(res);
+            setSubmitting(true);
+            const res = await axiosPost.postBrand(values);
+            if (res.brands) {
+              alert.show(`${res.brands.name} has been added.`, {
+                type: "success",
+              });
+            }
+            if (res.error) {
+              alert.show(`${res.error.brands}.`, { type: "error" });
+            }
             setSubmitting(false);
             resetForm({ values: { name: "" } });
+            mutate();
           }}
         >
           {({ isSubmitting }) => (
@@ -63,7 +73,9 @@ export const AddBrand = () => {
                   name="name"
                 />
                 <button
-                  className="btn-olive"
+                  className={
+                    isSubmitting ? "btn-olive disabled-btn" : "btn-olive"
+                  }
                   type="submit"
                   disabled={isSubmitting}
                 >
