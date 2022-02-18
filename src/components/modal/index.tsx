@@ -2,19 +2,24 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { useAlert } from "react-alert";
 import { KeyedMutator } from "swr";
-import { BrandWithStringDates } from "../../interface";
+import {
+  BrandWithStringDates,
+  DeleteByID,
+  RubberWithStringDates,
+} from "../../interface";
 import { axiosDelete } from "../../service/axios";
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  data: {
-    id: string;
-    name: string;
-  };
-  mutate: KeyedMutator<{
-    brands: BrandWithStringDates[];
-  }>;
+  data: DeleteByID;
+  mutate:
+    | KeyedMutator<{
+        brands: BrandWithStringDates[];
+      }>
+    | KeyedMutator<{
+        rubbers: RubberWithStringDates[];
+      }>;
 }
 
 export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
@@ -23,15 +28,33 @@ export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
 
   const handelDelete = async (id: string) => {
     setIsDisabled(true);
-    const res = await axiosDelete.deleteBrand(id);
-    setIsDisabled(false);
-    setIsOpen(false);
-    mutate();
-    if (res.brandName) {
-      alert.show(`${res.brandName} has been delete.`, { type: "success" });
+    if (data.type === "BRAND") {
+      const res = await axiosDelete.deleteBrand(id);
+      setIsDisabled(false);
+      setIsOpen(false);
+      mutate();
+      if (res.brandName) {
+        alert.show(`${res.brandName} has been delete.`, { type: "success" });
+      }
+      if (res.error) {
+        alert.show(`${res.error.brand} had been delete.`, { type: "error" });
+      }
     }
-    if (res.error) {
-      alert.show(`${res.error.brand} had been delete.`, { type: "error" });
+    if (data.type === "RUBBER") {
+      const res = await axiosDelete.deleteRubber(id);
+      setIsDisabled(false);
+      setIsOpen(false);
+      mutate();
+      if (res.rubber) {
+        alert.show(`${res.rubber} has been delete.`, {
+          type: "success",
+        });
+      }
+      if (res.error) {
+        alert.show(`${res.error.rubber} had been delete.`, {
+          type: "error",
+        });
+      }
     }
   };
 

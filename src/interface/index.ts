@@ -91,6 +91,20 @@ export type GoodFor =
   | "under 75kg"
   | "over 55kg";
 
-export interface BrandPut {
+export interface BrandPost {
   name: string;
+}
+
+export interface RubberPost {
+  name: string;
+  stiffness: StiffnessType;
+  brandId: string;
+  description: string;
+  image: string;
+}
+
+export interface DeleteByID {
+  id: string;
+  name: string;
+  type: "BRAND" | "RUBBER" | "SHOE";
 }

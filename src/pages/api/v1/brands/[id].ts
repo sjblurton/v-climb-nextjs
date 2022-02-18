@@ -42,7 +42,7 @@ export default async function handler(
         ]) as BrandWithStringDates[];
         res.status(200).json({ brands: datesAsStrings });
       } else {
-        res.status(404).json({ error: `couldn't brand find id: ${ID}` });
+        res.status(404).json({ error: `couldn't find brand id: ${ID}` });
       }
     } catch (error) {
       res.status(500).json({ error: `server error` });

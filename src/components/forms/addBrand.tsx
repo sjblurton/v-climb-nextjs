@@ -2,26 +2,24 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { MouseEvent, useState } from "react";
 import { useAlert } from "react-alert";
 import * as Yup from "yup";
+import { deleteById } from "../../helper/helper";
 import { useBrands } from "../../hooks/custom";
+import { DeleteByID } from "../../interface";
 import { axiosPost } from "../../service/axios";
-import { Post } from "../../service/database";
 import { MyDialog } from "../modal";
 
 export const AddBrand = () => {
   const alert = useAlert();
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState({ id: "", name: "" });
+  const [data, setData] = useState<DeleteByID>({
+    id: "",
+    name: "",
+    type: "BRAND",
+  });
   const { brandsData, isError, mutate } = useBrands();
 
-  const handleClick = (
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-    data: { id: string; name: string }
-  ) => {
-    e.preventDefault();
-    setData(data);
-    setIsOpen(true);
-  };
   if (isError) return <p>{isError}</p>;
+
   if (brandsData) {
     return (
       <div className="w-full max-w-sm">
@@ -100,7 +98,11 @@ export const AddBrand = () => {
           </thead>
           <tbody>
             {brandsData.brands.map((item) => {
-              const data = { id: item.id, name: item.name };
+              const data: DeleteByID = {
+                id: item.id,
+                name: item.name,
+                type: "BRAND",
+              };
               return (
                 <tr key={item.id}>
                   <td>{item.name}</td>
@@ -109,7 +111,7 @@ export const AddBrand = () => {
                   </td>
                   <td>
                     <button
-                      onClick={(e) => handleClick(e, data)}
+                      onClick={(e) => deleteById(e, data, setIsOpen, setData)}
                       className="btn-danger"
                     >
                       delete

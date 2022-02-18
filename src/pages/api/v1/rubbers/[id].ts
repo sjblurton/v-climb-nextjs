@@ -12,6 +12,7 @@ export default async function handler(
   res: NextApiResponse<Data | ApiError>
 ) {
   const ID = req.query.id.toString();
+
   if (req.method === "GET") {
     try {
       const rubber = await prisma.rubber.findUnique({ where: { id: ID } });
@@ -25,6 +26,26 @@ export default async function handler(
       }
     } catch (error) {
       // TODO Add alert
+      res.status(500).json({ error: `server error` });
+    }
+  }
+
+  if (req.method === "DELETE") {
+    try {
+      const rubber = await prisma.rubber.delete({
+        where: {
+          id: ID,
+        },
+      });
+      if (rubber) {
+        const datesAsStrings = stringifyTheDates([
+          rubber,
+        ]) as RubberWithStringDates[];
+        res.status(200).json({ rubbers: datesAsStrings });
+      } else {
+        res.status(404).json({ error: `couldn't find rubber id: ${ID}` });
+      }
+    } catch (error) {
       res.status(500).json({ error: `server error` });
     }
   }

@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import {
-  BrandPut,
+  BrandPost,
   BrandWithStringDates,
+  RubberPost,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
@@ -88,7 +89,20 @@ export const axiosPost = {
   //       console.log(error);
   //     });
   // },
-  postBrand: async (data: BrandPut) => {
+  postRubber: async (data: RubberPost) => {
+    const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
+      await axios.post("/api/v1/rubbers/", data);
+    if ("data" in response) {
+      return { rubbers: response.data.rubbers[0] };
+    } else {
+      return {
+        error: {
+          rubbers: `Rubber ${data.name} did not add to database. please try again.`,
+        },
+      };
+    }
+  },
+  postBrand: async (data: BrandPost) => {
     const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
       await axios.post("/api/v1/brands/", data);
     if ("data" in response) {
@@ -111,6 +125,15 @@ export const axiosDelete = {
       return { brandName: response.data.brands[0].name };
     } else {
       return { error: { brand: `brand id: ${id} failed delete` } };
+    }
+  },
+  deleteRubber: async (id: string) => {
+    const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
+      await axios.delete(`/api/v1/rubbers/${id}`);
+    if ("data" in response) {
+      return { rubber: response.data.rubbers[0].name };
+    } else {
+      return { error: { rubber: `rubber id: ${id} failed delete` } };
     }
   },
 };

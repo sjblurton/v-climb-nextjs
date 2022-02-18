@@ -1,7 +1,7 @@
 import { prisma } from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
-import { BrandWithStringDates } from "../../../../interface";
+import { BrandPost, BrandWithStringDates } from "../../../../interface";
 import { ApiError } from "../../../../interface";
 
 type Data = {
@@ -27,7 +27,7 @@ export default async function handler(
 
   if (req.method === "POST") {
     try {
-      const brandData = req.body;
+      const brandData: BrandPost = req.body;
       const savedBrand = await prisma.brand.create({
         data: brandData,
       });
@@ -36,7 +36,6 @@ export default async function handler(
       ]) as BrandWithStringDates[];
       res.status(200).json({ brands: datesAsStrings });
     } catch (error) {
-      // TODO Add alert
       res.status(500).json({ error: `server error` });
     }
   }
