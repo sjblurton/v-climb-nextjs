@@ -1,6 +1,10 @@
-import { FormikHelpers, FormikState } from "formik";
+import { FormikHelpers } from "formik";
 import { KeyedMutator } from "swr";
-import { BrandWithStringDates, RubberPost } from "../interface";
+import {
+  BrandWithStringDates,
+  RubberPost,
+  RubberWithStringDates,
+} from "../interface";
 import { axiosPost } from "./axios";
 
 export const brandInitialValues = { name: "" };
@@ -35,6 +39,28 @@ export const onSubmit = {
     }
     if (res.error) {
       return { message: `${res.error.brands}.`, type: "error" };
+    }
+  },
+  addRubber: async (
+    values: RubberPost,
+    { setSubmitting, resetForm }: FormikHelpers<RubberPost>,
+    mutate: KeyedMutator<{
+      rubbers: RubberWithStringDates[];
+    }>
+  ) => {
+    setSubmitting(true);
+    const res = await axiosPost.postRubber(values);
+    setSubmitting(false);
+    resetForm({ values: rubberInitialValues });
+    mutate();
+    if (res.rubbers) {
+      return {
+        message: `${res.rubbers.name} has been added.`,
+        type: "success",
+      };
+    }
+    if (res.error) {
+      return { message: `${res.error.rubbers}.`, type: "error" };
     }
   },
 };

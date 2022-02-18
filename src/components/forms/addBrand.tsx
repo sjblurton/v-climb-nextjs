@@ -4,7 +4,7 @@ import { AlertType, useAlert } from "react-alert";
 import { useBrands } from "../../hooks/custom";
 import { DeleteByID } from "../../interface";
 import { brandInitialValues, onSubmit } from "../../service/formik";
-import { brandsSchema } from "../../service/schema";
+import { schemas } from "../../service/schema";
 import { MyDialog } from "../modal";
 import { FormikTextInput, SubmitButton, Table } from "./";
 
@@ -35,7 +35,7 @@ export const AddBrand = () => {
         />
         <Formik
           initialValues={brandInitialValues}
-          validationSchema={brandsSchema(brandsData.brands)}
+          validationSchema={schemas.brand(brandsData.brands)}
           onSubmit={async (values, formikHelpers) => {
             const res = await onSubmit.addBrand(values, formikHelpers, mutate);
             if (res)
