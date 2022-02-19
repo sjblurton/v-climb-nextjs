@@ -72,7 +72,7 @@ export const AddRubber = () => {
               <FormikTextInput name="name" placeholder="Rubber name..." />
               <Select data={selectLists.stiffness} name="stiffness" />
               <Select
-                name="brand"
+                name="brandId"
                 data={brandsData.brands.map((brand) => {
                   return { value: brand.id, name: brand.name };
                 })}

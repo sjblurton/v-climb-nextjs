@@ -173,3 +173,14 @@ export const axiosDelete = {
     }
   },
 };
+
+export const axiosPut = {
+  brand: async (id: string, body: { name: string }) => {
+    const response = await axios.put(`/api/v1/brands/${id}`, body);
+    if ("data" in response) {
+      return { brandName: response.data.brands[0].name };
+    } else {
+      return { error: { brand: `brand id: ${id} failed delete` } };
+    }
+  },
+};

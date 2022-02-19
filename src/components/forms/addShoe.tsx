@@ -78,13 +78,13 @@ export const AddShoe = () => {
           {({ isSubmitting }) => (
             <Form>
               <Select
-                name="brand"
+                name="brandId"
                 data={brandsData.brands.map((brand) => {
                   return { value: brand.id, name: brand.name };
                 })}
               />
               <Select
-                name="rubber"
+                name="rubberId"
                 data={rubbersData.rubbers.map((brand) => {
                   return { value: brand.id, name: brand.name };
                 })}
@@ -107,6 +107,7 @@ export const AddShoe = () => {
                 data={selectLists.rubber_thickness}
                 name="rubber thickness"
               />
+              <Select data={selectLists.price} name="price" />
               <Select data={selectLists.stiffness} name="midsole" />
               <Select data={selectLists.volume} name="volume" />
               <FormikTextInput

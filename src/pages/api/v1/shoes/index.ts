@@ -1,11 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { slugString, stringifyTheDates } from "../../../../helper/stringify";
-import {
-  ApiError,
-  ShoePost,
-  ShoePostInput,
-  ShoeWithStringDates,
-} from "../../../../interface";
+import { stringifyTheDates } from "../../../../helper/stringify";
+import { ApiError, ShoePost, ShoeWithStringDates } from "../../../../interface";
 import { prisma } from "../../../../lib/prisma";
 
 type Data = {

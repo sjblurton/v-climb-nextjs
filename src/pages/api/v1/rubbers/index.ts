@@ -30,7 +30,6 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       const rubberData: RubberPost = req.body;
-
       const savedRubber = await prisma.rubber.create({
         data: rubberData,
       });
@@ -38,8 +37,8 @@ export default async function handler(
         savedRubber,
       ]) as RubberWithStringDates[];
       res.status(200).json({ rubbers: datesAsStrings });
-    } catch (error) {
-      res.status(500).json({ error: `server error` });
+    } catch (error: any) {
+      res.status(500).json({ error: error });
     }
   }
 }
