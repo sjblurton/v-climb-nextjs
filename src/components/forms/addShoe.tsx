@@ -1,4 +1,3 @@
-import { StiffnessType } from "@prisma/client";
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import { AlertType, useAlert } from "react-alert";
@@ -17,13 +16,6 @@ export const AddShoe = () => {
     id: "",
     name: "",
     type: "SHOE",
-  });
-
-  const selectStiffnessData = Object.keys(StiffnessType).map((item) => {
-    return {
-      value: item,
-      name: item.toLocaleLowerCase(),
-    };
   });
 
   const {

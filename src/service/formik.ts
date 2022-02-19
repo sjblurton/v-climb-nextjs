@@ -1,6 +1,5 @@
 import { FormikHelpers } from "formik";
 import { KeyedMutator } from "swr";
-import { boolean } from "yup";
 import {
   BrandPost,
   BrandWithStringDates,

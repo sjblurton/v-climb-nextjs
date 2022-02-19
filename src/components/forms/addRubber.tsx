@@ -1,4 +1,3 @@
-import { StiffnessType } from "@prisma/client";
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import { AlertType, useAlert } from "react-alert";
