@@ -1,8 +1,7 @@
 import { useSession } from "next-auth/react";
-import { CustomTab, Layout, Seo, AddRubber, AddBrand } from "../components";
+import { CustomTab, Layout, Seo, AddRubber, AddBrand } from "../../components";
 import { Tab } from "@headlessui/react";
-import { useBrands } from "../hooks/custom";
-import { AddShoe } from "../components/forms/addShoe";
+import { AddShoe } from "../../components/forms/addShoe";
 
 type Props = {};
 

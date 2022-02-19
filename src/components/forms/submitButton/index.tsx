@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-type Props = { isDisabled: boolean };
+type Props = { isDisabled: boolean; children: ReactNode };
 
-export const SubmitButton = ({ isDisabled }: Props) => {
+export const SubmitButton = ({ isDisabled, children }: Props) => {
   return (
     <button
       className={
@@ -13,7 +13,7 @@ export const SubmitButton = ({ isDisabled }: Props) => {
       type="submit"
       disabled={isDisabled}
     >
-      Add
+      {children}
     </button>
   );
 };

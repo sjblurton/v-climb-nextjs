@@ -9,7 +9,7 @@ import {
   ShoePostInput,
   ShoeWithStringDates,
 } from "../interface";
-import { axiosPost } from "./axios";
+import { axiosPost, axiosPut } from "./axios";
 
 export const brandInitialValues: BrandPost = { name: "" };
 
@@ -114,6 +114,24 @@ export const onSubmit = {
       }
     } catch (error) {
       return { message: `Ops, something went wrong.`, type: "error" };
+    }
+  },
+  updateBrand: async (
+    id: string,
+    values: BrandPost,
+    { setSubmitting }: FormikHelpers<BrandPost>
+  ) => {
+    setSubmitting(true);
+    const res = await axiosPut.brand(id, values);
+    setSubmitting(false);
+    if (res.brandName) {
+      return {
+        message: `${res.brandName} has been updated.`,
+        type: "success",
+      };
+    }
+    if (res.error) {
+      return { message: `${res.error.brand}.`, type: "error" };
     }
   },
 };

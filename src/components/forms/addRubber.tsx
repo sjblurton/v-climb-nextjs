@@ -43,7 +43,7 @@ export const AddRubber = () => {
 
   if (rubbersData && brandsData)
     return (
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm m-auto">
         <MyDialog
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -83,7 +83,7 @@ export const AddRubber = () => {
                 textarea={true}
               />
               <FormikTextInput name="image" placeholder="Logo URL..." />
-              <SubmitButton isDisabled={isSubmitting} />
+              <SubmitButton isDisabled={isSubmitting}>Add</SubmitButton>
             </Form>
           )}
         </Formik>

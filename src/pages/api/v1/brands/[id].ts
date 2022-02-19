@@ -4,6 +4,7 @@ import { stringifyTheDates } from "../../../../helper/stringify";
 import {
   ApiError,
   BrandPost,
+  BrandPut,
   BrandWithStringDates,
 } from "../../../../interface";
 
@@ -55,7 +56,7 @@ export default async function handler(
 
   if (req.method === "PUT") {
     try {
-      const brandData: BrandPost = req.body;
+      const brandData: BrandPut = req.body;
       const brand = await prisma.brand.update({
         where: {
           id: ID,

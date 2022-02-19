@@ -50,7 +50,7 @@ export const AddShoe = () => {
 
   if (rubbersData && brandsData && shoesData)
     return (
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm m-auto">
         <MyDialog
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -123,7 +123,7 @@ export const AddShoe = () => {
                 name="url"
                 placeholder="URL to more information..."
               />
-              <SubmitButton isDisabled={isSubmitting} />
+              <SubmitButton isDisabled={isSubmitting}>Add</SubmitButton>
             </Form>
           )}
         </Formik>

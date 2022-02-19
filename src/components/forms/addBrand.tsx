@@ -26,7 +26,7 @@ export const AddBrand = () => {
 
   if (brandsData) {
     return (
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm m-auto">
         <MyDialog
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -49,7 +49,7 @@ export const AddBrand = () => {
           {({ isSubmitting }) => (
             <Form>
               <FormikTextInput name="name" placeholder="Add a new brand..." />
-              <SubmitButton isDisabled={isSubmitting} />
+              <SubmitButton isDisabled={isSubmitting}>Add</SubmitButton>
             </Form>
           )}
         </Formik>

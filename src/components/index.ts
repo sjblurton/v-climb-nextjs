@@ -12,3 +12,4 @@ export { AddBrand } from "./forms/addBrand";
 export { AddRubber } from "./forms/addRubber";
 export { MyDialog } from "./modal";
 export { default as AlertTemplate } from "./AlertTemplate";
+export { Message } from "./message";
