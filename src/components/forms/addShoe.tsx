@@ -16,6 +16,7 @@ export const AddShoe = () => {
     id: "",
     name: "",
     type: "SHOE",
+    slug: "",
   });
 
   const {
@@ -129,9 +130,13 @@ export const AddShoe = () => {
           name="Shoes"
           setData={setData}
           setIsOpen={setIsOpen}
-          type="SHOE"
           data={shoesData.shoes.map((item) => {
-            return { id: item.id, name: item.name };
+            return {
+              id: item.id,
+              name: item.name,
+              slug: item.slug,
+              type: "SHOE",
+            };
           })}
         />
       </div>

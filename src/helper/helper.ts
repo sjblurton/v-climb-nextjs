@@ -27,13 +27,7 @@ export const deleteById = (
   e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   data: DeleteByID,
   setIsOpen: Dispatch<SetStateAction<boolean>>,
-  setData: Dispatch<
-    SetStateAction<{
-      id: string;
-      name: string;
-      type: "BRAND" | "RUBBER" | "SHOE";
-    }>
-  >
+  setData: Dispatch<SetStateAction<DeleteByID>>
 ) => {
   e.preventDefault();
   setData(data);

@@ -60,6 +60,24 @@ export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
         });
       }
     }
+    if (data.type === "SHOE") {
+      const res = data.slug
+        ? await axiosDelete.deleteShoe(data.slug)
+        : { error: { shoes: `Ops... something went wrong.` } };
+      setIsDisabled(false);
+      setIsOpen(false);
+      mutate();
+      if (res.shoes) {
+        alert.show(`${res.shoes} has been delete.`, {
+          type: "success",
+        });
+      }
+      if (res.error) {
+        alert.show(`${res.error.shoes} had been delete.`, {
+          type: "error",
+        });
+      }
+    }
   };
 
   return (

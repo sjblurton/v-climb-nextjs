@@ -56,11 +56,10 @@ export const AddBrand = () => {
         <Table
           name="Brands"
           data={brandsData.brands.map((item) => {
-            return { id: item.id, name: item.name };
+            return { id: item.id, name: item.name, type: "BRAND" };
           })}
           setIsOpen={setIsOpen}
           setData={setData}
-          type="BRAND"
         />
       </div>
     );

@@ -149,4 +149,5 @@ export interface DeleteByID {
   id: string;
   name: string;
   type: "BRAND" | "RUBBER" | "SHOE";
+  slug?: string;
 }

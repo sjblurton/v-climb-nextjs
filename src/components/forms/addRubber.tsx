@@ -91,9 +91,8 @@ export const AddRubber = () => {
           name="Rubber"
           setData={setData}
           setIsOpen={setIsOpen}
-          type="RUBBER"
           data={rubbersData.rubbers.map((item) => {
-            return { id: item.id, name: item.name };
+            return { id: item.id, name: item.name, type: "RUBBER" };
           })}
         />
       </div>

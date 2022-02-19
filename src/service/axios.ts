@@ -163,4 +163,13 @@ export const axiosDelete = {
       return { error: { rubber: `rubber id: ${id} failed delete` } };
     }
   },
+  deleteShoe: async (slug: string) => {
+    const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
+      await axios.delete(`/api/v1/shoes/${slug}`);
+    if ("data" in response) {
+      return { shoes: response.data.shoes[0].name };
+    } else {
+      return { error: { shoes: `shoes slug: ${slug} failed delete` } };
+    }
+  },
 };

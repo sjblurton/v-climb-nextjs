@@ -2,17 +2,14 @@ import React, { Dispatch, SetStateAction } from "react";
 import { deleteById } from "../../../helper/helper";
 import { DeleteByID } from "../../../interface";
 
-type Data = { id: string; name: string };
-
 interface Props {
   name: string;
-  type: "BRAND" | "RUBBER" | "SHOE";
-  data: Data[];
+  data: DeleteByID[];
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setData: Dispatch<SetStateAction<DeleteByID>>;
 }
 
-export const Table = ({ name, type, data, setIsOpen, setData }: Props) => {
+export const Table = ({ name, data, setIsOpen, setData }: Props) => {
   return (
     <table className="table-auto my-4 text-olive-50 w-full">
       <thead>
@@ -27,7 +24,8 @@ export const Table = ({ name, type, data, setIsOpen, setData }: Props) => {
           const data: DeleteByID = {
             id: item.id,
             name: item.name,
-            type: type,
+            type: item.type,
+            slug: item.slug,
           };
           return (
             <tr key={item.id}>
