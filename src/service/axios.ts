@@ -175,12 +175,22 @@ export const axiosDelete = {
 };
 
 export const axiosPut = {
-  brand: async (id: string, body: { name: string }) => {
-    const response = await axios.put(`/api/v1/brands/${id}`, body);
+  brand: async (id: string, body: BrandPost) => {
+    const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
+      await axios.put(`/api/v1/brands/${id}`, body);
     if ("data" in response) {
       return { brandName: response.data.brands[0].name };
     } else {
       return { error: { brand: `brand id: ${id} failed delete` } };
+    }
+  },
+  rubber: async (id: string, body: RubberPost) => {
+    const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
+      await axios.put(`/api/v1/rubbers/${id}`, body);
+    if ("data" in response) {
+      return { rubber: response.data.rubbers[0].name };
+    } else {
+      return { error: { rubber: `brand id: ${id} failed delete` } };
     }
   },
 };

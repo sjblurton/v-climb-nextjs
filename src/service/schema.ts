@@ -58,6 +58,22 @@ export const schemas = {
       url: Yup.string().required("Required").matches(URL, "Enter a valid url"),
     });
   },
+  rubberPut: () => {
+    return Yup.object({
+      name: Yup.string()
+        .max(20, "Must be 20 characters or less")
+        .required("Required"),
+      stiffness: Yup.string()
+        .required("Required")
+        .matches(/(SOFT|AVERAGE|STIFF)/),
+      brandId: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+      image: Yup.string()
+        .required("Required")
+        .matches(URL, "Enter a valid url"),
+      url: Yup.string().required("Required").matches(URL, "Enter a valid url"),
+    });
+  },
   shoe: (
     shoesData: ShoeWithStringDates[],
     rubbersData: RubberWithStringDates[],

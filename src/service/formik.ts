@@ -134,4 +134,22 @@ export const onSubmit = {
       return { message: `${res.error.brand}.`, type: "error" };
     }
   },
+  updateRubber: async (
+    id: string,
+    values: RubberPost,
+    { setSubmitting }: FormikHelpers<RubberPost>
+  ) => {
+    setSubmitting(true);
+    const res = await axiosPut.rubber(id, values);
+    setSubmitting(false);
+    if (res.rubber) {
+      return {
+        message: `${res.rubber} has been updated.`,
+        type: "success",
+      };
+    }
+    if (res.error) {
+      return { message: `${res.error.rubber}.`, type: "error" };
+    }
+  },
 };

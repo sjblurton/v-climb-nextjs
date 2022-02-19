@@ -1,13 +1,13 @@
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import { AlertType, useAlert } from "react-alert";
-import { selectLists } from "../../helper/helper";
 import { useBrands, useRubbers } from "../../hooks/custom";
 import { DeleteByID } from "../../interface";
 import { onSubmit, rubberInitialValues } from "../../service/formik";
 import { schemas } from "../../service/schema";
 import { MyDialog } from "../modal";
-import { Select, FormikTextInput, SubmitButton, Table } from "./";
+import { SubmitButton, Table } from "./";
+import { RubberInputs } from "./rubber";
 
 export const AddRubber = () => {
   const alert = useAlert();
@@ -69,20 +69,7 @@ export const AddRubber = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              <FormikTextInput name="name" placeholder="Rubber name..." />
-              <Select data={selectLists.stiffness} name="stiffness" />
-              <Select
-                name="brandId"
-                data={brandsData.brands.map((brand) => {
-                  return { value: brand.id, name: brand.name };
-                })}
-              />
-              <FormikTextInput
-                name="description"
-                placeholder="Write a brief description..."
-                textarea={true}
-              />
-              <FormikTextInput name="image" placeholder="Logo URL..." />
+              <RubberInputs />
               <SubmitButton isDisabled={isSubmitting}>Add</SubmitButton>
             </Form>
           )}

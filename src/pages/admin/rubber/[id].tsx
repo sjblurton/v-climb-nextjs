@@ -2,27 +2,45 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { AlertType, useAlert } from "react-alert";
 import { Layout, Message } from "../../../components";
-import { FormikTextInput, SubmitButton } from "../../../components/forms";
-import { useBrands } from "../../../hooks/custom";
+import {
+  FormikTextInput,
+  Select,
+  SubmitButton,
+} from "../../../components/forms";
+import { RubberInputs } from "../../../components/forms/rubber";
+import { selectLists } from "../../../helper/helper";
+import { useBrands, useRubbers } from "../../../hooks/custom";
 import { onSubmit } from "../../../service/formik";
 import { schemas } from "../../../service/schema";
 
 type Props = {};
 
-const BrandEditor = (props: Props) => {
+const RubberEditor = (props: Props) => {
   const alert = useAlert();
   const { query, push } = useRouter();
   const id = typeof query.id === "string" ? query.id : "";
 
-  const { brandsData, isError, isLoading, mutate } = useBrands();
+  const {
+    brandsData,
+    isError: brandError,
+    isLoading: brandLoading,
+  } = useBrands();
+  const { rubbersData, isError, isLoading, mutate } = useRubbers();
 
-  if (isLoading) return <Message>Loading...</Message>;
+  if (isLoading || brandLoading) return <Message>Loading...</Message>;
 
-  if (isError) return <Message>Ops, something went wrong...</Message>;
+  if (isError || brandError)
+    return <Message>Ops, something went wrong...</Message>;
 
-  if (brandsData) {
-    const brand = brandsData.brands.filter((brand) => brand.id === id)[0];
-    const initialValues = { name: brand.name };
+  if (brandsData && rubbersData) {
+    const rubber = rubbersData.rubbers.filter((rubber) => rubber.id === id)[0];
+    const initialValues = {
+      name: rubber.name,
+      stiffness: rubber.stiffness,
+      brandId: rubber.brandId,
+      description: rubber.description,
+      image: rubber.image,
+    };
 
     return (
       <>
@@ -32,7 +50,7 @@ const BrandEditor = (props: Props) => {
               initialValues={initialValues}
               validationSchema={schemas.brand(brandsData.brands)}
               onSubmit={async (values, formikHelpers) => {
-                const res = await onSubmit.updateBrand(
+                const res = await onSubmit.updateRubber(
                   id,
                   values,
                   formikHelpers
@@ -50,10 +68,7 @@ const BrandEditor = (props: Props) => {
             >
               {({ isSubmitting }) => (
                 <Form>
-                  <FormikTextInput
-                    name="name"
-                    placeholder="Add a new brand..."
-                  />
+                  <RubberInputs />
                   <SubmitButton isDisabled={isSubmitting}>Edit</SubmitButton>
                   <button
                     className="btn-olive w-full mt-4"
@@ -66,10 +81,10 @@ const BrandEditor = (props: Props) => {
               )}
             </Formik>
           </div>
-        </Layout>
+        </Layout>{" "}
       </>
     );
   }
 };
 
-export default BrandEditor;
+export default RubberEditor;

@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/router";
+import React, { Dispatch, MouseEvent, SetStateAction } from "react";
 import { deleteById } from "../../../helper/helper";
 import { DeleteByID } from "../../../interface";
 
@@ -10,6 +11,14 @@ interface Props {
 }
 
 export const Table = ({ name, data, setIsOpen, setData }: Props) => {
+  const { push } = useRouter();
+
+  const clickHandler = (e: MouseEvent<HTMLButtonElement>, edit: DeleteByID) => {
+    e.preventDefault();
+    if (edit.type === "BRAND") push(`/admin/brand/${edit.id}`);
+    if (edit.type === "RUBBER") push(`/admin/rubber/${edit.id}`);
+  };
+
   return (
     <table className="table-auto my-4 text-olive-50 w-full">
       <thead>
@@ -31,7 +40,12 @@ export const Table = ({ name, data, setIsOpen, setData }: Props) => {
             <tr key={item.id}>
               <td className="capitalize">{item.name}</td>
               <td>
-                <button className="btn-olive">edit</button>
+                <button
+                  onClick={(e) => clickHandler(e, data)}
+                  className="btn-olive"
+                >
+                  edit
+                </button>
               </td>
               <td>
                 <button
