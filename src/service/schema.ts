@@ -75,7 +75,6 @@ export const schemas = {
     });
   },
   shoe: (
-    shoesData: ShoeWithStringDates[],
     rubbersData: RubberWithStringDates[],
     brandsData: BrandWithStringDates[]
   ) => {
@@ -98,15 +97,7 @@ export const schemas = {
         ),
       name: Yup.string()
         .max(20, "Must be 20 characters or less")
-        .required("Required")
-        .test(
-          "existsCheck",
-          "Rubber already exists",
-          (value) =>
-            !rubbersData
-              .map((item) => item.name.toLowerCase())
-              .includes(value ? value.toLowerCase() : "")
-        ),
+        .required("Required"),
       veganType: Yup.string()
         .required("Required")
         .matches(/(VEGAN|NOT|POSSIBLY)/),

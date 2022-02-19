@@ -193,4 +193,33 @@ export const axiosPut = {
       return { error: { rubber: `brand id: ${id} failed delete` } };
     }
   },
+  shoe: async (id: string, body: ShoePostInput) => {
+    const brand = await axiosGet.getBrandById(body.brandId);
+    if (brand.brandName) {
+      const slug = slugString(brand.brandName, body.name);
+      const ankleStringToBoolean =
+        body["ankle protection"] === "YES" ? true : false || false;
+      const rubber_thickness = body["rubber thickness"] || "THINNER";
+      delete body["ankle protection"];
+      delete body["rubber thickness"];
+      const shoeWithSlug: ShoePost = {
+        ...body,
+        slug: slug,
+        ankle_protection: ankleStringToBoolean,
+        rubber_thickness: rubber_thickness,
+      };
+      const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
+        await axios.put(`/api/v1/shoes/${id}`, shoeWithSlug);
+      if ("data" in response) {
+        return { shoes: response.data.shoes[0].name };
+      } else {
+        return { error: { shoes: `brand id: ${id} failed delete` } };
+      }
+    } else
+      return {
+        error: {
+          shoes: `Shoes ${body.name} did not add to database. please try again.`,
+        },
+      };
+  },
 };

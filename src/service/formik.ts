@@ -152,4 +152,22 @@ export const onSubmit = {
       return { message: `${res.error.rubber}.`, type: "error" };
     }
   },
+  updateShoe: async (
+    id: string,
+    values: ShoePost,
+    { setSubmitting }: FormikHelpers<ShoePost>
+  ) => {
+    setSubmitting(true);
+    const res = await axiosPut.shoe(id, values);
+    setSubmitting(false);
+    if (res.shoes) {
+      return {
+        message: `${res.shoes} has been updated.`,
+        type: "success",
+      };
+    }
+    if (res.error) {
+      return { message: `${res.error.shoes}.`, type: "error" };
+    }
+  },
 };

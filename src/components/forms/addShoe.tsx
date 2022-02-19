@@ -8,6 +8,7 @@ import { onSubmit, shoesInitialValues } from "../../service/formik";
 import { schemas } from "../../service/schema";
 import { MyDialog } from "../modal";
 import { Select, FormikTextInput, SubmitButton, Table } from "./";
+import { ShoeInputs } from "./shoe";
 
 export const AddShoe = () => {
   const alert = useAlert();
@@ -61,7 +62,6 @@ export const AddShoe = () => {
         <Formik
           initialValues={shoesInitialValues}
           validationSchema={schemas.shoe(
-            shoesData.shoes,
             rubbersData.rubbers,
             brandsData.brands
           )}
@@ -77,52 +77,7 @@ export const AddShoe = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              <Select
-                name="brandId"
-                data={brandsData.brands.map((brand) => {
-                  return { value: brand.id, name: brand.name };
-                })}
-              />
-              <Select
-                name="rubberId"
-                data={rubbersData.rubbers.map((brand) => {
-                  return { value: brand.id, name: brand.name };
-                })}
-              />
-              <FormikTextInput name="name" placeholder="Shoe name..." />
-              <Select data={selectLists.vegan} name="veganType" />
-              <Select data={selectLists.asymmetry} name="asymmetry" />
-              <Select data={selectLists.profile} name="profile" />
-              <Select data={selectLists.closure} name="closure" />
-              <Select data={selectLists.hooking} name="hooking" />
-              <Select
-                data={[
-                  { value: "YES", name: "yes" },
-                  { value: "NO", name: "no" },
-                ]}
-                name="ankle protection"
-              />
-
-              <Select
-                data={selectLists.rubber_thickness}
-                name="rubber thickness"
-              />
-              <Select data={selectLists.price} name="price" />
-              <Select data={selectLists.stiffness} name="midsole" />
-              <Select data={selectLists.volume} name="volume" />
-              <FormikTextInput
-                name="description"
-                placeholder="Write a brief description..."
-                textarea={true}
-              />
-              <FormikTextInput
-                name="image"
-                placeholder="Image of shoe URL..."
-              />
-              <FormikTextInput
-                name="url"
-                placeholder="URL to more information..."
-              />
+              <ShoeInputs />
               <SubmitButton isDisabled={isSubmitting}>Add</SubmitButton>
             </Form>
           )}

@@ -3,14 +3,15 @@ import { useRouter } from "next/router";
 import { AlertType, useAlert } from "react-alert";
 import { Layout, Message } from "../../../components";
 import { SubmitButton } from "../../../components/forms";
-import { RubberInputs } from "../../../components/forms/rubber";
-import { useBrands, useRubbers } from "../../../hooks/custom";
+import { ShoeInputs } from "../../../components/forms/shoe";
+import { useBrands, useRubbers, useShoes } from "../../../hooks/custom";
+import { ShoePostInput } from "../../../interface";
 import { onSubmit } from "../../../service/formik";
 import { schemas } from "../../../service/schema";
 
 type Props = {};
 
-const RubberEditor = (props: Props) => {
+const ShoeEditor = (props: Props) => {
   const alert = useAlert();
   const { query, push } = useRouter();
   const id = typeof query.id === "string" ? query.id : "";
@@ -20,32 +21,50 @@ const RubberEditor = (props: Props) => {
     isError: brandError,
     isLoading: brandLoading,
   } = useBrands();
-  const { rubbersData, isError, isLoading, mutate } = useRubbers();
+  const { rubbersData, isError, isLoading } = useRubbers();
+  const { shoesData, mutate } = useShoes();
 
   if (isLoading || brandLoading) return <Message>Loading...</Message>;
 
   if (isError || brandError)
     return <Message>Ops, something went wrong...</Message>;
 
-  if (brandsData && rubbersData) {
-    const rubber = rubbersData.rubbers.filter((rubber) => rubber.id === id)[0];
-    const initialValues = {
-      name: rubber.name,
-      stiffness: rubber.stiffness,
-      brandId: rubber.brandId,
-      description: rubber.description,
-      image: rubber.image,
+  if (brandsData && rubbersData && shoesData) {
+    const shoe = shoesData.shoes.filter((shoe) => shoe.slug === id)[0];
+    const initialValues: ShoePostInput = {
+      rubberId: shoe.rubberId,
+      brandId: shoe.brandId,
+      name: shoe.name,
+      slug: shoe.slug,
+      veganType: shoe.veganType,
+      price: shoe.price,
+      volume: shoe.volume,
+      closure: shoe.closure,
+      hooking: shoe.hooking,
+      asymmetry: shoe.asymmetry,
+      profile: shoe.profile,
+      "rubber thickness": shoe.rubber_thickness,
+      midsole: shoe.midsole,
+      "ankle protection": shoe.ankle_protection === true ? "YES" : "NO",
+      description: shoe.description,
+      url: shoe.url,
+      image: shoe.image,
+      ankle_protection: shoe.ankle_protection,
+      rubber_thickness: shoe.rubber_thickness,
     };
 
     return (
       <>
         <Layout>
-          <div className="w-full max-w-sm m-auto h-screen flex align-middle flex-col justify-center">
+          <div className="w-full max-w-sm my-4 mx-auto flex align-middle flex-col justify-center">
             <Formik
               initialValues={initialValues}
-              validationSchema={schemas.brand(brandsData.brands)}
+              validationSchema={schemas.shoe(
+                rubbersData.rubbers,
+                brandsData.brands
+              )}
               onSubmit={async (values, formikHelpers) => {
-                const res = await onSubmit.updateRubber(
+                const res = await onSubmit.updateShoe(
                   id,
                   values,
                   formikHelpers
@@ -63,7 +82,7 @@ const RubberEditor = (props: Props) => {
             >
               {({ isSubmitting }) => (
                 <Form>
-                  <RubberInputs />
+                  <ShoeInputs />
                   <SubmitButton isDisabled={isSubmitting}>Edit</SubmitButton>
                   <button
                     className="btn-olive w-full mt-4"
@@ -82,4 +101,4 @@ const RubberEditor = (props: Props) => {
   }
 };
 
-export default RubberEditor;
+export default ShoeEditor;

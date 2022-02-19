@@ -17,6 +17,7 @@ export const Table = ({ name, data, setIsOpen, setData }: Props) => {
     e.preventDefault();
     if (edit.type === "BRAND") push(`/admin/brand/${edit.id}`);
     if (edit.type === "RUBBER") push(`/admin/rubber/${edit.id}`);
+    if (edit.type === "SHOE") push(`/admin/shoe/${edit.slug}`);
   };
 
   return (

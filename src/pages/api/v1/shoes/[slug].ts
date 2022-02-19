@@ -1,7 +1,7 @@
 import { prisma } from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
-import { ApiError, ShoeWithStringDates } from "../../../../interface";
+import { ApiError, ShoePost, ShoeWithStringDates } from "../../../../interface";
 
 type Data = {
   shoes: ShoeWithStringDates[];
@@ -42,5 +42,21 @@ export default async function handler(
     } catch (error) {
       res.status(500).json({ error: `server error` });
     }
+  }
+  if (req.method === "PUT") {
+    const shoeData: ShoePost = req.body;
+
+    const savedShoe = await prisma.shoes.update({
+      where: {
+        slug: SLUG,
+      },
+      data: shoeData,
+    });
+    const datesAsStrings = stringifyTheDates([
+      savedShoe,
+    ]) as ShoeWithStringDates[];
+    if (savedShoe) {
+      res.status(200).json({ shoes: datesAsStrings });
+    } else res.status(500).json({ error: `server error` });
   }
 }
