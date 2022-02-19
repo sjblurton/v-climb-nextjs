@@ -65,4 +65,9 @@ export const AddBrand = () => {
       </div>
     );
   }
+  return (
+    <p className="text-olive-50 text-center w-full">
+      server error please try again...
+    </p>
+  );
 };

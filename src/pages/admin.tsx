@@ -2,12 +2,12 @@ import { useSession } from "next-auth/react";
 import { CustomTab, Layout, Seo, AddRubber, AddBrand } from "../components";
 import { Tab } from "@headlessui/react";
 import { useBrands } from "../hooks/custom";
+import { AddShoe } from "../components/forms/addShoe";
 
 type Props = {};
 
 const Admin = (props: Props) => {
   const { data: session, status } = useSession();
-  const { brandsData, isError, isLoading } = useBrands();
 
   if (session) {
     return (
@@ -39,14 +39,14 @@ const Admin = (props: Props) => {
               </Tab.List>
               <Tab.Panels>
                 <Tab.Panel>
-                  {brandsData && <AddBrand />}
-                  {!isError && isLoading && <p>Loading...</p>}
-                  {isError && <p>{isError}</p>}
+                  <AddBrand />
                 </Tab.Panel>
                 <Tab.Panel>
                   <AddRubber />
                 </Tab.Panel>
-                <Tab.Panel>Add Shoe</Tab.Panel>
+                <Tab.Panel>
+                  <AddShoe />
+                </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
           </div>

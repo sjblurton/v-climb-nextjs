@@ -103,6 +103,48 @@ export interface RubberPost {
   image: string;
 }
 
+export interface ShoePost {
+  name: string;
+  slug: string;
+  veganType: VeganType;
+  price: PriceType;
+  volume: VolumeType;
+  closure: ClosureType;
+  hooking: HookingType;
+  asymmetry: AsymmetryType;
+  profile: ProfileType;
+  rubber_thickness: RubberThicknessType;
+  midsole: StiffnessType;
+  ankle_protection: boolean;
+  description: string;
+  url: string;
+  image: string;
+  rubberId: string;
+  brandId: string;
+}
+
+export interface ShoePostInput {
+  name: string;
+  slug: string;
+  veganType: VeganType;
+  price: PriceType;
+  volume: VolumeType;
+  closure: ClosureType;
+  hooking: HookingType;
+  asymmetry: AsymmetryType;
+  profile: ProfileType;
+  midsole: StiffnessType;
+  description: string;
+  url: string;
+  image: string;
+  rubberId: string;
+  brandId: string;
+  ankle_protection: boolean;
+  rubber_thickness: RubberThicknessType;
+  "ankle protection"?: "YES" | "NO";
+  "rubber thickness"?: RubberThicknessType;
+}
+
 export interface DeleteByID {
   id: string;
   name: string;

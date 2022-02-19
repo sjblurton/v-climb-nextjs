@@ -1,19 +1,47 @@
 import { FormikHelpers } from "formik";
 import { KeyedMutator } from "swr";
+import { boolean } from "yup";
 import {
+  BrandPost,
   BrandWithStringDates,
   RubberPost,
   RubberWithStringDates,
+  ShoePost,
+  ShoePostInput,
+  ShoeWithStringDates,
 } from "../interface";
 import { axiosPost } from "./axios";
 
-export const brandInitialValues = { name: "" };
+export const brandInitialValues: BrandPost = { name: "" };
+
 export const rubberInitialValues: RubberPost = {
   name: "",
   stiffness: "AVERAGE",
-  brandId: "",
+  brandId: "9abf4a88-13f8-4b26-a948-39d7daac98b0",
   description: "",
   image: "",
+};
+
+export const shoesInitialValues: ShoePostInput = {
+  rubberId: "444ba067-961f-4f3f-826a-114d5deddd58",
+  brandId: "9abf4a88-13f8-4b26-a948-39d7daac98b0",
+  name: "",
+  slug: "",
+  veganType: "NOT",
+  price: "AVERAGE",
+  volume: "AVERAGE",
+  closure: "VELCRO",
+  hooking: "AVERAGE",
+  asymmetry: "MEDIUM",
+  profile: "MODERATE",
+  "rubber thickness": "THINNER",
+  midsole: "AVERAGE",
+  "ankle protection": "NO",
+  description: "",
+  url: "",
+  image: "",
+  ankle_protection: false,
+  rubber_thickness: "THINNER",
 };
 
 export const onSubmit = {
@@ -61,6 +89,32 @@ export const onSubmit = {
     }
     if (res.error) {
       return { message: `${res.error.rubbers}.`, type: "error" };
+    }
+  },
+  addShoe: async (
+    values: ShoePost,
+    { setSubmitting, resetForm }: FormikHelpers<ShoePost>,
+    mutate: KeyedMutator<{
+      shoes: ShoeWithStringDates[];
+    }>
+  ) => {
+    setSubmitting(true);
+    try {
+      const res = await axiosPost.postShoes(values);
+      setSubmitting(false);
+      resetForm({ values: shoesInitialValues });
+      mutate();
+      if (res.shoes) {
+        return {
+          message: `${res.shoes.name} has been added.`,
+          type: "success",
+        };
+      }
+      if (res.error) {
+        return { message: `${res.error.shoes}.`, type: "error" };
+      }
+    } catch (error) {
+      return { message: `Ops, something went wrong.`, type: "error" };
     }
   },
 };

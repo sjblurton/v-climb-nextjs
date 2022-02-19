@@ -31,7 +31,7 @@ export const Table = ({ name, type, data, setIsOpen, setData }: Props) => {
           };
           return (
             <tr key={item.id}>
-              <td>{item.name}</td>
+              <td className="capitalize">{item.name}</td>
               <td>
                 <button className="btn-olive">edit</button>
               </td>

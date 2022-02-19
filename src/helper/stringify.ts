@@ -30,3 +30,6 @@ export const brandNameFromId = (brands: BrandList[], id: string): string => {
   const brand = brands.filter((item) => item.id === id)[0].name;
   return brand;
 };
+
+export const slugString = (brand: string, name: string) =>
+  [...brand.toLowerCase().split(" "), name.toLowerCase().split(" ")].join("-");

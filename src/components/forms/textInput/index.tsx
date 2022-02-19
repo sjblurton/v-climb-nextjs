@@ -1,7 +1,11 @@
 import { ErrorMessage, Field } from "formik";
-import React from "react";
+import React, { ChangeEvent } from "react";
 
-type Props = { placeholder: string; name: string; textarea?: boolean };
+type Props = {
+  placeholder: string;
+  name: string;
+  textarea?: boolean;
+};
 
 export const FormikTextInput = ({
   name,

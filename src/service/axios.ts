@@ -1,9 +1,12 @@
 import axios, { AxiosResponse } from "axios";
+import { slugString } from "../helper/stringify";
 import {
   BrandPost,
   BrandWithStringDates,
   RubberPost,
   RubberWithStringDates,
+  ShoePost,
+  ShoePostInput,
   ShoeWithStringDates,
 } from "../interface";
 
@@ -79,16 +82,40 @@ export const axiosGet = {
 };
 
 export const axiosPost = {
-  // postShoes: async (data: ShoesPut) => {
-  //   axios
-  //     .post("/api/v1/shoes/", data)
-  //     .then(function (response) {
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // },
+  postShoes: async (data: ShoePostInput) => {
+    const brand = await axiosGet.getBrandById(data.brandId);
+
+    if (brand.brandName) {
+      const slug = slugString(brand.brandName, data.name);
+      const ankleStringToBoolean =
+        data["ankle protection"] === "YES" ? true : false || false;
+      const rubber_thickness = data["rubber thickness"] || "THINNER";
+      delete data["ankle protection"];
+      delete data["rubber thickness"];
+      const shoeWithSlug: ShoePost = {
+        ...data,
+        slug: slug,
+        ankle_protection: ankleStringToBoolean,
+        rubber_thickness: rubber_thickness,
+      };
+      const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
+        await axios.post("/api/v1/shoes/", shoeWithSlug);
+      if ("data" in response) {
+        return { shoes: response.data.shoes[0] };
+      } else {
+        return {
+          error: {
+            shoes: `Shoes ${data.name} did not add to database. please try again.`,
+          },
+        };
+      }
+    } else
+      return {
+        error: {
+          shoes: `Shoes ${data.name} did not add to database. please try again.`,
+        },
+      };
+  },
   postRubber: async (data: RubberPost) => {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
       await axios.post("/api/v1/rubbers/", data);

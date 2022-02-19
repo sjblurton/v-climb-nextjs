@@ -6,6 +6,7 @@ import {
   BrandWithStringDates,
   DeleteByID,
   RubberWithStringDates,
+  ShoeWithStringDates,
 } from "../../interface";
 import { axiosDelete } from "../../service/axios";
 
@@ -19,6 +20,9 @@ interface Props {
       }>
     | KeyedMutator<{
         rubbers: RubberWithStringDates[];
+      }>
+    | KeyedMutator<{
+        shoes: ShoeWithStringDates[];
       }>;
 }
 

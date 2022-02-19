@@ -1,6 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { stringifyTheDates } from "../../../../helper/stringify";
-import { ApiError, ShoeWithStringDates } from "../../../../interface";
+import { slugString, stringifyTheDates } from "../../../../helper/stringify";
+import {
+  ApiError,
+  ShoePost,
+  ShoePostInput,
+  ShoeWithStringDates,
+} from "../../../../interface";
 import { prisma } from "../../../../lib/prisma";
 
 type Data = {
@@ -20,5 +25,19 @@ export default async function handler(
       // TODO Add alert
       res.status(500).json({ error: `server error` });
     }
+  }
+
+  if (req.method === "POST") {
+    const shoeData: ShoePost = req.body;
+
+    const savedShoe = await prisma.shoes.create({
+      data: shoeData,
+    });
+    const datesAsStrings = stringifyTheDates([
+      savedShoe,
+    ]) as ShoeWithStringDates[];
+    if (savedShoe) {
+      res.status(200).json({ shoes: datesAsStrings });
+    } else res.status(500).json({ error: `server error` });
   }
 }
