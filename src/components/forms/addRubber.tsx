@@ -50,7 +50,6 @@ export const AddRubber = () => {
           data={data}
           mutate={mutate}
         />
-
         <Formik
           initialValues={rubberInitialValues}
           validationSchema={schemas.rubber(
@@ -58,7 +57,6 @@ export const AddRubber = () => {
             brandsData.brands
           )}
           onSubmit={async (values, formikHelpers) => {
-            console.log(values);
             const res = await onSubmit.addRubber(values, formikHelpers, mutate);
             if (res)
               alert.show(`${res.message}.`, { type: res.type as AlertType });
@@ -75,14 +73,14 @@ export const AddRubber = () => {
             </Form>
           )}
         </Formik>
-        <Table
+        {/* <Table
           name="Rubber"
           setData={setData}
           setIsOpen={setIsOpen}
           data={rubbersData.rubbers.map((item) => {
             return { id: item.id, name: item.name, type: "RUBBER" };
           })}
-        />
+        /> */}
       </div>
     );
   return (

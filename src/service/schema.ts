@@ -55,7 +55,6 @@ export const schemas = {
       image: Yup.string()
         .required("Required")
         .matches(URL, "Enter a valid url"),
-      url: Yup.string().required("Required").matches(URL, "Enter a valid url"),
     });
   },
   rubberPut: () => {
