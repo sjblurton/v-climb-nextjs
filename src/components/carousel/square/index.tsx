@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { RubberWithStringDates, TFeatures } from "../../../interface";
-import { Tooltip } from "../../tooltip";
+import { Tooltip } from "../tooltip";
 import { Asymmetry, Midsole, Profile, Thickness, Volume } from "./svg";
 
 type Props = {

@@ -1,3 +1,9 @@
+import {
+  AsymmetryType,
+  ProfileType,
+  StiffnessType,
+  VolumeType,
+} from "@prisma/client";
 import { Accordion, Card, Layout, Seo } from "../components";
 import { brandNameFromId } from "../helper/stringify";
 import {
@@ -18,8 +24,8 @@ interface Props {
   };
 }
 
-const Home = ({ shoes, brands, error }: Props) => {
-  if (shoes && brands) {
+const Home = ({ shoes, brands, rubbers, error }: Props) => {
+  if (shoes && brands && rubbers) {
     return (
       <>
         <Seo />
@@ -41,16 +47,93 @@ const Home = ({ shoes, brands, error }: Props) => {
               <Accordion
                 title="Filters"
                 content={
-                  <Accordion
-                    title="Brand"
-                    content={
-                      <>
-                        {brands.map((brand) => (
-                          <li key={brand.id}>{brand.name}</li>
-                        ))}
-                      </>
-                    }
-                  />
+                  <>
+                    <Accordion
+                      title="Brand"
+                      content={
+                        <>
+                          {brands.map((brand) => (
+                            <li key={brand.id}>{brand.name}</li>
+                          ))}
+                        </>
+                      }
+                    />
+                    <Accordion
+                      title="Rubber"
+                      content={
+                        <>
+                          {rubbers.map((rubber) => (
+                            <li key={rubber.id}>{rubber.name}</li>
+                          ))}
+                        </>
+                      }
+                    />
+                    <Accordion
+                      title="Rubber Stiffness"
+                      content={
+                        <>
+                          <li key={StiffnessType.SOFT}>{StiffnessType.SOFT}</li>
+                          <li key={StiffnessType.AVERAGE}>
+                            {StiffnessType.AVERAGE}
+                          </li>
+                          <li key={StiffnessType.STIFF}>
+                            {StiffnessType.STIFF}
+                          </li>
+                        </>
+                      }
+                    />
+                    <Accordion
+                      title="Midsole"
+                      content={
+                        <>
+                          <li key={StiffnessType.SOFT}>{StiffnessType.SOFT}</li>
+                          <li key={StiffnessType.AVERAGE}>
+                            {StiffnessType.AVERAGE}
+                          </li>
+                          <li key={StiffnessType.STIFF}>
+                            {StiffnessType.STIFF}
+                          </li>
+                        </>
+                      }
+                    />
+                    <Accordion
+                      title="Profile"
+                      content={
+                        <>
+                          <li key={ProfileType.FLAT}>{ProfileType.FLAT}</li>
+                          <li key={ProfileType.MODERATE}>
+                            {ProfileType.MODERATE}
+                          </li>
+                          <li key={ProfileType.AGGRESSIVE}>
+                            {ProfileType.AGGRESSIVE}
+                          </li>
+                        </>
+                      }
+                    />
+                    <Accordion
+                      title="Volume"
+                      content={
+                        <>
+                          <li key={VolumeType.LOW}>{VolumeType.LOW}</li>
+                          <li key={VolumeType.AVERAGE}>{VolumeType.AVERAGE}</li>
+                          <li key={VolumeType.WIDE}>{VolumeType.WIDE}</li>
+                          <li key={VolumeType.KIDS}>{VolumeType.KIDS}</li>
+                        </>
+                      }
+                    />
+                    <Accordion
+                      title="Asymmetry"
+                      content={
+                        <>
+                          <li key={AsymmetryType.LOW}>{AsymmetryType.LOW}</li>
+                          <li key={AsymmetryType.MEDIUM}>
+                            {AsymmetryType.MEDIUM}
+                          </li>
+                          <li key={AsymmetryType.HIGH}>{AsymmetryType.HIGH}</li>
+                        </>
+                      }
+                    />
+                  </>
                 }
               />
             </div>

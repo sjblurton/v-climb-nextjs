@@ -58,6 +58,7 @@ export const AddRubber = () => {
             brandsData.brands
           )}
           onSubmit={async (values, formikHelpers) => {
+            console.log(values);
             const res = await onSubmit.addRubber(values, formikHelpers, mutate);
             if (res)
               alert.show(`${res.message}.`, { type: res.type as AlertType });
