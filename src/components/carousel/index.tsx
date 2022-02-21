@@ -2,8 +2,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Square } from "./square";
+import { RubberWithStringDates, TFeatures } from "../../interface";
 
-type Props = { values: { title: string; value: string }[] };
+type Props = {
+  values: { title: TFeatures; value: string; rubber?: RubberWithStringDates }[];
+};
 
 export const Features = ({ values }: Props) => {
   const settings = {
@@ -64,7 +67,12 @@ export const Features = ({ values }: Props) => {
       <div>
         <Slider {...settings}>
           {values.map((item, i) => (
-            <Square key={i} title={item.title} value={item.value} />
+            <Square
+              key={i}
+              title={item.title}
+              value={item.value}
+              rubber={item.rubber || undefined}
+            />
           ))}
         </Slider>
       </div>

@@ -2,10 +2,14 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import { GoBack } from "../assets/icons";
-import { Features, Layout, RubberData, Seo } from "../components";
+import { Features, Layout, Seo } from "../components";
 import { VeganImage } from "../components/";
 import { priceConverter, veganToString } from "../helper/helper";
-import { RubberWithStringDates, ShoeWithStringDates } from "../interface";
+import {
+  RubberWithStringDates,
+  ShoeWithStringDates,
+  TFeatures,
+} from "../interface";
 import { axiosGet } from "../service/axios";
 
 type Props = {
@@ -35,19 +39,19 @@ const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
   )}`;
 
   const array = [
-    { title: "profile", value: profile },
-    { title: "midsole", value: midsole },
-    { title: "rubber", value: rubber_thickness },
-    { title: "asymmetry", value: asymmetry },
-    { title: "volume", value: volume },
-    { title: rubber.name, value: rubber.image },
+    { title: "profile" as TFeatures, value: profile },
+    { title: "midsole" as TFeatures, value: midsole },
+    { title: "rubber" as TFeatures, value: rubber_thickness },
+    { title: "asymmetry" as TFeatures, value: asymmetry },
+    { title: "volume" as TFeatures, value: volume },
+    { title: "rubberBrand" as TFeatures, value: rubber.image, rubber: rubber },
   ];
 
   return (
     <>
       <Seo templateTitle={templateTitle} />
       <Layout>
-        <div className="container max-w-5xl mx-auto">
+        <div className="container max-w-5xl mx-auto my-4">
           <div className="flex items-center justify-between p-3">
             <h2 className="text-olive-50 capitalize text-4xl text-center">
               <span className="font-bold">{shoeBrand}</span> - {shoeName}{" "}

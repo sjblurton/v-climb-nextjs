@@ -32,4 +32,6 @@ export const brandNameFromId = (brands: BrandList[], id: string): string => {
 };
 
 export const slugString = (brand: string, name: string) =>
-  [...brand.toLowerCase().split(" "), name.toLowerCase().split(" ")].join("-");
+  [...brand.toLowerCase().split(" "), ...name.toLowerCase().split(" ")].join(
+    "-"
+  );

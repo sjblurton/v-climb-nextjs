@@ -56,7 +56,11 @@ const BrandEditor = (props: Props) => {
                   />
                   <SubmitButton isDisabled={isSubmitting}>Edit</SubmitButton>
                   <button
-                    className="btn-olive w-full mt-4"
+                    className={
+                      isSubmitting
+                        ? "btn-olive disabled-btn w-full mt-4"
+                        : "btn-olive w-full mt-4"
+                    }
                     type="button"
                     onClick={() => push("/admin")}
                   >

@@ -151,3 +151,11 @@ export interface DeleteByID {
   type: "BRAND" | "RUBBER" | "SHOE";
   slug?: string;
 }
+
+export type TFeatures =
+  | "profile"
+  | "midsole"
+  | "asymmetry"
+  | "volume"
+  | "rubber"
+  | "rubberBrand";

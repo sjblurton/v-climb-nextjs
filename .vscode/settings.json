@@ -5,6 +5,7 @@
     "msapplication",
     "semibold",
     "superjson",
-    "tailwindcss"
+    "tailwindcss",
+    "tippyjs"
   ]
 }
