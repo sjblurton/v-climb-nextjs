@@ -12,6 +12,8 @@ const nextConfig = {
       "eb-climbing.com",
       "cdn.shopify.com",
       "www.eb-escalade.com",
+      "www.unparallelsports.com",
+      "cypherclimbing.com",
     ],
   },
 };
