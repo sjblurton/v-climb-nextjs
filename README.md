@@ -1,4 +1,4 @@
-![logo]([logo])
+![logo](https://raw.githubusercontent.com/sjblurton/v-climb-nextjs/main/src/assets/logo/logo.png)
 
 # V-Climb
 
@@ -28,20 +28,19 @@ link to the live site... TBA
 - Typescript
 - PWA, working offline?
 - Tailwind
-- Formik?
-- Yup form validation?
+- Formik
+- Yup form validation
 - Fully responsive, Mobile first.
 - SVG art work
 - Figma design
 
 ## Links
 
-<!-- - Project homepage: https://big-6-next-js.vercel.app
-- Repository: https://github.com/sjblurton/Big-6-Next-js
-- Figma: https://www.figma.com/file/2bjSoKqP1rj1mDrlMOTuWp/The-Big-6-Calisthenics?node-id=7%3A11 -->
+<!-- - Project homepage: https://big-6-next-js.vercel.app -->
+
+- Repository: https://github.com/sjblurton/v-climb-nextjs
+<!-- - Figma: https://www.figma.com/file/2bjSoKqP1rj1mDrlMOTuWp/The-Big-6-Calisthenics?node-id=7%3A11 -->
 
 ## Licensing
 
-"The code in this project is is all my own work and Copyrighted to Simon Blurton."
-
-[logo] : https://raw.githubusercontent.com/sjblurton/v-climb-nextjs/main/src/assets/logo/logo.png
+"The code in this project is free source."
