@@ -1,5 +1,5 @@
 import { ErrorMessage, Field } from "formik";
-import React, { ChangeEvent } from "react";
+import React from "react";
 
 type Props = {
   placeholder: string;

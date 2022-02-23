@@ -4,7 +4,8 @@ import {
   StiffnessType,
   VolumeType,
 } from "@prisma/client";
-import { Accordion, Card, Checkbox, Layout, Seo } from "../components";
+import { Card } from "../components";
+import { Layout, Seo } from "../components/shared";
 import { brandNameFromId } from "../helper/stringify";
 import {
   BrandWithStringDates,
@@ -46,7 +47,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
           </article>
           <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
             <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
-              <Accordion
+              {/* <Accordion
                 title="Filters"
                 content={
                   <>
@@ -137,7 +138,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
                     />
                   </>
                 }
-              />
+              /> */}
             </div>
             <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
               {shoes.map((shoe) => (

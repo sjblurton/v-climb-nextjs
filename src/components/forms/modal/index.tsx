@@ -7,8 +7,8 @@ import {
   DeleteByID,
   RubberWithStringDates,
   ShoeWithStringDates,
-} from "../../interface";
-import { axiosDelete } from "../../service/axios";
+} from "../../../interface";
+import { axiosDelete } from "../../../service/axios";
 
 interface Props {
   isOpen: boolean;
@@ -26,7 +26,7 @@ interface Props {
       }>;
 }
 
-export const MyDialog = ({ isOpen, setIsOpen, data, mutate }: Props) => {
+export const DeleteModal = ({ isOpen, setIsOpen, data, mutate }: Props) => {
   const alert = useAlert();
   const [isDisabled, setIsDisabled] = useState(false);
 

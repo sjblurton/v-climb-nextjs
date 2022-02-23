@@ -5,8 +5,7 @@ import { useBrands } from "../../hooks/custom";
 import { DeleteByID } from "../../interface";
 import { brandInitialValues, onSubmit } from "../../service/formik";
 import { schemas } from "../../service/schema";
-import { MyDialog } from "../modal";
-import { FormikTextInput, SubmitButton, Table } from "./";
+import { FormikTextInput, SubmitButton, Table, DeleteModal } from "./";
 
 export const AddBrand = () => {
   const alert = useAlert();
@@ -27,7 +26,7 @@ export const AddBrand = () => {
   if (brandsData) {
     return (
       <div className="w-full max-w-sm m-auto">
-        <MyDialog
+        <DeleteModal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           data={data}

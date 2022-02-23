@@ -2,8 +2,8 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import { GoBack } from "../assets/icons";
-import { Features, Layout, Seo } from "../components";
-import { VeganImage } from "../components/";
+import { Features } from "../components";
+import { VeganImage, Layout, Seo } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
 import {
   RubberWithStringDates,

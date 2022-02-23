@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
-import { AlertTemplate } from "../components";
+import { AlertTemplate } from "../components/shared";
 
 const options = {
   position: positions.BOTTOM_CENTER,

@@ -1,7 +1,7 @@
 import React from "react";
 import { selectLists } from "../../../helper/helper";
 import { useBrands } from "../../../hooks/custom";
-import { Message } from "../../message";
+import { Message } from "../../shared";
 import { Select } from "../select";
 import { FormikTextInput } from "../textInput";
 

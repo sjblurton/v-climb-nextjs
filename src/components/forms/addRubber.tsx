@@ -5,8 +5,7 @@ import { useBrands, useRubbers } from "../../hooks/custom";
 import { DeleteByID } from "../../interface";
 import { onSubmit, rubberInitialValues } from "../../service/formik";
 import { schemas } from "../../service/schema";
-import { MyDialog } from "../modal";
-import { SubmitButton, RubberInputs, Table } from "./";
+import { SubmitButton, RubberInputs, Table, DeleteModal } from "./";
 
 export const AddRubber = () => {
   const alert = useAlert();
@@ -43,7 +42,7 @@ export const AddRubber = () => {
   if (rubbersData && brandsData)
     return (
       <div className="w-full max-w-sm m-auto">
-        <MyDialog
+        <DeleteModal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           data={data}

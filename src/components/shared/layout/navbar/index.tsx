@@ -1,8 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Logo } from "../../../assets/logo/logo";
+import { Logo } from "../../../../assets/logo/logo";
 import Link from "next/link";
-import { SingedIn } from "../../signed_in";
+import { SingedIn } from "../../../forms";
 
 type Props = {};
 

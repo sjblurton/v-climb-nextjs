@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import { openGraph } from "../../helper/openGraph";
+import { openGraph } from "../../../helper/openGraph";
 
 const defaultMeta = {
   title: "V-Climb | Vegan climbing shoes",

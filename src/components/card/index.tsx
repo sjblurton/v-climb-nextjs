@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { priceConverter } from "../../helper/helper";
 import { ShoesCard } from "../../interface";
-import { VeganImage } from "../";
+import { VeganImage } from "../shared";
 
 type Props = { shoe: ShoesCard; brand: string };
 
