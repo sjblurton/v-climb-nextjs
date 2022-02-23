@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import { UpChevron } from "../../assets/icons/up-chevron";
+import { UpChevron } from "../../../assets/icons/up-chevron";
 
 type Props = { title: ReactNode; content: ReactNode };
 

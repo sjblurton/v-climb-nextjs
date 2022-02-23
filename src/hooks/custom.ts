@@ -52,19 +52,3 @@ export const useBrands = (id = "") => {
     mutate,
   };
 };
-
-export const useCheckbox = (
-  type: CheckboxTypes,
-  label: string,
-  state: { rubbers: RubberWithStringDates[]; brands: BrandWithStringDates[] }
-) => {
-  const [checkboxList, setCheckboxList] = useState(
-    initialCheckboxState(state.brands, state.rubbers)
-  );
-  let value: boolean = checkboxList[type].includes(label);
-
-  const setCheckbox = (type: CheckboxTypes, label: string) => {};
-
-  value = checkboxList[type].includes(label);
-  return { value, setCheckbox };
-};

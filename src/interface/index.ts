@@ -76,21 +76,6 @@ export interface RubberList {
   description: string;
 }
 
-export type GoodFor =
-  | "Beginners"
-  | "Indoor"
-  | "Big Wall"
-  | "All Round"
-  | "Steep Limestone"
-  | "Steep Limestone with Tufas"
-  | "Granite"
-  | "Vertical Limestone"
-  | "Smooth Sandstone"
-  | "Coarse Sandstone"
-  | "Steep Sandstone"
-  | "under 75kg"
-  | "over 55kg";
-
 export interface BrandPost {
   name: string;
 }
@@ -159,22 +144,3 @@ export type TFeatures =
   | "volume"
   | "rubber"
   | "rubberBrand";
-
-export interface CheckboxState {
-  brand: string[];
-  rubber: string[];
-  "rubber stiffness": string[];
-  midsole: string[];
-  profile: string[];
-  volume: string[];
-  asymmetry: string[];
-}
-
-export type CheckboxTypes =
-  | "brand"
-  | "rubber"
-  | "rubber stiffness"
-  | "midsole"
-  | "profile"
-  | "volume"
-  | "asymmetry";
