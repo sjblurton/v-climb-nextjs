@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Card } from "../components";
 import { Filters } from "../components/filters";
 import { Layout, Seo } from "../components/shared";
+import { FilterContext } from "../context/context";
 import { brandNameFromId } from "../helper/stringify";
 import {
   BrandWithStringDates,
@@ -21,6 +23,21 @@ interface Props {
 }
 
 const Home = ({ shoes, brands, rubbers, error }: Props) => {
+  const { dispatch, state } = useContext(FilterContext);
+
+  const card = (
+    data: ShoeWithStringDates[],
+    brandData: BrandWithStringDates[]
+  ) => {
+    return data.map((item) => (
+      <Card
+        key={item.slug}
+        shoe={item}
+        brand={brandNameFromId(brandData, item.brandId)}
+      />
+    ));
+  };
+
   if (shoes && brands && rubbers) {
     return (
       <>
@@ -45,13 +62,9 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
               <Filters />
             </div>
             <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
-              {shoes.map((shoe) => (
-                <Card
-                  key={shoe.slug}
-                  shoe={shoe}
-                  brand={brandNameFromId(brands, shoe.brandId)}
-                />
-              ))}
+              {state.filteredShoes
+                ? card(state.filteredShoes, brands)
+                : card(shoes, brands)}
             </div>
           </div>
         </Layout>

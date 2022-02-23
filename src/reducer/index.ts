@@ -1,3 +1,4 @@
+import { ShoeWithStringDates } from "../interface";
 import { ActionType, AppActions } from "./actions";
 import { AppState } from "./state";
 
@@ -10,28 +11,56 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
         shoes: action.payload,
       };
     case ActionType.InitBrandData:
+      const brandInitArray = state.shoes.map((item) => item.brandId);
+      const uniqueBrands = uniqueFilter(brandInitArray);
+      const listOfBrandsToFilter = action.payload.filter((item) =>
+        uniqueBrands.includes(item.id)
+      );
       return {
         ...state,
-        brands: action.payload,
+        brands: listOfBrandsToFilter,
       };
     case ActionType.AddBrandFilter:
-      let tempArray = state.filters.brands;
-      console.log(tempArray);
-      const filterInArray = tempArray.includes(action.payload);
+      const filterByBrandArray = addRemoveItem(
+        state.filters.brands,
+        action.payload
+      );
+      const newBrandFilteredArray =
+        filterByBrandArray.length === 0
+          ? state.shoes
+          : filterShoes(state.shoes, filterByBrandArray, "brandId");
 
-      if (filterInArray) {
-        const positionInArray = tempArray.indexOf(action.payload);
-        const itemRemoved = tempArray.splice(positionInArray, 1);
-        console.log("remove: " + itemRemoved + " from array " + tempArray);
-      } else {
-        tempArray.push(action.payload);
-        console.log("added: " + action.payload + " to array " + tempArray);
-      }
       return {
         ...state,
-        filters: { brands: tempArray },
+        filteredShoes: newBrandFilteredArray,
+        filters: { brands: filterByBrandArray },
       };
     default:
       return state;
   }
 }
+
+const addRemoveItem = (arr: string[], item: string) => {
+  const positionInArray = arr.indexOf(item);
+  positionInArray > -1 ? arr.splice(positionInArray, 1) : arr.push(item);
+  return arr;
+};
+
+const filterShoes = (
+  arr: ShoeWithStringDates[],
+  filters: string[],
+  key: keyof ShoeWithStringDates
+): ShoeWithStringDates[] => {
+  let newArr: ShoeWithStringDates[] = [];
+  for (let i = 0; i < filters.length; i++) {
+    const tempArr = arr.filter((item) => item[key] === filters[i]);
+    newArr = [...newArr, ...tempArr];
+  }
+  return newArr;
+};
+
+const uniqueFilter = (arr: string[]) => {
+  return arr.filter((value, index, self) => {
+    return self.indexOf(value) === index;
+  });
+};
