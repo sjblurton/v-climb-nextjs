@@ -1,9 +1,18 @@
-import { ReactNode, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FilterContext } from "../../../context/context";
+import { ActionType } from "../../../reducer/actions";
 
-type Props = { children: ReactNode };
+type FilterGroup = "brand";
 
-export const Checkbox = ({ children }: Props) => {
+type Props = { label: string; type: FilterGroup };
+
+export const Checkbox = ({ label, type }: Props) => {
   const [checked, setChecked] = useState(false);
+  const { state, dispatch } = useContext(FilterContext);
+
+  useEffect(() => {
+    setChecked(state.filters.brands.includes(label));
+  }, [state]); // eslint-disable-line
 
   return (
     <div className="block">
@@ -12,10 +21,12 @@ export const Checkbox = ({ children }: Props) => {
           <input
             type="checkbox"
             checked={checked}
-            onChange={() => setChecked(!checked)}
+            onChange={() =>
+              dispatch({ type: ActionType.AddBrandFilter, payload: label })
+            }
             className="w-6 h-6 rounded focus:ring-0 text-olive-700 cursor-pointer"
           />
-          <span className="ml-2">{children}</span>
+          <span className="ml-2">{label}</span>
         </label>
       </div>
     </div>

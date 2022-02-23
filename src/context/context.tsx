@@ -5,7 +5,7 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import { useShoes } from "../hooks/custom";
+import { useBrands, useShoes } from "../hooks/custom";
 import { filterReducer } from "../reducer";
 import { ActionType, AppActions } from "../reducer/actions";
 import { AppState, initialAppState } from "../reducer/state";
@@ -22,13 +22,15 @@ type Props = { children: ReactNode };
 
 export const ContextProvider = ({ children }: Props) => {
   const { shoesData } = useShoes();
+  const { brandsData } = useBrands();
   const [state, dispatch] = useReducer(filterReducer, initialAppState);
 
   useEffect(() => {
-    if (shoesData) {
+    if (shoesData && brandsData) {
       dispatch({ type: ActionType.InitShoeData, payload: shoesData.shoes });
+      dispatch({ type: ActionType.InitBrandData, payload: brandsData.brands });
     }
-  }, [shoesData]);
+  }, [shoesData, brandsData]);
 
   if (shoesData)
     return (
