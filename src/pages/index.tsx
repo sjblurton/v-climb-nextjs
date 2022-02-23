@@ -30,10 +30,12 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
       <>
         <Seo />
         <Layout>
-          <article className="px-2 text-olive-50 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
-            <h1 className="text-6xl text-olive-50 font-bold">V-CLIMB</h1>
-            <h3 className="text-3xl">Vegan Rock Climbing Shoes</h3>
-            <p>
+          <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
+            <h1 className="text-6xl text-slate-50 font-bold">V-CLIMB</h1>
+            <h3 className="text-3xl text-slate-100">
+              Vegan Rock Climbing Shoes
+            </h3>
+            <p className="text-slate-200">
               Trying to select the most ethical, environmentally friendly,
               cruelty free shoes for climbing while also not sacrificing the
               performance of our climbing can be tricky. Here at V-Climb we have

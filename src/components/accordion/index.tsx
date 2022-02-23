@@ -20,7 +20,6 @@ export const Accordion = ({ title, content }: Props) => {
 
   function toggleAccordion() {
     setActive((prevState) => !prevState);
-    // @ts-ignore
     setHeight(active ? "0px" : `2000px`);
     setRotate(
       active
@@ -32,10 +31,10 @@ export const Accordion = ({ title, content }: Props) => {
   return (
     <div className="flex flex-col md:min-w-fit">
       <button
-        className="border-b-2 border-olive-500 py-2 box-border appearance-none cursor-pointer gap-4 focus:outline-none flex items-center justify-between"
+        className="border-b-2 border-olive-400 py-2 box-border appearance-none cursor-pointer gap-4 focus:outline-none flex items-center justify-between"
         onClick={toggleAccordion}
       >
-        <div className=" inline-block text-sm font-bold uppercase text-olive-50">
+        <div className=" inline-block text-sm font-bold uppercase text-slate-100">
           {title}
         </div>
         <UpChevron
