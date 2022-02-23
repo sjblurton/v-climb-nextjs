@@ -1,20 +1,23 @@
-export const recommendFor = [
-  "View All",
-  "Beginners",
-  "Indoor",
-  "Big Wall",
-  "All Round",
-  "Steep Limestone",
-  "Steep Limestone with Tufas",
-  "Granite",
-  "Vertical Limestone",
-  "Smooth Sandstone",
-  "Coarse Sandstone",
-  "Steep Sandstone",
-];
+import { BrandWithStringDates, RubberWithStringDates } from "../interface";
 
-export const climberWeight = [
-  "Under 55kg (120lb)",
-  "55kg to 75kg",
-  "Over 75kg (165lb)",
-];
+export const initialCheckboxState = (
+  brands: BrandWithStringDates[],
+  rubbers: RubberWithStringDates[]
+) => {
+  const rubbersNames = rubbers.map((rubber) => {
+    return { [rubber.name]: false };
+  });
+  const brandName = brands.map((shoe) => {
+    return { [shoe.name]: false };
+  });
+  const brandObj = Object.assign({}, ...brandName);
+  return {
+    brand: rubbersNames,
+    rubber: brandObj,
+    "rubber stiffness": { SOFT: false, AVERAGE: false, STIFF: false },
+    midsole: { SOFT: false, AVERAGE: false, STIFF: false },
+    profile: { flat: false, moderate: false, aggressive: false },
+    volume: { LOW: false, AVERAGE: false, WIDE: false, KIDS: false },
+    asymmetry: { LOW: false, MEDIUM: false, HIGH: false },
+  };
+};

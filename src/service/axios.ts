@@ -112,7 +112,7 @@ export const axiosPost = {
     } else
       return {
         error: {
-          shoes: `Shoes ${data.name} did not add to database. please try again.`,
+          shoes: `Failed to get brand: ${data.brandId}, for the shoe data. please try again.`,
         },
       };
   },
@@ -218,7 +218,7 @@ export const axiosPut = {
     } else
       return {
         error: {
-          shoes: `Shoes ${body.name} did not add to database. please try again.`,
+          shoes: `Failed to get brand: ${body.brandId}, for the shoe data. please try again.`,
         },
       };
   },

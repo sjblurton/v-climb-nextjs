@@ -159,3 +159,22 @@ export type TFeatures =
   | "volume"
   | "rubber"
   | "rubberBrand";
+
+export interface CheckboxState {
+  brand: string[];
+  rubber: string[];
+  "rubber stiffness": string[];
+  midsole: string[];
+  profile: string[];
+  volume: string[];
+  asymmetry: string[];
+}
+
+export type CheckboxTypes =
+  | "brand"
+  | "rubber"
+  | "rubber stiffness"
+  | "midsole"
+  | "profile"
+  | "volume"
+  | "asymmetry";

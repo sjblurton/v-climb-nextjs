@@ -1,14 +1,12 @@
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import { AlertType, useAlert } from "react-alert";
-import { selectLists } from "../../helper/helper";
 import { useBrands, useRubbers, useShoes } from "../../hooks/custom";
 import { DeleteByID } from "../../interface";
 import { onSubmit, shoesInitialValues } from "../../service/formik";
 import { schemas } from "../../service/schema";
 import { MyDialog } from "../modal";
-import { Select, FormikTextInput, SubmitButton, Table } from "./";
-import { ShoeInputs } from "./shoe";
+import { SubmitButton, Table, ShoeInputs } from "./";
 
 export const AddShoe = () => {
   const alert = useAlert();

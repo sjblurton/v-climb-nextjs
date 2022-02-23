@@ -20,6 +20,7 @@ export default async function handler(
       ) as BrandWithStringDates[];
       res.status(200).json({ brands: datesAsStrings });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }
@@ -30,11 +31,14 @@ export default async function handler(
       const savedBrand = await prisma.brand.create({
         data: brandData,
       });
-      const datesAsStrings = stringifyTheDates([
-        savedBrand,
-      ]) as BrandWithStringDates[];
-      res.status(200).json({ brands: datesAsStrings });
+      if (savedBrand) {
+        const datesAsStrings = stringifyTheDates([
+          savedBrand,
+        ]) as BrandWithStringDates[];
+        res.status(200).json({ brands: datesAsStrings });
+      } else res.status(400).json({ error: "brand not added." });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }

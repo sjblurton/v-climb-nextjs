@@ -29,7 +29,7 @@ export default async function handler(
         res.status(404).json({ error: `couldn't rubber find id: ${ID}` });
       }
     } catch (error) {
-      // TODO Add alert
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }
@@ -50,6 +50,7 @@ export default async function handler(
         res.status(404).json({ error: `couldn't find rubber id: ${ID}` });
       }
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }
@@ -71,6 +72,7 @@ export default async function handler(
         res.status(404).json({ error: `couldn't find brand id: ${ID}` });
       }
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }

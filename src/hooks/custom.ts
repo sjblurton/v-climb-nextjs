@@ -1,7 +1,11 @@
 import axios from "axios";
+import { useState } from "react";
 import useSWR from "swr";
+import { array } from "yup";
+import { initialCheckboxState } from "../data/filters";
 import {
   BrandWithStringDates,
+  CheckboxTypes,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
@@ -47,4 +51,20 @@ export const useBrands = (id = "") => {
     isError: error,
     mutate,
   };
+};
+
+export const useCheckbox = (
+  type: CheckboxTypes,
+  label: string,
+  state: { rubbers: RubberWithStringDates[]; brands: BrandWithStringDates[] }
+) => {
+  const [checkboxList, setCheckboxList] = useState(
+    initialCheckboxState(state.brands, state.rubbers)
+  );
+  let value: boolean = checkboxList[type].includes(label);
+
+  const setCheckbox = (type: CheckboxTypes, label: string) => {};
+
+  value = checkboxList[type].includes(label);
+  return { value, setCheckbox };
 };

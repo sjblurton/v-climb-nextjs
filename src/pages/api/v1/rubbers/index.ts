@@ -23,6 +23,7 @@ export default async function handler(
       ) as RubberWithStringDates[];
       res.status(200).json({ rubbers: datesAsStrings });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }
@@ -33,12 +34,15 @@ export default async function handler(
       const savedRubber = await prisma.rubber.create({
         data: rubberData,
       });
-      const datesAsStrings = stringifyTheDates([
-        savedRubber,
-      ]) as RubberWithStringDates[];
-      res.status(200).json({ rubbers: datesAsStrings });
+      if (savedRubber) {
+        const datesAsStrings = stringifyTheDates([
+          savedRubber,
+        ]) as RubberWithStringDates[];
+        res.status(200).json({ rubbers: datesAsStrings });
+      } else res.status(400).json({ error: "rubber not added." });
     } catch (error: any) {
-      res.status(500).json({ error: error });
+      console.log(error);
+      res.status(500).json({ error: `server error` });
     }
   }
 }

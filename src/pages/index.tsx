@@ -4,7 +4,7 @@ import {
   StiffnessType,
   VolumeType,
 } from "@prisma/client";
-import { Accordion, Card, Layout, Seo } from "../components";
+import { Accordion, Card, Checkbox, Layout, Seo } from "../components";
 import { brandNameFromId } from "../helper/stringify";
 import {
   BrandWithStringDates,
@@ -137,7 +137,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
                 }
               />
             </div>
-            <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-lx my-4">
+            <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
               {shoes.map((shoe) => (
                 <Card
                   key={shoe.slug}

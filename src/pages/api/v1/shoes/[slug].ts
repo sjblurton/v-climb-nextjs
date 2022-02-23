@@ -24,6 +24,7 @@ export default async function handler(
         res.status(404).json({ error: `couldn't shoe find slug: ${SLUG}` });
       }
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }
@@ -40,23 +41,29 @@ export default async function handler(
         res.status(404).json({ error: `couldn't find rubber id: ${SLUG}` });
       }
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: `server error` });
     }
   }
   if (req.method === "PUT") {
-    const shoeData: ShoePost = req.body;
+    try {
+      const shoeData: ShoePost = req.body;
 
-    const savedShoe = await prisma.shoes.update({
-      where: {
-        slug: SLUG,
-      },
-      data: shoeData,
-    });
-    const datesAsStrings = stringifyTheDates([
-      savedShoe,
-    ]) as ShoeWithStringDates[];
-    if (savedShoe) {
-      res.status(200).json({ shoes: datesAsStrings });
-    } else res.status(500).json({ error: `server error` });
+      const savedShoe = await prisma.shoes.update({
+        where: {
+          slug: SLUG,
+        },
+        data: shoeData,
+      });
+      if (savedShoe) {
+        const datesAsStrings = stringifyTheDates([
+          savedShoe,
+        ]) as ShoeWithStringDates[];
+        res.status(200).json({ shoes: datesAsStrings });
+      } else res.status(404).json({ error: `shoe not found` });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: `server error` });
+    }
   }
 }

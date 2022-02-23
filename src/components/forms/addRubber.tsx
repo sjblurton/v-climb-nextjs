@@ -6,8 +6,7 @@ import { DeleteByID } from "../../interface";
 import { onSubmit, rubberInitialValues } from "../../service/formik";
 import { schemas } from "../../service/schema";
 import { MyDialog } from "../modal";
-import { SubmitButton, Table } from "./";
-import { RubberInputs } from "./rubber";
+import { SubmitButton, RubberInputs, Table } from "./";
 
 export const AddRubber = () => {
   const alert = useAlert();
@@ -73,14 +72,14 @@ export const AddRubber = () => {
             </Form>
           )}
         </Formik>
-        {/* <Table
+        <Table
           name="Rubber"
           setData={setData}
           setIsOpen={setIsOpen}
           data={rubbersData.rubbers.map((item) => {
             return { id: item.id, name: item.name, type: "RUBBER" };
           })}
-        /> */}
+        />
       </div>
     );
   return (
