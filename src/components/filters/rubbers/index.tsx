@@ -1,26 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FilterContext } from "../../../context/context";
 import { Checkbox } from "../checkbox";
 
 export const RubbersFilter = () => {
   const { state } = useContext(FilterContext);
-  const [rubbers, setRubbers] = useState(state.filteredBrands);
-
-  useEffect(() => {
-    console.log(state.filteredRubbers);
-    setRubbers(state.filteredRubbers);
-  }, [state.filteredRubbers]);
+  const rubberBrandName = useRef("");
 
   return (
     <>
-      {rubbers.map((rubber) => (
-        <Checkbox
-          filterGroup="rubber"
-          key={rubber.id}
-          id={rubber.id}
-          label={rubber.name}
-        />
-      ))}
+      {state.filteredRubbers.map((rubber) => {
+        rubberBrandName.current =
+          state.brands.filter((brand) => rubber.brandId === brand.id)[0].name +
+          " - ";
+        return (
+          <Checkbox
+            filterGroup="rubber"
+            key={rubber.id}
+            id={rubber.id}
+            label={`${rubberBrandName.current}${rubber.name}`}
+          />
+        );
+      })}
     </>
   );
 };
