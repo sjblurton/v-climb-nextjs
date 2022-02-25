@@ -1,9 +1,15 @@
-import { BrandWithStringDates, ShoeWithStringDates } from "../interface";
+import {
+  BrandWithStringDates,
+  RubberWithStringDates,
+  ShoeWithStringDates,
+} from "../interface";
 
 export enum ActionType {
   InitShoeData,
   InitBrandData,
+  InitRubberData,
   AddBrandFilter,
+  AddRubberFilter,
 }
 
 export interface InitShoeData {
@@ -15,9 +21,23 @@ export interface InitBrandData {
   payload: BrandWithStringDates[];
 }
 
+export interface InitRubberData {
+  type: ActionType.InitRubberData;
+  payload: RubberWithStringDates[];
+}
 export interface AddBrandFilter {
   type: ActionType.AddBrandFilter;
   payload: string;
 }
 
-export type AppActions = InitShoeData | InitBrandData | AddBrandFilter;
+export interface AddRubberFilter {
+  type: ActionType.AddRubberFilter;
+  payload: string;
+}
+
+export type AppActions =
+  | InitShoeData
+  | InitBrandData
+  | AddBrandFilter
+  | InitRubberData
+  | AddRubberFilter;

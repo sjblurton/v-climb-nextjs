@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Card } from "../components";
 import { Filters } from "../components/filters";
 import { Layout, Seo } from "../components/shared";
@@ -9,6 +9,7 @@ import {
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
+import { ActionType } from "../reducer/actions";
 import { getAllData } from "../service/axios";
 
 interface Props {
@@ -25,6 +26,14 @@ interface Props {
 const Home = ({ shoes, brands, rubbers, error }: Props) => {
   const { dispatch, state } = useContext(FilterContext);
 
+  useEffect(() => {
+    shoes && dispatch({ type: ActionType.InitShoeData, payload: shoes || [] });
+    brands &&
+      dispatch({ type: ActionType.InitBrandData, payload: brands || [] });
+    rubbers &&
+      dispatch({ type: ActionType.InitRubberData, payload: rubbers || [] });
+  }, []); // eslint-disable-line
+
   const card = (
     data: ShoeWithStringDates[],
     brandData: BrandWithStringDates[]
@@ -38,43 +47,31 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
     ));
   };
 
-  if (shoes && brands && rubbers) {
-    return (
-      <>
-        <Seo />
-        <Layout>
-          <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
-            <h1 className="text-6xl text-slate-50 font-bold">V-CLIMB</h1>
-            <h3 className="text-3xl text-slate-100">
-              Vegan Rock Climbing Shoes
-            </h3>
-            <p className="text-slate-200">
-              Trying to select the most ethical, environmentally friendly,
-              cruelty free shoes for climbing while also not sacrificing the
-              performance of our climbing can be tricky. Here at V-Climb we have
-              done the hard work for you with all the confirmed vegan rock
-              climbing shoes in one place to help you make the best choice
-              easier for you, the planet, and the animals.
-            </p>
-          </article>
-          <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
-            <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
-              <Filters />
-            </div>
-            <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
-              {state.filteredShoes
-                ? card(state.filteredShoes, brands)
-                : card(shoes, brands)}
-            </div>
-          </div>
-        </Layout>
-      </>
-    );
-  }
   return (
     <>
-      <h1>Error loading Props</h1>
-      <p>{JSON.stringify(error)}</p>
+      <Seo />
+      <Layout>
+        <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
+          <h1 className="text-6xl text-slate-50 font-bold">V-CLIMB</h1>
+          <h3 className="text-3xl text-slate-100">Vegan Rock Climbing Shoes</h3>
+          <p className="text-slate-200">
+            Trying to select the most ethical, environmentally friendly, cruelty
+            free shoes for climbing while also not sacrificing the performance
+            of our climbing can be tricky. Here at V-Climb we have done the hard
+            work for you with all the confirmed vegan rock climbing shoes in one
+            place to help you make the best choice easier for you, the planet,
+            and the animals.
+          </p>
+        </article>
+        <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
+          <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
+            <Filters />
+          </div>
+          <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
+            {state.filteredShoes && card(state.filteredShoes, state.brands)}
+          </div>
+        </div>
+      </Layout>
     </>
   );
 };

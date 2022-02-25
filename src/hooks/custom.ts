@@ -1,11 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
 import useSWR from "swr";
-import { array } from "yup";
-import { initialCheckboxState } from "../data/filters";
 import {
   BrandWithStringDates,
-  CheckboxTypes,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";

@@ -1,15 +1,25 @@
-import { BrandWithStringDates, ShoeWithStringDates } from "../interface";
+import {
+  BrandWithStringDates,
+  RubberWithStringDates,
+  ShoeWithStringDates,
+} from "../interface";
 
 export interface AppState {
-  filters: { brands: string[] };
+  filters: { brands: string[]; rubbers: string[] };
   shoes: ShoeWithStringDates[];
-  filteredShoes: ShoeWithStringDates[] | undefined;
+  filteredShoes: ShoeWithStringDates[];
   brands: BrandWithStringDates[];
+  rubbers: RubberWithStringDates[];
+  filteredBrands: BrandWithStringDates[];
+  filteredRubbers: RubberWithStringDates[];
 }
 
 export const initialAppState: AppState = {
-  filters: { brands: [] },
+  filters: { brands: [], rubbers: [] },
   shoes: [] as ShoeWithStringDates[],
-  filteredShoes: undefined,
+  filteredShoes: [] as ShoeWithStringDates[],
   brands: [],
+  rubbers: [],
+  filteredBrands: [],
+  filteredRubbers: [],
 };

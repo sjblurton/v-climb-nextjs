@@ -1,13 +1,6 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  useEffect,
-  useReducer,
-} from "react";
-import { useBrands, useShoes } from "../hooks/custom";
+import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import { filterReducer } from "../reducer";
-import { ActionType, AppActions } from "../reducer/actions";
+import { AppActions } from "../reducer/actions";
 import { AppState, initialAppState } from "../reducer/state";
 
 export const FilterContext = createContext<{
@@ -21,22 +14,11 @@ export const FilterContext = createContext<{
 type Props = { children: ReactNode };
 
 export const ContextProvider = ({ children }: Props) => {
-  const { shoesData } = useShoes();
-  const { brandsData } = useBrands();
   const [state, dispatch] = useReducer(filterReducer, initialAppState);
 
-  useEffect(() => {
-    if (shoesData && brandsData) {
-      dispatch({ type: ActionType.InitShoeData, payload: shoesData.shoes });
-      dispatch({ type: ActionType.InitBrandData, payload: brandsData.brands });
-    }
-  }, [shoesData, brandsData]);
-
-  if (shoesData)
-    return (
-      <FilterContext.Provider value={{ state, dispatch }}>
-        {children}
-      </FilterContext.Provider>
-    );
-  else return <></>;
+  return (
+    <FilterContext.Provider value={{ state, dispatch }}>
+      {children}
+    </FilterContext.Provider>
+  );
 };
