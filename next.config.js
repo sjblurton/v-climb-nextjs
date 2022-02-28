@@ -17,6 +17,9 @@ const nextConfig = {
       "www.borealoutdoor.com",
       "www.ocun.com",
       "shop.epictv.com",
+      "www.evolvsports.com",
+      "www.wildclimb.it",
+      "www.redchiliclimbing.com",
     ],
   },
 };
