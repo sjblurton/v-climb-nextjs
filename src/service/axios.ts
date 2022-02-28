@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { ParsedUrlQuery } from "querystring";
 import { slugString } from "../helper/stringify";
 import {
   BrandPost,
@@ -12,8 +13,8 @@ import {
 
 axios.defaults.baseURL = "http://localhost:3000";
 
-export const getAllData = async () => {
-  const shoesRes = await axiosGet.getShoes();
+export const getAllData = async (query?: ParsedUrlQuery) => {
+  const shoesRes = await axiosGet.getShoes(query);
   const RubbersRes = await axiosGet.getRubber();
   const brandsRes = await axiosGet.getBrands();
 
@@ -25,9 +26,9 @@ export const getAllData = async () => {
 };
 
 export const axiosGet = {
-  getShoes: async () => {
+  getShoes: async (query?: ParsedUrlQuery) => {
     const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
-      await axios.get("/api/v1/shoes/");
+      await axios.get(`/api/v1/shoes`, { params: query });
     if ("data" in response) {
       return { shoes: response.data.shoes };
     } else {

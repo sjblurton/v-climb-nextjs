@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../context/context";
 import { ActionType } from "../../../reducer/actions";
 
-type FilterGroup = "brand" | "rubber";
+type FilterGroup = "brand" | "rubber" | "midsole";
 
 type Props = { label: string; id: string; filterGroup: FilterGroup };
 
@@ -11,8 +11,13 @@ export const Checkbox = ({ label, id, filterGroup }: Props) => {
   const { state, dispatch } = useContext(FilterContext);
 
   useEffect(() => {
-    filterGroup === "brand" && setChecked(state.filters.brands.includes(id));
-    filterGroup === "rubber" && setChecked(state.filters.rubbers.includes(id));
+    if (state.filters) {
+      filterGroup === "brand" && setChecked(state.filters.brands.includes(id));
+      filterGroup === "rubber" &&
+        setChecked(state.filters.rubbers.includes(id));
+      filterGroup === "midsole" &&
+        setChecked(state.filters.midsole.includes(id));
+    }
   }, [state]); // eslint-disable-line
 
   const handleOnChange = () => {
@@ -20,6 +25,8 @@ export const Checkbox = ({ label, id, filterGroup }: Props) => {
       dispatch({ type: ActionType.AddBrandFilter, payload: id });
     filterGroup === "rubber" &&
       dispatch({ type: ActionType.AddRubberFilter, payload: id });
+    filterGroup === "midsole" &&
+      dispatch({ type: ActionType.AddMidsoleFilter, payload: id });
   };
 
   return (

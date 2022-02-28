@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import { useContext, useEffect } from "react";
 import { Card } from "../components";
 import { Filters } from "../components/filters";
@@ -25,7 +26,7 @@ interface Props {
 
 const Home = ({ shoes, brands, rubbers, error }: Props) => {
   const { dispatch, state } = useContext(FilterContext);
-
+  console.log(state);
   useEffect(() => {
     shoes && dispatch({ type: ActionType.InitShoeData, payload: shoes || [] });
     brands &&
@@ -78,7 +79,8 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
 
 export default Home;
 
-export const getStaticProps = async () => {
-  const props = await getAllData();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context;
+  const props = await getAllData(query);
   return { props: props };
 };

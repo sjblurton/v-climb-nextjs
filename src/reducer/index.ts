@@ -47,15 +47,14 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
         action.payload
       );
 
-      if (filterByBrandArray.length === 0 && state.filters.rubbers.length === 0)
-        return resetFilters(state);
+      if (filterByBrandArray.length === 0) return resetFilters(state);
 
       const newBrandFilteredArray =
         (filterByBrandArray.length > 0 &&
           filterShoes(state.shoes, filterByBrandArray, "brandId")) ||
         [];
 
-      const listOfRubbersToFilter = filteredList(
+      state.filteredRubbers = filteredList(
         newBrandFilteredArray,
         "rubberId",
         state.rubbers
@@ -65,29 +64,23 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
 
       return {
         ...state,
-        filteredShoes: newBrandFilteredArray,
-        filteredRubbers: listOfRubbersToFilter,
       };
     }
 
-    case ActionType.AddRubberFilter:
+    case ActionType.AddRubberFilter: {
       const filterByRubberArray = addRemoveItem(
         state.filters.rubbers,
         action.payload
       );
 
-      if (
-        filterByRubberArray.length === 0 &&
-        state.filters.rubbers.length === 0
-      )
-        return resetFilters(state);
+      if (filterByRubberArray.length === 0) return resetFilters(state);
 
       const newRubberFilteredArray =
         (filterByRubberArray.length > 0 &&
           filterShoes(state.shoes, filterByRubberArray, "rubberId")) ||
         [];
 
-      const listOfBrandsToFilter = filteredList(
+      state.filteredBrands = filteredList(
         newRubberFilteredArray,
         "brandId",
         state.brands
@@ -97,9 +90,33 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
 
       return {
         ...state,
-        filteredShoes: newRubberFilteredArray,
-        filteredBrands: listOfBrandsToFilter,
       };
+    }
+    case ActionType.AddMidsoleFilter: {
+      const filterByMidsoleArray = addRemoveItem(
+        state.filters.midsole,
+        action.payload
+      );
+
+      if (filterByMidsoleArray.length === 0) return resetFilters(state);
+
+      const newMidsoleFilteredArray =
+        (filterByMidsoleArray.length > 0 &&
+          filterShoes(state.filteredShoes, filterByMidsoleArray, "midsole")) ||
+        [];
+
+      state.filters.midsole = filterByMidsoleArray;
+
+      return {
+        ...state,
+      };
+    }
+    case ActionType.ResetForm: {
+      return resetFilters(state);
+    }
+    case ActionType.SetFilteredShoes: {
+      return { ...state, filteredShoes: action.payload.filteredShoes };
+    }
 
     default:
       return state;
@@ -129,7 +146,7 @@ const getArrayOfUniqueFilters = (
   key: keyof ShoeWithStringDates,
   data: ShoeWithStringDates[]
 ): string[] => {
-  if (key !== "ankle_protection")
+  if (key !== "ankle_protection" && data)
     return uniqueFilter(data.map((item) => item[key]));
   return [];
 };
@@ -165,7 +182,7 @@ const resetFilters = (state: AppState): AppState => {
   return {
     ...state,
     filteredShoes: state.shoes,
-    filters: { brands: [], rubbers: [] },
+    filters: { brands: [], rubbers: [], midsole: [] },
     filteredBrands: listOfBrandsToFilter,
     filteredRubbers: listOfRubbersToFilter,
   };

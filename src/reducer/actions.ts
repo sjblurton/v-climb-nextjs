@@ -10,6 +10,9 @@ export enum ActionType {
   InitRubberData,
   AddBrandFilter,
   AddRubberFilter,
+  AddMidsoleFilter,
+  ResetForm,
+  SetFilteredShoes,
 }
 
 export interface InitShoeData {
@@ -35,9 +38,26 @@ export interface AddRubberFilter {
   payload: string;
 }
 
+export interface AddMidsoleFilter {
+  type: ActionType.AddMidsoleFilter;
+  payload: string;
+}
+
+export interface ResetForm {
+  type: ActionType.ResetForm;
+}
+
+export interface SetFilteredShoes {
+  type: ActionType.SetFilteredShoes;
+  payload: { filteredShoes: ShoeWithStringDates[] };
+}
+
 export type AppActions =
   | InitShoeData
   | InitBrandData
   | AddBrandFilter
   | InitRubberData
-  | AddRubberFilter;
+  | AddRubberFilter
+  | AddMidsoleFilter
+  | ResetForm
+  | SetFilteredShoes;

@@ -5,7 +5,7 @@ import {
 } from "../interface";
 
 export interface AppState {
-  filters: { brands: string[]; rubbers: string[] };
+  filters: { brands: string[]; rubbers: string[]; midsole: string[] };
   shoes: ShoeWithStringDates[];
   filteredShoes: ShoeWithStringDates[];
   brands: BrandWithStringDates[];
@@ -15,7 +15,7 @@ export interface AppState {
 }
 
 export const initialAppState: AppState = {
-  filters: { brands: [], rubbers: [] },
+  filters: { brands: [], rubbers: [], midsole: [] },
   shoes: [] as ShoeWithStringDates[],
   filteredShoes: [] as ShoeWithStringDates[],
   brands: [],
