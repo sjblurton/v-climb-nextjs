@@ -98,13 +98,6 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
         action.payload
       );
 
-      if (filterByMidsoleArray.length === 0) return resetFilters(state);
-
-      const newMidsoleFilteredArray =
-        (filterByMidsoleArray.length > 0 &&
-          filterShoes(state.filteredShoes, filterByMidsoleArray, "midsole")) ||
-        [];
-
       state.filters.midsole = filterByMidsoleArray;
 
       return {
@@ -116,6 +109,16 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
     }
     case ActionType.SetFilteredShoes: {
       return { ...state, filteredShoes: action.payload.filteredShoes };
+    }
+
+    case ActionType.AddVeganFilter: {
+      const filterByVeganArray = addRemoveItem(
+        state.filters.veganType,
+        action.payload
+      );
+      state.filters.veganType = filterByVeganArray;
+
+      return { ...state };
     }
 
     default:
@@ -182,7 +185,19 @@ const resetFilters = (state: AppState): AppState => {
   return {
     ...state,
     filteredShoes: state.shoes,
-    filters: { brands: [], rubbers: [], midsole: [] },
+    filters: {
+      brands: [],
+      rubbers: [],
+      midsole: [],
+      asymmetry: [],
+      closure: [],
+      hooking: [],
+      price: [],
+      profile: [],
+      rubber_thickness: [],
+      veganType: [],
+      volume: [],
+    },
     filteredBrands: listOfBrandsToFilter,
     filteredRubbers: listOfRubbersToFilter,
   };

@@ -13,6 +13,7 @@ export enum ActionType {
   AddMidsoleFilter,
   ResetForm,
   SetFilteredShoes,
+  AddVeganFilter,
 }
 
 export interface InitShoeData {
@@ -52,6 +53,11 @@ export interface SetFilteredShoes {
   payload: { filteredShoes: ShoeWithStringDates[] };
 }
 
+export interface AddVeganFilter {
+  type: ActionType.AddVeganFilter;
+  payload: string;
+}
+
 export type AppActions =
   | InitShoeData
   | InitBrandData
@@ -60,4 +66,5 @@ export type AppActions =
   | AddRubberFilter
   | AddMidsoleFilter
   | ResetForm
-  | SetFilteredShoes;
+  | SetFilteredShoes
+  | AddVeganFilter;

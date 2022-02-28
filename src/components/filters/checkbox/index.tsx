@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../context/context";
 import { ActionType } from "../../../reducer/actions";
 
-type FilterGroup = "brand" | "rubber" | "midsole";
+type FilterGroup = "brand" | "rubber" | "midsole" | "vegan";
 
 type Props = { label: string; id: string; filterGroup: FilterGroup };
 
@@ -17,6 +17,8 @@ export const Checkbox = ({ label, id, filterGroup }: Props) => {
         setChecked(state.filters.rubbers.includes(id));
       filterGroup === "midsole" &&
         setChecked(state.filters.midsole.includes(id));
+      filterGroup === "vegan" &&
+        setChecked(state.filters.veganType.includes(id));
     }
   }, [state]); // eslint-disable-line
 
@@ -27,6 +29,8 @@ export const Checkbox = ({ label, id, filterGroup }: Props) => {
       dispatch({ type: ActionType.AddRubberFilter, payload: id });
     filterGroup === "midsole" &&
       dispatch({ type: ActionType.AddMidsoleFilter, payload: id });
+    filterGroup === "vegan" &&
+      dispatch({ type: ActionType.AddVeganFilter, payload: id });
   };
 
   return (

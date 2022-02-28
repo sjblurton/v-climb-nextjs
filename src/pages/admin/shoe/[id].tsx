@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { AlertType, useAlert } from "react-alert";
-import { Layout, Message } from "../../../components";
+import { Layout, Message } from "../../../components/shared";
 import { SubmitButton } from "../../../components/forms";
 import { ShoeInputs } from "../../../components/forms/shoe";
 import { useBrands, useRubbers, useShoes } from "../../../hooks/custom";
