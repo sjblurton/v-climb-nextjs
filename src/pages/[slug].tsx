@@ -17,10 +17,9 @@ type Props = {
   shoe: ShoeWithStringDates;
   rubber: RubberWithStringDates;
   shoeBrand: string;
-  rubberBrand: string;
 };
 
-const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
+const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand }) => {
   const router = useRouter();
 
   if (router.isFallback) {

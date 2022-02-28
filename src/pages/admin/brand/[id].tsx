@@ -7,9 +7,7 @@ import { useBrands } from "../../../hooks/custom";
 import { onSubmit } from "../../../service/formik";
 import { schemas } from "../../../service/schema";
 
-type Props = {};
-
-const BrandEditor = (props: Props) => {
+const BrandEditor = () => {
   const alert = useAlert();
   const { query, push } = useRouter();
   const id = typeof query.id === "string" ? query.id : "";

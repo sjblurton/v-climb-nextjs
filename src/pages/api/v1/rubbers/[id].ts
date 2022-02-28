@@ -6,6 +6,7 @@ import {
   RubberPost,
   RubberWithStringDates,
 } from "../../../../interface";
+import { getSession } from "next-auth/react";
 
 type Data = {
   rubbers: RubberWithStringDates[];
@@ -34,46 +35,58 @@ export default async function handler(
     }
   }
 
-  if (req.method === "DELETE") {
-    try {
-      const rubber = await prisma.rubber.delete({
-        where: {
-          id: ID,
-        },
-      });
-      if (rubber) {
-        const datesAsStrings = stringifyTheDates([
-          rubber,
-        ]) as RubberWithStringDates[];
-        res.status(200).json({ rubbers: datesAsStrings });
-      } else {
-        res.status(404).json({ error: `couldn't find rubber id: ${ID}` });
+  const session = await getSession({ req });
+
+  if (req.method !== "GET") {
+    if (session) {
+      if (req.method === "DELETE") {
+        try {
+          const rubber = await prisma.rubber.delete({
+            where: {
+              id: ID,
+            },
+          });
+          if (rubber) {
+            const datesAsStrings = stringifyTheDates([
+              rubber,
+            ]) as RubberWithStringDates[];
+            res.status(200).json({ rubbers: datesAsStrings });
+          } else {
+            res.status(404).json({ error: `couldn't find rubber id: ${ID}` });
+          }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ error: `server error` });
+        }
       }
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: `server error` });
-    }
-  }
-  if (req.method === "PUT") {
-    try {
-      const rubberData: RubberPost = req.body;
-      const rubber = await prisma.rubber.update({
-        where: {
-          id: ID,
-        },
-        data: rubberData,
-      });
-      if (rubber) {
-        const datesAsStrings = stringifyTheDates([
-          rubber,
-        ]) as RubberWithStringDates[];
-        res.status(200).json({ rubbers: datesAsStrings });
-      } else {
-        res.status(404).json({ error: `couldn't find brand id: ${ID}` });
+      if (req.method === "PUT") {
+        try {
+          const rubberData: RubberPost = req.body;
+          const rubber = await prisma.rubber.update({
+            where: {
+              id: ID,
+            },
+            data: rubberData,
+          });
+          if (rubber) {
+            const datesAsStrings = stringifyTheDates([
+              rubber,
+            ]) as RubberWithStringDates[];
+            res.status(200).json({ rubbers: datesAsStrings });
+          } else {
+            res.status(404).json({ error: `couldn't find brand id: ${ID}` });
+          }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ error: `server error` });
+        }
       }
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: `server error` });
+    } else {
+      console.log(
+        "Must be logged in as ADMIN for anything other than a GET request"
+      );
+      res.status(401);
     }
+    res.end();
   }
 }

@@ -9,9 +9,7 @@ import { ShoePostInput } from "../../../interface";
 import { onSubmit } from "../../../service/formik";
 import { schemas } from "../../../service/schema";
 
-type Props = {};
-
-const ShoeEditor = (props: Props) => {
+const ShoeEditor = () => {
   const alert = useAlert();
   const { query, push } = useRouter();
   const id = typeof query.id === "string" ? query.id : "";

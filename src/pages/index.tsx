@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useContext, useEffect } from "react";
-import { Card } from "../components";
-import { Filters } from "../components/filters";
+import { Card, Filters } from "../components";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { brandNameFromId } from "../helper/stringify";
@@ -26,7 +25,7 @@ interface Props {
 
 const Home = ({ shoes, brands, rubbers, error }: Props) => {
   const { dispatch, state } = useContext(FilterContext);
-  console.log(state);
+
   useEffect(() => {
     shoes && dispatch({ type: ActionType.InitShoeData, payload: shoes || [] });
     brands &&
@@ -47,6 +46,10 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
       />
     ));
   };
+
+  if (error) {
+    console.log(error);
+  }
 
   return (
     <>

@@ -11,7 +11,7 @@ import { Layout, Seo } from "../../components/shared";
 type Props = {};
 
 const Admin = (props: Props) => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   if (session) {
     return (

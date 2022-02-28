@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
 import { BrandPost, BrandWithStringDates } from "../../../../interface";
 import { ApiError } from "../../../../interface";
+import { getSession } from "next-auth/react";
 
 type Data = {
   brands: BrandWithStringDates[];
@@ -25,21 +26,33 @@ export default async function handler(
     }
   }
 
-  if (req.method === "POST") {
-    try {
-      const brandData: BrandPost = req.body;
-      const savedBrand = await prisma.brand.create({
-        data: brandData,
-      });
-      if (savedBrand) {
-        const datesAsStrings = stringifyTheDates([
-          savedBrand,
-        ]) as BrandWithStringDates[];
-        res.status(200).json({ brands: datesAsStrings });
-      } else res.status(400).json({ error: "brand not added." });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: `server error` });
+  const session = await getSession({ req });
+
+  if (req.method !== "GET") {
+    if (session) {
+      if (req.method === "POST") {
+        try {
+          const brandData: BrandPost = req.body;
+          const savedBrand = await prisma.brand.create({
+            data: brandData,
+          });
+          if (savedBrand) {
+            const datesAsStrings = stringifyTheDates([
+              savedBrand,
+            ]) as BrandWithStringDates[];
+            res.status(200).json({ brands: datesAsStrings });
+          } else res.status(400).json({ error: "brand not added." });
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ error: `server error` });
+        }
+      }
+    } else {
+      console.log(
+        "Must be logged in as ADMIN for anything other than a GET request"
+      );
+      res.status(401);
     }
+    res.end();
   }
 }
