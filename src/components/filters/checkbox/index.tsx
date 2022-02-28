@@ -2,7 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../context/context";
 import { ActionType } from "../../../reducer/actions";
 
-type FilterGroup = "brand" | "rubber" | "midsole" | "vegan";
+type FilterGroup =
+  | "brand"
+  | "rubber"
+  | "midsole"
+  | "vegan"
+  | "rubberStiffness"
+  | "hooking"
+  | "closure"
+  | "asymmetry"
+  | "price"
+  | "profile"
+  | "rubberThickness"
+  | "volume";
 
 type Props = { label: string; id: string; filterGroup: FilterGroup };
 
@@ -19,6 +31,20 @@ export const Checkbox = ({ label, id, filterGroup }: Props) => {
         setChecked(state.filters.midsole.includes(id));
       filterGroup === "vegan" &&
         setChecked(state.filters.veganType.includes(id));
+      filterGroup === "rubberStiffness" &&
+        setChecked(state.filters.rubber_stiffness.includes(id));
+      filterGroup === "hooking" &&
+        setChecked(state.filters.hooking.includes(id));
+      filterGroup === "closure" &&
+        setChecked(state.filters.closure.includes(id));
+      filterGroup === "asymmetry" &&
+        setChecked(state.filters.asymmetry.includes(id));
+      filterGroup === "price" && setChecked(state.filters.price.includes(id));
+      filterGroup === "profile" &&
+        setChecked(state.filters.profile.includes(id));
+      filterGroup === "rubberThickness" &&
+        setChecked(state.filters.rubber_thickness.includes(id));
+      filterGroup === "volume" && setChecked(state.filters.volume.includes(id));
     }
   }, [state]); // eslint-disable-line
 
@@ -31,6 +57,37 @@ export const Checkbox = ({ label, id, filterGroup }: Props) => {
       dispatch({ type: ActionType.AddMidsoleFilter, payload: id });
     filterGroup === "vegan" &&
       dispatch({ type: ActionType.AddVeganFilter, payload: id });
+    filterGroup === "rubberStiffness" &&
+      dispatch({ type: ActionType.AddRubberStiffnessFilter, payload: id });
+    filterGroup === "asymmetry" &&
+      dispatch({ type: ActionType.AddAsymmetryFilter, payload: id });
+    filterGroup === "closure" &&
+      dispatch({ type: ActionType.AddClosureFilter, payload: id });
+    filterGroup === "hooking" &&
+      dispatch({
+        type: ActionType.AddHookingFilter,
+        payload: id,
+      });
+    filterGroup === "price" &&
+      dispatch({
+        type: ActionType.AddPriceFilter,
+        payload: id,
+      });
+    filterGroup === "profile" &&
+      dispatch({
+        type: ActionType.AddProfileFilter,
+        payload: id,
+      });
+    filterGroup === "rubberThickness" &&
+      dispatch({
+        type: ActionType.AddRubberThicknessFilter,
+        payload: id,
+      });
+    filterGroup === "volume" &&
+      dispatch({
+        type: ActionType.AddVolumeFilter,
+        payload: id,
+      });
   };
 
   return (

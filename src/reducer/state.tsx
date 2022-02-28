@@ -17,6 +17,7 @@ export interface AppState {
     asymmetry: string[];
     profile: string[];
     rubber_thickness: string[];
+    rubber_stiffness: string[];
   };
   shoes: ShoeWithStringDates[];
   filteredShoes: ShoeWithStringDates[];
@@ -24,6 +25,7 @@ export interface AppState {
   rubbers: RubberWithStringDates[];
   filteredBrands: BrandWithStringDates[];
   filteredRubbers: RubberWithStringDates[];
+  isLoading: boolean;
 }
 
 export const initialAppState: AppState = {
@@ -39,6 +41,7 @@ export const initialAppState: AppState = {
     asymmetry: [],
     profile: [],
     rubber_thickness: [],
+    rubber_stiffness: [],
   },
   shoes: [] as ShoeWithStringDates[],
   filteredShoes: [] as ShoeWithStringDates[],
@@ -46,4 +49,5 @@ export const initialAppState: AppState = {
   rubbers: [],
   filteredBrands: [],
   filteredRubbers: [],
+  isLoading: false,
 };

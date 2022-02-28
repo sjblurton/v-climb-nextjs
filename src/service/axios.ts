@@ -35,6 +35,7 @@ export const axiosGet = {
       return { error: { shoes: "shoes failed to load" } };
     }
   },
+
   getRubber: async () => {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
       await axios.get("/api/v1/rubbers");

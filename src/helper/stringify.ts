@@ -35,3 +35,8 @@ export const slugString = (brand: string, name: string) =>
   [...brand.toLowerCase().split(" "), ...name.toLowerCase().split(" ")].join(
     "-"
   );
+
+export const queryString = (type: string, arr: string[]): string => {
+  if (arr.length === 0) return "";
+  return arr.map((item) => `&${type}=${item}`).join("");
+};

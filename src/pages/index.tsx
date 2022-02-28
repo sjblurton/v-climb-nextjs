@@ -68,9 +68,27 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
             <Filters />
           </div>
-          <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
-            {state.filteredShoes && card(state.filteredShoes, state.brands)}
-          </div>
+          {state.isLoading ? (
+            <div className="w-full h-full flex justify-center mt-4 sm:col-span-8 md:col-span-9 lg:col-span-10">
+              <h3 className="text-slate-100 text-lg text-center block w-full">
+                Loading...
+              </h3>
+            </div>
+          ) : (
+            <>
+              {state.filteredShoes.length ? (
+                <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
+                  {card(state.filteredShoes, state.brands)}
+                </div>
+              ) : (
+                <div className="w-full h-full flex justify-center items-center mt-4 sm:col-span-8 md:col-span-9 lg:col-span-10">
+                  <h3 className="text-slate-100 text-lg text-center w-full">
+                    No shoes found matching your filters, please try again
+                  </h3>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </Layout>
     </>

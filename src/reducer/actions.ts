@@ -14,6 +14,15 @@ export enum ActionType {
   ResetForm,
   SetFilteredShoes,
   AddVeganFilter,
+  AddRubberStiffnessFilter,
+  SetIsLoading,
+  AddAsymmetryFilter,
+  AddClosureFilter,
+  AddHookingFilter,
+  AddPriceFilter,
+  AddProfileFilter,
+  AddRubberThicknessFilter,
+  AddVolumeFilter,
 }
 
 export interface InitShoeData {
@@ -58,6 +67,45 @@ export interface AddVeganFilter {
   payload: string;
 }
 
+export interface AddRubberStiffnessFilter {
+  type: ActionType.AddRubberStiffnessFilter;
+  payload: string;
+}
+
+export interface SetIsLoading {
+  type: ActionType.SetIsLoading;
+  payload: boolean;
+}
+
+export interface AddAsymmetryFilter {
+  type: ActionType.AddAsymmetryFilter;
+  payload: string;
+}
+export interface AddClosureFilter {
+  type: ActionType.AddClosureFilter;
+  payload: string;
+}
+export interface AddHookingFilter {
+  type: ActionType.AddHookingFilter;
+  payload: string;
+}
+export interface AddPriceFilter {
+  type: ActionType.AddPriceFilter;
+  payload: string;
+}
+export interface AddProfileFilter {
+  type: ActionType.AddProfileFilter;
+  payload: string;
+}
+export interface AddRubberThicknessFilter {
+  type: ActionType.AddRubberThicknessFilter;
+  payload: string;
+}
+export interface AddVolumeFilter {
+  type: ActionType.AddVolumeFilter;
+  payload: string;
+}
+
 export type AppActions =
   | InitShoeData
   | InitBrandData
@@ -67,4 +115,13 @@ export type AppActions =
   | AddMidsoleFilter
   | ResetForm
   | SetFilteredShoes
-  | AddVeganFilter;
+  | AddVeganFilter
+  | AddRubberStiffnessFilter
+  | SetIsLoading
+  | AddAsymmetryFilter
+  | AddClosureFilter
+  | AddHookingFilter
+  | AddPriceFilter
+  | AddProfileFilter
+  | AddRubberThicknessFilter
+  | AddVolumeFilter;

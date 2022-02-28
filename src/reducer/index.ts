@@ -121,6 +121,105 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
       return { ...state };
     }
 
+    case ActionType.AddRubberStiffnessFilter: {
+      const filterByRubberStiffnessArray = addRemoveItem(
+        state.filters.rubber_stiffness,
+        action.payload
+      );
+      state.filters.rubber_stiffness = filterByRubberStiffnessArray;
+
+      for (let i = 0; i < filterByRubberStiffnessArray.length; i++) {
+        const element = filterByRubberStiffnessArray[i];
+        const list = state.filteredRubbers
+          .filter((rubber) => rubber.stiffness === element)
+          .map((item) => item.id);
+        state.filters.rubbers.push(...list);
+      }
+
+      const newRubberFilteredArray =
+        (state.filters.rubbers.length > 0 &&
+          filterShoes(state.shoes, state.filters.rubbers, "rubberId")) ||
+        [];
+
+      state.filteredBrands = filteredList(
+        newRubberFilteredArray,
+        "brandId",
+        state.brands
+      ) as BrandWithStringDates[];
+
+      return { ...state };
+    }
+
+    case ActionType.SetIsLoading: {
+      state.isLoading = action.payload;
+
+      return { ...state };
+    }
+
+    case ActionType.AddAsymmetryFilter: {
+      const filterByAsymmetryArray = addRemoveItem(
+        state.filters.asymmetry,
+        action.payload
+      );
+      state.filters.asymmetry = filterByAsymmetryArray;
+
+      return { ...state };
+    }
+    case ActionType.AddClosureFilter: {
+      const filterByClosureArray = addRemoveItem(
+        state.filters.closure,
+        action.payload
+      );
+      state.filters.closure = filterByClosureArray;
+
+      return { ...state };
+    }
+    case ActionType.AddHookingFilter: {
+      const filterByHookingArray = addRemoveItem(
+        state.filters.hooking,
+        action.payload
+      );
+      state.filters.hooking = filterByHookingArray;
+
+      return { ...state };
+    }
+    case ActionType.AddPriceFilter: {
+      const filterByPriceArray = addRemoveItem(
+        state.filters.price,
+        action.payload
+      );
+      state.filters.price = filterByPriceArray;
+
+      return { ...state };
+    }
+    case ActionType.AddProfileFilter: {
+      const filterByProfileArray = addRemoveItem(
+        state.filters.profile,
+        action.payload
+      );
+      state.filters.profile = filterByProfileArray;
+
+      return { ...state };
+    }
+    case ActionType.AddRubberThicknessFilter: {
+      const filterByRubberThicknessArray = addRemoveItem(
+        state.filters.rubber_thickness,
+        action.payload
+      );
+      state.filters.rubber_thickness = filterByRubberThicknessArray;
+
+      return { ...state };
+    }
+    case ActionType.AddVolumeFilter: {
+      const filterByVolumeArray = addRemoveItem(
+        state.filters.volume,
+        action.payload
+      );
+      state.filters.volume = filterByVolumeArray;
+
+      return { ...state };
+    }
+
     default:
       return state;
   }
@@ -197,6 +296,7 @@ const resetFilters = (state: AppState): AppState => {
       rubber_thickness: [],
       veganType: [],
       volume: [],
+      rubber_stiffness: [],
     },
     filteredBrands: listOfBrandsToFilter,
     filteredRubbers: listOfRubbersToFilter,
