@@ -5,9 +5,7 @@ import { Message } from "../../shared";
 import { Select } from "../select";
 import { FormikTextInput } from "../textInput";
 
-type Props = {};
-
-export const RubberInputs = (props: Props) => {
+export const RubberInputs = () => {
   const { brandsData, isLoading } = useBrands();
 
   if (isLoading) return <Message>Loading...</Message>;

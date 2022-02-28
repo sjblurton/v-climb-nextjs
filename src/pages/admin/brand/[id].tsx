@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { AlertType, useAlert } from "react-alert";
-import { Layout, Message } from "../../../components";
+import { Layout, Message } from "../../../components/shared";
 import { FormikTextInput, SubmitButton } from "../../../components/forms";
 import { useBrands } from "../../../hooks/custom";
 import { onSubmit } from "../../../service/formik";

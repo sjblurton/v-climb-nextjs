@@ -14,6 +14,9 @@ const nextConfig = {
       "www.eb-escalade.com",
       "www.unparallelsports.com",
       "cypherclimbing.com",
+      "www.borealoutdoor.com",
+      "www.ocun.com",
+      "shop.epictv.com",
     ],
   },
 };

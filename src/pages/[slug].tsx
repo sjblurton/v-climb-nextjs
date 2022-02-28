@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { GoBack } from "../assets/icons";
 import { Features } from "../components";
@@ -20,6 +21,20 @@ type Props = {
 };
 
 const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <>
+        <Layout>
+          <h3 className="w-full text-xl text-slate-50 text-center">
+            Loading...
+          </h3>
+        </Layout>
+      </>
+    );
+  }
+
   const {
     name: shoeName,
     veganType,
@@ -32,6 +47,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
     asymmetry,
     volume,
     updatedAt,
+    url,
   } = shoe;
 
   const templateTitle = `${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
@@ -84,6 +100,9 @@ const Product: NextPage<Props> = ({ shoe, rubber, rubberBrand, shoeBrand }) => {
               Up-to-date as of the {updatedAt}
             </p>
           </div>
+          <a href={url} target="_blank" rel="noreferrer">
+            <button className="btn btn-olive">more info</button>
+          </a>
           <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
             Price: {priceConverter(price)}
           </h3>
@@ -105,7 +124,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     });
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -135,5 +154,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
       rubberBrand: rubberBrandRes.brandName,
     };
   }
-  return { props };
+  return { props, revalidate: 600 };
 };

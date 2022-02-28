@@ -70,7 +70,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
           </div>
           {state.isLoading ? (
             <div className="w-full h-full flex justify-center mt-4 sm:col-span-8 md:col-span-9 lg:col-span-10">
-              <h3 className="text-slate-100 text-lg text-center block w-full">
+              <h3 className="text-slate-100 text-lg text-center w-full">
                 Loading...
               </h3>
             </div>
