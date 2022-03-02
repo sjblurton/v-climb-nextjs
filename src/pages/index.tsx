@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { useContext, useEffect } from "react";
 import { Card, Filters, SearchBar } from "../components";
 import { Layout, Seo } from "../components/shared";
@@ -101,8 +101,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query } = context;
-  const props = await getAllData(query);
+export const getStaticProps: GetStaticProps = async () => {
+  const props = await getAllData();
   return { props: props };
 };

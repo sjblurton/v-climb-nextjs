@@ -4,9 +4,7 @@ import { Logo } from "../../../../assets/logo/logo";
 import Link from "next/link";
 import { SingedIn } from "../../../forms";
 
-type Props = {};
-
-export const Navbar = (props: Props) => {
+export const Navbar = () => {
   const router = useRouter();
   const isAdminPage = router.pathname === "/admin";
   return (
@@ -20,16 +18,23 @@ export const Navbar = (props: Props) => {
             </span>
           </div>
         </Link>
-        <Link href="/about">
-          <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer">
-            About Us
-          </a>
-        </Link>
-        {isAdminPage && (
-          <>
-            <SingedIn />
-          </>
-        )}
+        <div>
+          <Link href="/contact">
+            <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer mr-8">
+              Contact Us
+            </a>
+          </Link>
+          <Link href="/about">
+            <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer mr-8">
+              Guide
+            </a>
+          </Link>
+          {isAdminPage && (
+            <>
+              <SingedIn />
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

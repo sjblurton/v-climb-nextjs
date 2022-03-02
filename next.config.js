@@ -22,6 +22,13 @@ const nextConfig = {
       "www.redchiliclimbing.com",
       "www.scarpa.co.uk",
       "logodix.com",
+      "www.unparallelsports.com.au",
+      "weighmyrack.com",
+      "climblog.weebly.com",
+      "yt3.ggpht.com",
+      "imgcdn.ukc2.com",
+      "goma2.net",
+      "i.vimeocdn.com",
     ],
   },
 };
