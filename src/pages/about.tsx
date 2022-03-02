@@ -145,5 +145,6 @@ export const getStaticProps = async () => {
         ),
       },
     },
+    revalidate: 1000,
   };
 };

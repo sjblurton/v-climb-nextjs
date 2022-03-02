@@ -4,7 +4,7 @@
 
 > V-Climb an interactive guide to buying vegan climbing shoes
 
-V-Climb is a database of all the confirmed vegan climbing shoes there is on the market today. I plan to make the database an open source rest API in the future. This is my first full Typescript project, and I'm now only going to be using Typescript going forward.
+V-Climb is a database of all the confirmed vegan climbing shoes there is on the market today. This is my first full Typescript project, and I'm now only going to be using Typescript going forward. The database is built in PostgreSQL using Prisma.io to interact with the CRUD frontend.
 
 ## Demo
 
@@ -23,11 +23,11 @@ link to the live site... TBA
 ## Features
 
 - Next.js
-- Single page, static SEO, and speed optimized.
-- PostgreSQL REST database
+- Single page, static SEO, speed optimized, also some client side dynamic API get requests.
+- PostgreSQL REST, and relational database.
+- CRUD from end with Admin login for anything but a GET request.
 - Typescript
-- PWA, working offline?
-- Tailwind
+- Tailwind CSS
 - Formik
 - Yup form validation
 - Fully responsive, Mobile first.
@@ -39,6 +39,7 @@ link to the live site... TBA
 <!-- - Project homepage: https://big-6-next-js.vercel.app -->
 
 - Repository: https://github.com/sjblurton/v-climb-nextjs
+
 <!-- - Figma: https://www.figma.com/file/2bjSoKqP1rj1mDrlMOTuWp/The-Big-6-Calisthenics?node-id=7%3A11 -->
 
 ## Licensing
