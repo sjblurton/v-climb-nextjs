@@ -20,6 +20,8 @@ const nextConfig = {
       "www.evolvsports.com",
       "www.wildclimb.it",
       "www.redchiliclimbing.com",
+      "www.scarpa.co.uk",
+      "logodix.com",
     ],
   },
 };

@@ -3,7 +3,7 @@ import { Layout, Seo } from "../components/shared";
 
 type Props = {};
 
-const about = (props: Props) => {
+const About = (props: Props) => {
   return (
     <>
       <Seo />
@@ -11,3 +11,5 @@ const about = (props: Props) => {
     </>
   );
 };
+
+export default About;

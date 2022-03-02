@@ -21,7 +21,9 @@ export const Navbar = (props: Props) => {
           </div>
         </Link>
         <Link href="/about">
-          <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer"></a>
+          <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer">
+            About Us
+          </a>
         </Link>
         {isAdminPage && (
           <>
