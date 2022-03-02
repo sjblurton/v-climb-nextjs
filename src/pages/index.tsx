@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useContext, useEffect } from "react";
-import { Card, Filters } from "../components";
+import { Card, Filters, SearchBar } from "../components";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { brandNameFromId } from "../helper/stringify";
@@ -66,6 +66,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
             place to help you make the best choice easier for you, the planet,
             and the animals.
           </p>
+          <SearchBar />
         </article>
         <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
