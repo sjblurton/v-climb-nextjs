@@ -104,6 +104,9 @@ const About = ({ rubbers }: Props) => {
                     {p}
                   </p>
                 ))}
+                <h4 className="text-xl text-slate-100 font-bold py-2">
+                  {`List of the ${item.type.toLocaleLowerCase()} rubbers.`}
+                </h4>
                 {item.type === "SOFT" && <RubberTable rubbers={soft} />}
                 {item.type === "AVERAGE" && <RubberTable rubbers={average} />}
                 {item.type === "STIFF" && <RubberTable rubbers={stiff} />}
