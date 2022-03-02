@@ -85,15 +85,18 @@ export const Square = ({ title, value, rubber }: Props) => {
       return (
         <Tooltip type={title} value={value} rubber={rubber}>
           <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
+            <h3 className="font-bold uppercase text-base text-gray-900 text-center">
+              rubber
+            </h3>
             <Image
               width={75}
               height={75}
               src={rubber.image}
               alt={`logo for the ${rubber.name} of rubber.`}
             />
-            <h3 className="font-bold uppercase text-base text-gray-900 text-center">
-              rubber
-            </h3>
+            <p className="font-bold capitalize text-sm text-gray-900 text-center">
+              stiffness: {rubber.stiffness.toLocaleLowerCase()}
+            </p>
           </div>
         </Tooltip>
       );

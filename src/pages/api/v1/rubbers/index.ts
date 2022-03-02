@@ -17,15 +17,40 @@ export default async function handler(
   res: NextApiResponse<Data | ApiError>
 ) {
   if (req.method === "GET") {
-    try {
-      const rubbers = await prisma.rubber.findMany();
-      const datesAsStrings = stringifyTheDates(
-        rubbers
-      ) as RubberWithStringDates[];
-      res.status(200).json({ rubbers: datesAsStrings });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: `server error` });
+    const array = Object.keys(req.query);
+    if (array.length > 0) {
+      const queryArray = array.map((item) => {
+        if (/(\[\])/g.test(item)) {
+          return {
+            [item.replace(/(\[\])/g, "")]: { in: req.query[item] },
+          };
+        }
+        return { [item]: req.query[item] };
+      });
+
+      const prismaQuery = { where: Object.assign({}, ...queryArray) };
+
+      try {
+        const rubbers = await prisma.rubber.findMany(prismaQuery);
+        const datesAsStrings = stringifyTheDates(
+          rubbers
+        ) as RubberWithStringDates[];
+        res.status(200).json({ rubbers: datesAsStrings });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: `server error` });
+      }
+    } else {
+      try {
+        const rubbers = await prisma.rubber.findMany();
+        const datesAsStrings = stringifyTheDates(
+          rubbers
+        ) as RubberWithStringDates[];
+        res.status(200).json({ rubbers: datesAsStrings });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: `server error` });
+      }
     }
   }
 

@@ -36,9 +36,9 @@ export const axiosGet = {
     }
   },
 
-  getRubber: async () => {
+  getRubber: async (query?: ParsedUrlQuery) => {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
-      await axios.get("/api/v1/rubbers");
+      await axios.get("/api/v1/rubbers", { params: query });
     if ("data" in response) {
       return { rubbers: response.data.rubbers };
     } else {

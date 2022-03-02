@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { GoBack } from "../assets/icons";
-import { Features } from "../components";
+import { Features, SimilarTo } from "../components";
 import { VeganImage, Layout, Seo } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
 import {
@@ -17,10 +17,17 @@ type Props = {
   shoe: ShoeWithStringDates;
   rubber: RubberWithStringDates;
   shoeBrand: string;
+  similarShoes: ShoeWithStringDates[];
 };
 
-const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand }) => {
+const Product: NextPage<Props> = ({
+  shoe,
+  rubber,
+  shoeBrand,
+  similarShoes,
+}) => {
   const router = useRouter();
+  const shoeOptions = similarShoes.filter((item) => item.id !== shoe.id);
 
   if (router.isFallback) {
     return (
@@ -106,6 +113,10 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand }) => {
             Price: {priceConverter(price)}
           </h3>
           <Features values={array} />
+          <SimilarTo
+            shoes={shoeOptions}
+            similar={`${shoeBrand}'s - ${shoe.name}`}
+          />
         </div>
       </Layout>
     </>
@@ -138,12 +149,29 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (shoeRes.shoe) {
     const brandRes = await axiosGet.getBrandById(shoeRes.shoe.brandId);
-
     const rubberRes = await axiosGet.getRubberById(shoeRes.shoe.rubberId);
-
     const rubberBrandRes = rubberRes.rubber
       ? await axiosGet.getBrandById(rubberRes.rubber?.brandId)
       : { brandName: "" };
+
+    const rubberStiffness = {
+      stiffness: rubberRes.rubber?.stiffness,
+    };
+
+    const rubberList = await axiosGet.getRubber(rubberStiffness);
+
+    const similar = {
+      midsole: [shoeRes.shoe.midsole],
+      profile: [shoeRes.shoe.profile],
+      veganType: ["VEGAN", "POSSIBLY"],
+      rubberId: rubberList.rubbers?.map((item) => item.id),
+      asymmetry: [shoeRes.shoe.asymmetry],
+      volume: ["LOW", "AVERAGE", "WIDE"],
+    };
+
+    const similarModels = await axiosGet.getShoes(
+      shoeRes.shoe.volume === "KIDS" ? { volume: ["KIDS"] } : similar
+    );
 
     props = {
       ...props,
@@ -151,6 +179,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       ...rubberRes,
       shoeBrand: brandRes.brandName,
       rubberBrand: rubberBrandRes.brandName,
+      similarShoes: similarModels.shoes,
     };
   }
   return { props, revalidate: 600 };

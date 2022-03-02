@@ -15,10 +15,13 @@ export const Navbar = (props: Props) => {
         <Link href="/" passHref>
           <div className="flex cursor-pointer">
             <Logo />
-            <span className="self-center text-2xl font-bold whitespace-nowrap text-slate-50">
+            <span className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200">
               V-CLIMB
             </span>
           </div>
+        </Link>
+        <Link href="/about">
+          <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer"></a>
         </Link>
         {isAdminPage && (
           <>
