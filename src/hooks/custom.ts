@@ -6,7 +6,7 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "v-climb-nextjs-hd7ucvkbm-sjblurton.vercel.app";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

@@ -11,7 +11,7 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "v-climb-nextjs-hd7ucvkbm-sjblurton.vercel.app";
 
 export const getAllData = async (query?: ParsedUrlQuery) => {
   const shoesRes = await axiosGet.getShoes(query);

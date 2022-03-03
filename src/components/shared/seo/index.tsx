@@ -8,9 +8,8 @@ const defaultMeta = {
   siteName: "V-Climb | Vegan climbing shoes",
   description:
     "V-Climb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  // !TODO URL before production
-  url: "",
+
+  url: "v-climb-nextjs-hd7ucvkbm-sjblurton.vercel.app",
   type: "website",
   robots: "follow, index",
   /** No need to be filled, will be populated with openGraph function */
