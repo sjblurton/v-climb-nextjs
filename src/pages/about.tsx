@@ -1,4 +1,5 @@
 import { StiffnessType, VeganType } from "@prisma/client";
+import Link from "next/link";
 import React from "react";
 import { Layout, Seo, VeganImage } from "../components/shared";
 import { RubberTable } from "../components/table";
@@ -49,6 +50,11 @@ const About = ({ rubbers }: Props) => {
               </div>
               <h4 className="text-xl text-slate-100 font-bold">{item.title}</h4>
               <p className="text-slate-200 py-2">{item.body}</p>
+              <Link href={"/disclaimer"}>
+                <a className="text-lime-300 underline hover:text-lime-50">
+                  Check The Disclaimer
+                </a>
+              </Link>
             </div>
           ))}
           <h3 className="text-3xl text-slate-100 font-bold mb-6">

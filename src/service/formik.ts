@@ -11,6 +11,8 @@ import {
 } from "../interface";
 import { axiosPost, axiosPut } from "./axios";
 
+export const contactInitialValues = { name: "", email: "", message: "" };
+
 export const brandInitialValues: BrandPost = { name: "" };
 
 export const rubberInitialValues: RubberPost = {
