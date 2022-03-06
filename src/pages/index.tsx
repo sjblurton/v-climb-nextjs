@@ -13,9 +13,9 @@ import { ActionType } from "../reducer/actions";
 import { getAllData } from "../service/axios";
 
 interface Props {
-  shoes?: ShoeWithStringDates[];
-  rubbers?: RubberWithStringDates[];
-  brands?: BrandWithStringDates[];
+  shoes: ShoeWithStringDates[];
+  rubbers: RubberWithStringDates[];
+  brands: BrandWithStringDates[];
   error?: {
     shoes?: string;
     rubbers?: string;
