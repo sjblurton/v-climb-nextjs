@@ -28,7 +28,8 @@ const ShoeEditor = () => {
     return <Message>Ops, something went wrong...</Message>;
 
   if (brandsData && rubbersData && shoesData) {
-    const shoe = shoesData.shoes.filter((shoe) => shoe.slug === id)[0];
+    const shoe =
+      shoesData.shoes.filter((shoe) => shoe.slug === id)[0] || "not found";
     const initialValues: ShoePostInput = {
       rubberId: shoe.rubberId,
       brandId: shoe.brandId,

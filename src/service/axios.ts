@@ -58,7 +58,7 @@ export const axiosGet = {
     const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
       await axios.get(`/api/v1/shoes/${slug}`);
     if ("data" in response) {
-      return { shoe: response.data.shoes[0] };
+      return { shoe: response.data.shoes[0] ?? "" };
     } else {
       return { error: { shoe: `shoe ${slug} failed to load` } };
     }
@@ -67,7 +67,7 @@ export const axiosGet = {
     const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
       await axios.get(`/api/v1/brands/${id}`);
     if ("data" in response) {
-      return { brandName: response.data.brands[0].name };
+      return { brandName: response.data.brands[0].name ?? "" };
     } else {
       return { error: { brand: `brand ${id} failed to load` } };
     }
@@ -76,7 +76,7 @@ export const axiosGet = {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
       await axios.get(`/api/v1/rubbers/${id}`);
     if ("data" in response) {
-      return { rubber: response.data.rubbers[0] };
+      return { rubber: response.data.rubbers[0] ?? "" };
     } else {
       return { error: { rubber: `rubber ${id} failed to load` } };
     }
@@ -103,7 +103,7 @@ export const axiosPost = {
       const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
         await axios.post("/api/v1/shoes/", shoeWithSlug);
       if ("data" in response) {
-        return { shoes: response.data.shoes[0] };
+        return { shoes: response.data.shoes[0] ?? "" };
       } else {
         return {
           error: {
@@ -122,7 +122,7 @@ export const axiosPost = {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
       await axios.post("/api/v1/rubbers/", data);
     if ("data" in response) {
-      return { rubbers: response.data.rubbers[0] };
+      return { rubbers: response.data.rubbers[0] ?? "" };
     } else {
       return {
         error: {
@@ -135,7 +135,7 @@ export const axiosPost = {
     const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
       await axios.post("/api/v1/brands/", data);
     if ("data" in response) {
-      return { brands: response.data.brands[0] };
+      return { brands: response.data.brands[0] ?? "" };
     } else {
       return {
         error: {
@@ -151,7 +151,7 @@ export const axiosDelete = {
     const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
       await axios.delete(`/api/v1/brands/${id}`);
     if ("data" in response) {
-      return { brandName: response.data.brands[0].name };
+      return { brandName: response.data.brands[0].name ?? "" };
     } else {
       return { error: { brand: `brand id: ${id} failed delete` } };
     }
@@ -160,7 +160,7 @@ export const axiosDelete = {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
       await axios.delete(`/api/v1/rubbers/${id}`);
     if ("data" in response) {
-      return { rubber: response.data.rubbers[0].name };
+      return { rubber: response.data.rubbers[0].name ?? "" };
     } else {
       return { error: { rubber: `rubber id: ${id} failed delete` } };
     }
@@ -169,7 +169,7 @@ export const axiosDelete = {
     const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
       await axios.delete(`/api/v1/shoes/${slug}`);
     if ("data" in response) {
-      return { shoes: response.data.shoes[0].name };
+      return { shoes: response.data.shoes[0].name ?? "" };
     } else {
       return { error: { shoes: `shoes slug: ${slug} failed delete` } };
     }
@@ -181,7 +181,7 @@ export const axiosPut = {
     const response: AxiosResponse<{ brands: BrandWithStringDates[] }, any> =
       await axios.put(`/api/v1/brands/${id}`, body);
     if ("data" in response) {
-      return { brandName: response.data.brands[0].name };
+      return { brandName: response.data.brands[0].name ?? "" };
     } else {
       return { error: { brand: `brand id: ${id} failed delete` } };
     }
@@ -190,7 +190,7 @@ export const axiosPut = {
     const response: AxiosResponse<{ rubbers: RubberWithStringDates[] }, any> =
       await axios.put(`/api/v1/rubbers/${id}`, body);
     if ("data" in response) {
-      return { rubber: response.data.rubbers[0].name };
+      return { rubber: response.data.rubbers[0].name ?? "" };
     } else {
       return { error: { rubber: `brand id: ${id} failed delete` } };
     }
@@ -213,7 +213,7 @@ export const axiosPut = {
       const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
         await axios.put(`/api/v1/shoes/${id}`, shoeWithSlug);
       if ("data" in response) {
-        return { shoes: response.data.shoes[0].name };
+        return { shoes: response.data.shoes[0].name ?? "" };
       } else {
         return { error: { shoes: `brand id: ${id} failed delete` } };
       }

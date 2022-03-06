@@ -16,9 +16,9 @@ export const SimilarTo = ({ shoes, similar }: Props) => {
       <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
         {state.brands.length > 0 &&
           shoes.map((shoe) => {
-            const shoeBrand = state.brands.filter(
-              (item) => item.id === shoe.brandId
-            )[0].name;
+            const shoeBrand =
+              state.brands.filter((item) => item.id === shoe.brandId)[0].name ||
+              "not found";
             return <Card key={shoe.id} shoe={shoe} brand={shoeBrand} />;
           })}
       </div>
