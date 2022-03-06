@@ -128,10 +128,10 @@ export default Product;
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await axiosGet.getShoes();
   const paths = response?.shoes?.map((shoe) => {
-    return { params: { slug: shoe.slug } };
-  });
+    return { params: { slug: shoe.slug } } || [{ params: { slug: "error" } }];
+  }) || [{ params: { slug: "error" } }];
   return {
-    paths: paths || [{ params: { slug: "error" } }],
+    paths: paths,
     fallback: true,
   };
 };
@@ -162,7 +162,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       midsole: [shoeRes.shoe.midsole],
       profile: [shoeRes.shoe.profile],
       veganType: ["VEGAN", "POSSIBLY"],
-      rubberId: rubberList.rubbers?.map((item) => item.id) || "",
+      rubberId: rubberList?.rubbers?.map((item) => item.id) || "",
       asymmetry: [shoeRes.shoe.asymmetry],
       volume: ["LOW", "AVERAGE", "WIDE"],
     };
