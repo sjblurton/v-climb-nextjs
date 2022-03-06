@@ -27,7 +27,7 @@ const Product: NextPage<Props> = ({
   similarShoes,
 }) => {
   const router = useRouter();
-  const shoeOptions = similarShoes.filter((item) => item.id !== shoe.id);
+  const shoeOptions = similarShoes?.filter((item) => item.id !== shoe.id) ?? [];
 
   if (router.isFallback) {
     return (
@@ -127,13 +127,11 @@ export default Product;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await axiosGet.getShoes();
-  const paths =
-    // @ts-ignore
-    response.shoes.map((shoe) => {
-      return { params: { slug: shoe.slug } };
-    });
+  const paths = response?.shoes?.map((shoe) => {
+    return { params: { slug: shoe.slug } };
+  });
   return {
-    paths,
+    paths: paths || [{ params: { slug: "error" } }],
     fallback: true,
   };
 };
@@ -155,7 +153,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       : { brandName: "" };
 
     const rubberStiffness = {
-      stiffness: rubberRes.rubber?.stiffness,
+      stiffness: rubberRes.rubber?.stiffness || "AVERAGE",
     };
 
     const rubberList = await axiosGet.getRubber(rubberStiffness);
@@ -164,7 +162,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       midsole: [shoeRes.shoe.midsole],
       profile: [shoeRes.shoe.profile],
       veganType: ["VEGAN", "POSSIBLY"],
-      rubberId: rubberList.rubbers?.map((item) => item.id),
+      rubberId: rubberList.rubbers?.map((item) => item.id) || "",
       asymmetry: [shoeRes.shoe.asymmetry],
       volume: ["LOW", "AVERAGE", "WIDE"],
     };
