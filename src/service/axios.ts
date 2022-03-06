@@ -27,7 +27,8 @@ export const getAllData = async (query: { take: number; skip: number }) => {
 
 export const axiosGet = {
   getInitShoes: async (query: { take: number; skip: number }) => {
-    const response = await axios.get(`/api/v1/shoes`, { params: query });
+    const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
+      await axios.get(`/api/v1/shoes`, { params: query });
     if ("data" in response) {
       return { shoes: response.data.shoes };
     } else {

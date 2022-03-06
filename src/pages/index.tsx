@@ -1,4 +1,3 @@
-import { GetStaticProps } from "next";
 import { useContext, useEffect } from "react";
 import { Card, Filters, LoadMore, SearchBar } from "../components";
 import { Layout, Seo } from "../components/shared";
@@ -102,7 +101,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
 
 export default Home;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps = async () => {
   const props = await getAllData({ skip: 0, take: 80 });
   return { props: props };
 };
