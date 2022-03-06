@@ -1,12 +1,13 @@
 import axios from "axios";
 import useSWR from "swr";
+import { envString } from "../helper/stringify";
 import {
   BrandWithStringDates,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
 
-axios.defaults.baseURL = "v-climb-nextjs.vercel.app";
+axios.defaults.baseURL = envString("NEXT_URL") || "http://localhost:3000/";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

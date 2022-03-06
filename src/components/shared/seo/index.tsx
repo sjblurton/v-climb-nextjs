@@ -9,7 +9,7 @@ const defaultMeta = {
   description:
     "V-Climb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
 
-  url: "v-climb-nextjs.vercel.app",
+  url: "http://:3000/",
   type: "website",
   robots: "follow, index",
   /** No need to be filled, will be populated with openGraph function */

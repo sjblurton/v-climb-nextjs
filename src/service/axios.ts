@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ParsedUrlQuery } from "querystring";
-import { slugString } from "../helper/stringify";
+import { envString, slugString } from "../helper/stringify";
 import {
   BrandPost,
   BrandWithStringDates,
@@ -11,7 +11,7 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-axios.defaults.baseURL = "v-climb-nextjs.vercel.app";
+axios.defaults.baseURL = envString("NEXT_URL") || "http://localhost:3000/";
 
 export const getAllData = async (query?: ParsedUrlQuery) => {
   const shoesRes = await axiosGet.getShoes(query);
