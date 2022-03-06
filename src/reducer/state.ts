@@ -26,6 +26,8 @@ export interface AppState {
   filteredBrands: BrandWithStringDates[];
   filteredRubbers: RubberWithStringDates[];
   isLoading: boolean;
+  limit: number;
+  skip: number;
 }
 
 export const initialAppState: AppState = {
@@ -50,4 +52,6 @@ export const initialAppState: AppState = {
   filteredBrands: [],
   filteredRubbers: [],
   isLoading: false,
+  limit: 80,
+  skip: 0,
 };

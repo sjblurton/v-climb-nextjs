@@ -1,6 +1,6 @@
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
 import { useContext, useEffect } from "react";
-import { Card, Filters, SearchBar } from "../components";
+import { Card, Filters, LoadMore, SearchBar } from "../components";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { brandNameFromId } from "../helper/stringify";
@@ -94,6 +94,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
             </>
           )}
         </div>
+        <LoadMore />
       </Layout>
     </>
   );
@@ -102,6 +103,6 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const props = await getAllData();
+  const props = await getAllData({ skip: 0, take: 80 });
   return { props: props };
 };

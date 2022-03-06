@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { useSession, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { stringifyTheDates } from "../../../../helper/stringify";
 import { ApiError, ShoePost, ShoeWithStringDates } from "../../../../interface";
 import { prisma } from "../../../../lib/prisma";
@@ -12,9 +12,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data | ApiError>
 ) {
+  const { skip, take } = req.query;
+
   if (req.method === "GET") {
     const array = Object.keys(req.query);
-    if (array.length > 0) {
+    if (array.length > 2) {
       const queryArray = array.map((item) => {
         if (/(\[\])/g.test(item)) {
           return {
@@ -24,7 +26,11 @@ export default async function handler(
         return { [item]: req.query[item] };
       });
 
-      const prismaQuery = { where: Object.assign({}, ...queryArray) };
+      const prismaQuery = {
+        take: Number(take) ?? 80,
+        skip: Number(skip) ?? 0,
+        where: Object.assign({}, ...queryArray),
+      };
 
       try {
         const shoes = await prisma.shoes.findMany(prismaQuery);
@@ -38,7 +44,10 @@ export default async function handler(
       }
     } else {
       try {
-        const shoes = await prisma.shoes.findMany();
+        const shoes = await prisma.shoes.findMany({
+          take: Number(take) ?? 80,
+          skip: Number(skip) ?? 0,
+        });
         const datesAsStrings = stringifyTheDates(
           shoes
         ) as ShoeWithStringDates[];

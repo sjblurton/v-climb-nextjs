@@ -219,6 +219,16 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
 
       return { ...state };
     }
+    case ActionType.AddMoreShoes: {
+      const newArray = [...state.shoes, ...action.payload.shoes];
+      return {
+        ...state,
+        shoes: newArray,
+        filteredShoes: newArray,
+        limit: action.payload.limit,
+        skip: action.payload.skip,
+      };
+    }
 
     default:
       return state;

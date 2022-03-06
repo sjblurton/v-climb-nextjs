@@ -13,8 +13,8 @@ import {
 
 axios.defaults.baseURL = envString("NEXT_URL") || "http://localhost:3000/";
 
-export const getAllData = async (query?: ParsedUrlQuery) => {
-  const shoesRes = await axiosGet.getShoes(query);
+export const getAllData = async (query: { take: number; skip: number }) => {
+  const shoesRes = await axiosGet.getInitShoes(query);
   const RubbersRes = await axiosGet.getRubber();
   const brandsRes = await axiosGet.getBrands();
 
@@ -26,6 +26,14 @@ export const getAllData = async (query?: ParsedUrlQuery) => {
 };
 
 export const axiosGet = {
+  getInitShoes: async (query: { take: number; skip: number }) => {
+    const response = await axios.get(`/api/v1/shoes`, { params: query });
+    if ("data" in response) {
+      return { shoes: response.data.shoes };
+    } else {
+      return { error: { shoes: "shoes failed to load" } };
+    }
+  },
   getShoes: async (query?: ParsedUrlQuery) => {
     const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =
       await axios.get(`/api/v1/shoes`, { params: query });

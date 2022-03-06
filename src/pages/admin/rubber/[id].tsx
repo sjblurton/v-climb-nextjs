@@ -26,7 +26,9 @@ const RubberEditor = () => {
     return <Message>Ops, something went wrong...</Message>;
 
   if (brandsData && rubbersData) {
-    const rubber = rubbersData.rubbers.filter((rubber) => rubber.id === id)[0];
+    const rubber =
+      rubbersData.rubbers.filter((rubber) => rubber.id === id)[0] ||
+      "not found";
     const initialValues = {
       name: rubber.name,
       stiffness: rubber.stiffness,
