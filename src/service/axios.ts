@@ -11,20 +11,6 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-axios.defaults.baseURL = "v-climb-nextjs.vercel.app";
-
-export const getAllData = async (query?: ParsedUrlQuery) => {
-  const shoesRes = await axiosGet.getShoes(query);
-  const RubbersRes = await axiosGet.getRubber();
-  const brandsRes = await axiosGet.getBrands();
-
-  return {
-    ...shoesRes,
-    ...RubbersRes,
-    ...brandsRes,
-  };
-};
-
 export const axiosGet = {
   getShoes: async (query?: ParsedUrlQuery) => {
     const response: AxiosResponse<{ shoes: ShoeWithStringDates[] }, any> =

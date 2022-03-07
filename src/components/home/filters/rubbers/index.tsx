@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
-import { FilterContext } from "../../../context/context";
+import { useBrands, useRubbers } from "../../../../hooks/custom";
 import { Checkbox } from "../checkbox";
 import { Tooltip } from "./tooltip";
 
 export const RubbersFilter = () => {
-  const { state } = useContext(FilterContext);
-
+  const { rubbersData } = useRubbers();
+  const { brandsData } = useBrands();
   return (
     <>
-      {state.filteredRubbers.map((rubber) => {
+      {rubbersData?.rubbers.map((rubber) => {
         const title =
-          state.brands.filter((brand) => rubber.brandId === brand.id)[0].name +
+          brandsData?.brands.filter((brand) => rubber.brandId === brand.id)[0]
+            .name +
           " - " +
           rubber.name;
 

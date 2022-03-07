@@ -1,5 +1,5 @@
 import { VeganType } from "@prisma/client";
-import { veganToString } from "../../../helper/helper";
+import { veganToString } from "../../../../helper/helper";
 import { Checkbox } from "../checkbox";
 
 export const VeganFilter = () => {

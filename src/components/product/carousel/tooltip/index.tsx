@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { RubberWithStringDates, TFeatures } from "../../../interface";
-import { tooltips } from "../../../data/tooltips";
+import { RubberWithStringDates, TFeatures } from "../../../../interface";
+import { tooltips } from "../../../../data/tooltips";
 
 type Props = {
   type: TFeatures;

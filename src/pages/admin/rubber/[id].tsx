@@ -78,7 +78,7 @@ const RubberEditor = () => {
               )}
             </Formik>
           </div>
-        </Layout>{" "}
+        </Layout>
       </>
     );
   }

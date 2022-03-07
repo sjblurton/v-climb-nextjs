@@ -2,32 +2,53 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
+import { useEffect, useState } from "react";
 import { GoBack } from "../assets/icons";
-import { Features, SimilarTo } from "../components";
+import { Features, SimilarTo } from "../components/product";
 import { VeganImage, Layout, Seo } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
+import { stringifyTheDates } from "../helper/stringify";
+import { useRubbers, useShoes } from "../hooks/custom";
 import {
   RubberWithStringDates,
   ShoeWithStringDates,
   TFeatures,
 } from "../interface";
-import { axiosGet } from "../service/axios";
+import prisma from "../lib/prisma";
 
 type Props = {
   shoe: ShoeWithStringDates;
   rubber: RubberWithStringDates;
   shoeBrand: string;
-  similarShoes: ShoeWithStringDates[];
+  rubberBrand: string;
 };
 
-const Product: NextPage<Props> = ({
-  shoe,
-  rubber,
-  shoeBrand,
-  similarShoes,
-}) => {
+const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
+  const [similar, setSimilar] = useState<ShoeWithStringDates[]>([]);
+  const { shoesData } = useShoes();
+  const { rubbersData } = useRubbers();
+  console.log(similar);
+  useEffect(() => {
+    if (rubbersData && shoesData && shoe.volume !== "KIDS") {
+      const rubberList = rubbersData.rubbers
+        .filter((item) => item.stiffness === rubber.stiffness)
+        .map((item) => item.id);
+      const shoeList = shoesData.shoes.filter(
+        (item) =>
+          item.asymmetry === shoe.asymmetry &&
+          item.midsole === shoe.midsole &&
+          item.profile === shoe.profile &&
+          rubberList.includes(item.rubberId)
+      );
+      setSimilar(shoeList.filter((item) => item.id !== shoe.id));
+    }
+    if (rubbersData && shoesData && shoe.volume === "KIDS") {
+      const shoeList = shoesData.shoes.filter((item) => item.volume === "KIDS");
+      setSimilar(shoeList.filter((item) => item.id !== shoe.id));
+    }
+  }, [shoesData, rubbersData]);
+
   const router = useRouter();
-  const shoeOptions = similarShoes.filter((item) => item.id !== shoe.id);
 
   if (router.isFallback) {
     return (
@@ -113,10 +134,7 @@ const Product: NextPage<Props> = ({
             Price: {priceConverter(price)}
           </h3>
           <Features values={array} />
-          <SimilarTo
-            shoes={shoeOptions}
-            similar={`${shoeBrand}'s - ${shoe.name}`}
-          />
+          <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
         </div>
       </Layout>
     </>
@@ -126,12 +144,10 @@ const Product: NextPage<Props> = ({
 export default Product;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await axiosGet.getShoes();
-  const paths =
-    // @ts-ignore
-    response.shoes.map((shoe) => {
-      return { params: { slug: shoe.slug } };
-    });
+  const shoes = await prisma.shoes.findMany({ select: { slug: true } });
+  const paths = shoes.map((shoe) => {
+    return { params: { slug: shoe.slug } };
+  });
   return {
     paths,
     fallback: true,
@@ -144,43 +160,46 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as IParams;
+
   let props = {};
-  const shoeRes = await axiosGet.getShoeBySlug(slug);
 
-  if (shoeRes.shoe) {
-    const brandRes = await axiosGet.getBrandById(shoeRes.shoe.brandId);
-    const rubberRes = await axiosGet.getRubberById(shoeRes.shoe.rubberId);
-    const rubberBrandRes = rubberRes.rubber
-      ? await axiosGet.getBrandById(rubberRes.rubber?.brandId)
-      : { brandName: "" };
+  const shoe = await prisma.shoes.findUnique({ where: { slug } });
 
-    const rubberStiffness = {
-      stiffness: rubberRes.rubber?.stiffness,
-    };
+  if (shoe) {
+    const shoesDatesAsStrings = stringifyTheDates([
+      shoe,
+    ]) as ShoeWithStringDates[];
 
-    const rubberList = await axiosGet.getRubber(rubberStiffness);
+    const brand = await prisma.brand.findUnique({
+      where: { id: shoe.brandId },
+      select: { name: true },
+    });
 
-    const similar = {
-      midsole: [shoeRes.shoe.midsole],
-      profile: [shoeRes.shoe.profile],
-      veganType: ["VEGAN", "POSSIBLY"],
-      rubberId: rubberList.rubbers?.map((item) => item.id),
-      asymmetry: [shoeRes.shoe.asymmetry],
-      volume: ["LOW", "AVERAGE", "WIDE"],
-    };
+    const rubber = await prisma.rubber.findUnique({
+      where: { id: shoe.rubberId },
+    });
 
-    const similarModels = await axiosGet.getShoes(
-      shoeRes.shoe.volume === "KIDS" ? { volume: ["KIDS"] } : similar
-    );
+    if (rubber) {
+      const rubbersDatesAsStrings = stringifyTheDates([
+        rubber,
+      ]) as RubberWithStringDates[];
+
+      props = { ...props, rubber: rubbersDatesAsStrings[0] };
+
+      const rubberBrandRes = await prisma.brand.findUnique({
+        where: { id: rubber.brandId },
+        select: { name: true },
+      });
+
+      props = { ...props, rubberBrand: rubberBrandRes?.name };
+    }
 
     props = {
       ...props,
-      ...shoeRes,
-      ...rubberRes,
-      shoeBrand: brandRes.brandName,
-      rubberBrand: rubberBrandRes.brandName,
-      similarShoes: similarModels.shoes,
+      shoe: shoesDatesAsStrings[0],
+      shoeBrand: brand?.name,
     };
   }
-  return { props, revalidate: 600 };
+
+  return { props, revalidate: 1000 };
 };

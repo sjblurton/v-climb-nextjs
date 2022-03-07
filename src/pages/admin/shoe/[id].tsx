@@ -97,7 +97,7 @@ const ShoeEditor = () => {
               )}
             </Formik>
           </div>
-        </Layout>{" "}
+        </Layout>
       </>
     );
   }

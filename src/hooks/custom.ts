@@ -6,8 +6,6 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-axios.defaults.baseURL = "v-climb-nextjs.vercel.app";
-
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export const useShoes = (id = "") => {

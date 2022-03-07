@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { RubberWithStringDates, TFeatures } from "../../../interface";
+import { RubberWithStringDates, TFeatures } from "../../../../interface";
 import { Tooltip } from "../tooltip";
 import { Asymmetry, Midsole, Profile, Thickness, Volume } from "./svg";
 

@@ -1,58 +1,27 @@
-import { GetServerSideProps, GetStaticProps } from "next";
-import { useContext, useEffect } from "react";
-import { Card, Filters, SearchBar } from "../components";
+import { GetStaticProps } from "next";
+import { SWRConfig } from "swr";
+import { Filters, SearchBar } from "../components/home";
+import { ShoeGrid } from "../components/home";
 import { Layout, Seo } from "../components/shared";
-import { FilterContext } from "../context/context";
-import { brandNameFromId } from "../helper/stringify";
+import { stringifyTheDates } from "../helper/stringify";
 import {
   BrandWithStringDates,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
-import { ActionType } from "../reducer/actions";
-import { getAllData } from "../service/axios";
+import prisma from "../lib/prisma";
 
 interface Props {
-  shoes?: ShoeWithStringDates[];
-  rubbers?: RubberWithStringDates[];
-  brands?: BrandWithStringDates[];
-  error?: {
-    shoes?: string;
-    rubbers?: string;
-    brands?: string;
+  fallback: {
+    "/api/v1/shoes": ShoeWithStringDates[];
+    "/api/v1/brands": RubberWithStringDates[];
+    "/api/v1/rubbers": BrandWithStringDates[];
   };
 }
 
-const Home = ({ shoes, brands, rubbers, error }: Props) => {
-  const { dispatch, state } = useContext(FilterContext);
-
-  useEffect(() => {
-    shoes && dispatch({ type: ActionType.InitShoeData, payload: shoes || [] });
-    brands &&
-      dispatch({ type: ActionType.InitBrandData, payload: brands || [] });
-    rubbers &&
-      dispatch({ type: ActionType.InitRubberData, payload: rubbers || [] });
-  }, []); // eslint-disable-line
-
-  const card = (
-    data: ShoeWithStringDates[],
-    brandData: BrandWithStringDates[]
-  ) => {
-    return data.map((item) => (
-      <Card
-        key={item.slug}
-        shoe={item}
-        brand={brandNameFromId(brandData, item.brandId)}
-      />
-    ));
-  };
-
-  if (error) {
-    console.log(error);
-  }
-
+const Home = ({ fallback }: Props) => {
   return (
-    <>
+    <SWRConfig value={{ fallback }}>
       <Seo />
       <Layout>
         <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
@@ -72,36 +41,35 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
             <Filters />
           </div>
-          {state.isLoading ? (
-            <div className="w-full h-full flex justify-center mt-4 sm:col-span-8 md:col-span-9 lg:col-span-10">
-              <h3 className="text-slate-100 text-lg text-center w-full">
-                Loading...
-              </h3>
-            </div>
-          ) : (
-            <>
-              {state.filteredShoes.length ? (
-                <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
-                  {card(state.filteredShoes, state.brands)}
-                </div>
-              ) : (
-                <div className="w-full h-full flex justify-center items-center mt-4 sm:col-span-8 md:col-span-9 lg:col-span-10">
-                  <h3 className="text-slate-100 text-lg text-center w-full">
-                    No shoes found matching your filters, please try again
-                  </h3>
-                </div>
-              )}
-            </>
-          )}
+          <ShoeGrid />
         </div>
       </Layout>
-    </>
+    </SWRConfig>
   );
 };
 
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const props = await getAllData();
-  return { props: props };
+  const brands = await prisma.brand.findMany();
+  const rubbers = await prisma.rubber.findMany();
+  const shoes = await prisma.shoes.findMany({ take: 80 });
+
+  const shoesDatesAsStrings = stringifyTheDates(shoes) as ShoeWithStringDates[];
+  const brandsDatesAsStrings = stringifyTheDates(
+    brands
+  ) as BrandWithStringDates[];
+  const rubbersDatesAsStrings = stringifyTheDates(
+    rubbers
+  ) as RubberWithStringDates[];
+
+  const props = {
+    fallback: {
+      "/api/v1/shoes": shoesDatesAsStrings,
+      "/api/v1/brands": brandsDatesAsStrings,
+      "/api/v1/rubbers": rubbersDatesAsStrings,
+    },
+  };
+
+  return { props: props, revalidate: 1000 };
 };

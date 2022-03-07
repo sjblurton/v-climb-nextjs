@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { useSession, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { stringifyTheDates } from "../../../../helper/stringify";
 import { ApiError, ShoePost, ShoeWithStringDates } from "../../../../interface";
-import { prisma } from "../../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 
 type Data = {
   shoes: ShoeWithStringDates[];

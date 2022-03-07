@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { priceConverter } from "../../helper/helper";
-import { ShoesCard } from "../../interface";
-import { VeganImage } from "../shared";
+import { priceConverter } from "../../../helper/helper";
+import { ShoesCard } from "../../../interface";
+import { VeganImage } from "../";
 
 type Props = { shoe: ShoesCard; brand: string };
 

@@ -5,8 +5,8 @@ import React, {
   useState,
 } from "react";
 import Fuse from "fuse.js";
-import { FilterContext } from "../../context/context";
-import { ActionType } from "../../reducer/actions";
+import { FilterContext } from "../../../context/context";
+import { ActionType } from "../../../reducer/actions";
 
 export const SearchBar = () => {
   const [query, setQuery] = useState("");

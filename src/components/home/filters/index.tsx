@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
-import { FilterContext } from "../../context/context";
-import { queryString } from "../../helper/stringify";
-import { ActionType } from "../../reducer/actions";
-import { axiosGet } from "../../service/axios";
+import { FilterContext } from "../../../context/context";
+import { queryString } from "../../../helper/stringify";
+import { ActionType } from "../../../reducer/actions";
+import { axiosGet } from "../../../service/axios";
 import { Accordion } from "./accordion";
 import { AsymmetryFilter } from "./asymmetry";
 import { BrandsFilter } from "./brands";
