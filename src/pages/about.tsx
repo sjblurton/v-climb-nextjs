@@ -4,7 +4,7 @@ import React from "react";
 import { Layout, Seo, VeganImage } from "../components/shared";
 import { RubberTable } from "../components/table";
 import { data } from "../data/about";
-import { axiosGet } from "../service/axios";
+import prisma from "../lib/prisma";
 
 export type RubberWithBrandName = {
   brand: string | undefined;
@@ -128,17 +128,18 @@ const About = ({ rubbers }: Props) => {
 export default About;
 
 export const getStaticProps = async () => {
-  const rubbers = await axiosGet.getRubber();
-  const brands = await axiosGet.getBrands();
+  const rubbers = await prisma.rubber.findMany();
+  const brands = await prisma.brand.findMany({
+    select: { id: true, name: true },
+  });
 
-  const rubbersWithBrandNames =
-    rubbers.rubbers?.map((item) => {
-      return {
-        ...item,
-        brand: brands.brands?.filter((brand) => brand.id === item.brandId)[0]
-          .name,
-      };
-    }) || [];
+  const rubbersWithBrandNames = rubbers.map((item) => {
+    return {
+      ...item,
+      brand: brands.filter((brand) => brand.id === item.brandId)[0].name,
+    };
+  });
+
   return {
     props: {
       rubbers: {
