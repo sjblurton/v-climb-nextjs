@@ -11,8 +11,8 @@ export const RubbersFilter = () => {
       {state.filteredRubbers.map((rubber) => {
         const title =
           state.brands.filter((brand) => rubber.brandId === brand.id)[0].name +
-            " - " +
-            rubber.name || "not found";
+          " - " +
+          rubber.name;
 
         return (
           <Tooltip key={rubber.id} rubber={rubber}>

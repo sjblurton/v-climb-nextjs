@@ -1,5 +1,6 @@
+import { GetServerSideProps, GetStaticProps } from "next";
 import { useContext, useEffect } from "react";
-import { Card, Filters, LoadMore, SearchBar } from "../components";
+import { Card, Filters, SearchBar } from "../components";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { brandNameFromId } from "../helper/stringify";
@@ -12,9 +13,9 @@ import { ActionType } from "../reducer/actions";
 import { getAllData } from "../service/axios";
 
 interface Props {
-  shoes: ShoeWithStringDates[];
-  rubbers: RubberWithStringDates[];
-  brands: BrandWithStringDates[];
+  shoes?: ShoeWithStringDates[];
+  rubbers?: RubberWithStringDates[];
+  brands?: BrandWithStringDates[];
   error?: {
     shoes?: string;
     rubbers?: string;
@@ -93,7 +94,6 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
             </>
           )}
         </div>
-        <LoadMore />
       </Layout>
     </>
   );
@@ -101,7 +101,7 @@ const Home = ({ shoes, brands, rubbers, error }: Props) => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
-  const props = await getAllData({ skip: 0, take: 80 });
+export const getStaticProps: GetStaticProps = async () => {
+  const props = await getAllData();
   return { props: props };
 };

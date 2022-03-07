@@ -133,13 +133,11 @@ export const getStaticProps = async () => {
 
   const rubbersWithBrandNames =
     rubbers.rubbers?.map((item) => {
-      return (
-        {
-          ...item,
-          brand: brands.brands?.filter((brand) => brand.id === item.brandId)[0]
-            .name,
-        } || "not found"
-      );
+      return {
+        ...item,
+        brand: brands.brands?.filter((brand) => brand.id === item.brandId)[0]
+          .name,
+      };
     }) || [];
   return {
     props: {

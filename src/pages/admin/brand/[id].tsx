@@ -19,8 +19,7 @@ const BrandEditor = () => {
   if (isError) return <Message>Ops, something went wrong...</Message>;
 
   if (brandsData) {
-    const brand =
-      brandsData.brands.filter((brand) => brand.id === id)[0] || "not found";
+    const brand = brandsData.brands.filter((brand) => brand.id === id)[0];
     const initialValues = { name: brand.name };
 
     return (
