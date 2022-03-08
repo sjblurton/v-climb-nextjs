@@ -265,7 +265,17 @@ const filteredList = (
   listToFilter: BrandWithStringDates[] | RubberWithStringDates[]
 ): BrandWithStringDates[] | RubberWithStringDates[] => {
   const uniqueBrands = getArrayOfUniqueFilters(key, shoes);
-  return listToFilter.filter((item) => uniqueBrands.includes(item.id));
+  return listToFilter
+    .filter((item) => uniqueBrands.includes(item.id))
+    .sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
 };
 
 const resetFilters = (state: AppState): AppState => {

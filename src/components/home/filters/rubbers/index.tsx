@@ -1,32 +1,63 @@
-import { useBrands, useRubbers } from "../../../../hooks/custom";
+import { useContext, useEffect, useState } from "react";
+import { FilterContext } from "../../../../context/context";
+import { RubberWithStringDates } from "../../../../interface";
 import { Checkbox } from "../checkbox";
 import { Tooltip } from "./tooltip";
 
+interface RubberFilter extends RubberWithStringDates {
+  title: string;
+}
+
 export const RubbersFilter = () => {
-  const { rubbersData } = useRubbers();
-  const { brandsData } = useBrands();
-  return (
-    <>
-      {rubbersData?.rubbers.map((rubber) => {
+  const [rubberList, setRubberList] = useState<RubberFilter[]>([]);
+  const { state } = useContext(FilterContext);
+
+  useEffect(() => {
+    if (state.filteredRubbers.length > 0 && state.brands.length > 0) {
+      const array = state.filteredRubbers.map((rubber) => {
         const title =
-          brandsData?.brands.filter((brand) => rubber.brandId === brand.id)[0]
-            .name +
+          state.brands.filter((brand) => rubber.brandId === brand.id)[0].name +
           " - " +
           rubber.name;
+        console.log(title);
+        return { title: title, ...rubber };
+      });
+      const sortedArray = array.sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      setRubberList(sortedArray);
+    }
+  }, [state.filteredRubbers, state.brands]);
 
-        return (
-          <Tooltip key={rubber.id} rubber={rubber}>
-            <div>
-              <Checkbox
-                key={rubber.id}
-                filterGroup="rubber"
-                id={rubber.id}
-                label={title}
-              />
-            </div>
-          </Tooltip>
-        );
-      })}
+  return (
+    <>
+      {rubberList.length > 0 &&
+        rubberList.map((rubber) => {
+          const title =
+            state.brands.filter((brand) => rubber.brandId === brand.id)[0]
+              .name +
+            " - " +
+            rubber.name;
+
+          return (
+            <Tooltip key={rubber.id} rubber={rubber}>
+              <div>
+                <Checkbox
+                  key={rubber.id}
+                  filterGroup="rubber"
+                  id={rubber.id}
+                  label={title}
+                />
+              </div>
+            </Tooltip>
+          );
+        })}
     </>
   );
 };

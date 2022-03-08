@@ -1,12 +1,13 @@
-import { useBrands } from "../../../../hooks/custom";
+import { useContext } from "react";
+import { FilterContext } from "../../../../context/context";
 import { Checkbox } from "../checkbox";
 
 export const BrandsFilter = () => {
-  const { brandsData } = useBrands();
+  const { state } = useContext(FilterContext);
 
   return (
     <>
-      {brandsData?.brands.map((brand) => (
+      {state.filteredBrands.map((brand) => (
         <Checkbox
           filterGroup="brand"
           key={brand.id}

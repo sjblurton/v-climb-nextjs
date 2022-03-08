@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { FilterContext } from "../../../context/context";
 import { brandNameFromId } from "../../../helper/stringify";
-import { useBrands, useShoes } from "../../../hooks/custom";
+import { useBrands, useRubbers, useShoes } from "../../../hooks/custom";
 import { BrandWithStringDates, ShoeWithStringDates } from "../../../interface";
+import { ActionType } from "../../../reducer/actions";
 import { Card } from "../../shared";
 
 export const ShoeGrid = () => {
+  const { dispatch } = useContext(FilterContext);
   const { shoesData } = useShoes();
   const { brandsData } = useBrands();
+  const { rubbersData } = useRubbers();
 
-  console.log(shoesData);
+  useEffect(() => {
+    shoesData &&
+      dispatch({ type: ActionType.InitShoeData, payload: shoesData.shoes });
+
+    shoesData &&
+      brandsData &&
+      dispatch({ type: ActionType.InitBrandData, payload: brandsData.brands });
+
+    shoesData &&
+      rubbersData &&
+      dispatch({
+        type: ActionType.InitRubberData,
+        payload: rubbersData.rubbers,
+      });
+  }, [shoesData, brandsData, rubbersData]);
 
   const card = (
     shoes: ShoeWithStringDates[],
@@ -36,7 +54,6 @@ export const ShoeGrid = () => {
   }
 
   if (shoesData && brandsData) {
-    console.log(shoesData);
     return (
       <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
         {card(shoesData.shoes, brandsData.brands)}
