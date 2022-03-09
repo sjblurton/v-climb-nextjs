@@ -1,7 +1,7 @@
 import prisma from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
-import { ApiError, ShoePost, ShoeWithStringDates } from "../../../../interface";
+import { ShoePost, ShoeWithStringDates } from "../../../../interface";
 import { getSession } from "next-auth/react";
 
 type Data = {
@@ -10,7 +10,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ApiError>
+  res: NextApiResponse
 ) {
   const SLUG = req.query.slug.toString();
 
@@ -26,8 +26,7 @@ export default async function handler(
         res.status(404).json({ error: `couldn't shoe find slug: ${SLUG}` });
       }
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: `server error` });
+      res.status(500).send(error);
     }
   }
 
@@ -47,8 +46,7 @@ export default async function handler(
             res.status(404).json({ error: `couldn't find rubber id: ${SLUG}` });
           }
         } catch (error) {
-          console.log(error);
-          res.status(500).json({ error: `server error` });
+          res.status(500).send(error);
         }
       }
       if (req.method === "PUT") {
@@ -68,8 +66,7 @@ export default async function handler(
             res.status(200).json({ shoes: datesAsStrings });
           } else res.status(404).json({ error: `shoe not found` });
         } catch (error) {
-          console.log(error);
-          res.status(500).json({ error: `server error` });
+          res.status(500).send(error);
         }
       }
     } else {

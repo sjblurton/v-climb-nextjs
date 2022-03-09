@@ -20,7 +20,6 @@ export default async function handler(
       ) as BrandWithStringDates[];
       res.status(200).json({ brands: datesAsStrings });
     } catch (error) {
-      console.log(error);
       res.status(500).send(error);
     }
   }
@@ -42,8 +41,7 @@ export default async function handler(
             res.status(200).json({ brands: datesAsStrings });
           } else res.status(400).json({ error: "brand not added." });
         } catch (error) {
-          console.log(error);
-          res.status(500).json({ error: `server error` });
+          res.status(500).send(error);
         }
       }
     } else {

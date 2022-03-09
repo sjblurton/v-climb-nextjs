@@ -1,11 +1,7 @@
 import prisma from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
-import {
-  ApiError,
-  RubberPost,
-  RubberWithStringDates,
-} from "../../../../interface";
+import { RubberPost, RubberWithStringDates } from "../../../../interface";
 import { getSession } from "next-auth/react";
 
 type Data = {
@@ -14,7 +10,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ApiError>
+  res: NextApiResponse
 ) {
   if (req.method === "GET") {
     const array = Object.keys(req.query);
@@ -37,8 +33,7 @@ export default async function handler(
         ) as RubberWithStringDates[];
         res.status(200).json({ rubbers: datesAsStrings });
       } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: `server error` });
+        res.status(500).send(error);
       }
     } else {
       try {
@@ -48,8 +43,7 @@ export default async function handler(
         ) as RubberWithStringDates[];
         res.status(200).json({ rubbers: datesAsStrings });
       } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: `server error` });
+        res.status(500).send(error);
       }
     }
   }
@@ -70,9 +64,8 @@ export default async function handler(
             ]) as RubberWithStringDates[];
             res.status(200).json({ rubbers: datesAsStrings });
           } else res.status(400).json({ error: "rubber not added." });
-        } catch (error: any) {
-          console.log(error);
-          res.status(500).json({ error: `server error` });
+        } catch (error) {
+          res.status(500).send(error);
         }
       }
     } else {

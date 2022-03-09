@@ -14,7 +14,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ApiError>
+  res: NextApiResponse
 ) {
   const ID = req.query.id.toString();
 
@@ -30,8 +30,7 @@ export default async function handler(
         res.status(404).json({ error: `couldn't rubber find id: ${ID}` });
       }
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: `server error` });
+      res.status(500).send(error);
     }
   }
 
@@ -55,8 +54,7 @@ export default async function handler(
             res.status(404).json({ error: `couldn't find rubber id: ${ID}` });
           }
         } catch (error) {
-          console.log(error);
-          res.status(500).json({ error: `server error` });
+          res.status(500).send(error);
         }
       }
       if (req.method === "PUT") {
@@ -77,8 +75,7 @@ export default async function handler(
             res.status(404).json({ error: `couldn't find brand id: ${ID}` });
           }
         } catch (error) {
-          console.log(error);
-          res.status(500).json({ error: `server error` });
+          res.status(500).send(error);
         }
       }
     } else {

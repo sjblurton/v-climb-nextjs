@@ -10,7 +10,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ApiError>
+  res: NextApiResponse
 ) {
   if (req.method === "GET") {
     const array = Object.keys(req.query);
@@ -33,8 +33,7 @@ export default async function handler(
         ) as ShoeWithStringDates[];
         res.send({ shoes: datesAsStrings });
       } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: `server error` });
+        res.status(500).send(error);
       }
     } else {
       try {
@@ -44,8 +43,7 @@ export default async function handler(
         ) as ShoeWithStringDates[];
         res.send({ shoes: datesAsStrings });
       } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: `server error` });
+        res.status(500).send(error);
       }
     }
   }
@@ -67,8 +65,7 @@ export default async function handler(
           res.status(200).json({ shoes: datesAsStrings });
         } else res.status(404).json({ error: `shoe not added` });
       } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: `server error` });
+        res.status(500).send(error);
       }
     } else {
       console.log(
