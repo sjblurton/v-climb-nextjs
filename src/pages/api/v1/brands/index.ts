@@ -2,8 +2,9 @@ import prisma from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
 import { BrandPost, BrandWithStringDates } from "../../../../interface";
-import { ApiError } from "../../../../interface";
+// import { ApiError } from "../../../../interface";
 import { getSession } from "next-auth/react";
+import { ApiError } from "next/dist/server/api-utils";
 
 type Data = {
   brands: BrandWithStringDates[];
@@ -20,9 +21,9 @@ export default async function handler(
         brands
       ) as BrandWithStringDates[];
       res.status(200).json({ brands: datesAsStrings });
-    } catch (error) {
+    } catch (error: ApiError) {
       console.log(error);
-      res.status(500).json({ error: `server error` });
+      res.status(500).json(error);
     }
   }
 
