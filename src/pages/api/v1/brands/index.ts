@@ -2,9 +2,7 @@ import prisma from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
 import { BrandPost, BrandWithStringDates } from "../../../../interface";
-// import { ApiError } from "../../../../interface";
 import { getSession } from "next-auth/react";
-import { ApiError } from "next/dist/server/api-utils";
 
 type Data = {
   brands: BrandWithStringDates[];
@@ -12,7 +10,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ApiError>
+  res: NextApiResponse
 ) {
   if (req.method === "GET") {
     try {
@@ -23,7 +21,7 @@ export default async function handler(
       res.status(200).json({ brands: datesAsStrings });
     } catch (error) {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).send(error);
     }
   }
 
