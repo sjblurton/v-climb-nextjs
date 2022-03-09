@@ -21,7 +21,7 @@ export default async function handler(
         brands
       ) as BrandWithStringDates[];
       res.status(200).json({ brands: datesAsStrings });
-    } catch (error: ApiError) {
+    } catch (error) {
       console.log(error);
       res.status(500).json(error);
     }
