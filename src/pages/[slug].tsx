@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 import { GoBack } from "../assets/icons";
 import { Features, SimilarTo } from "../components/product";
-import { VeganImage, Layout, Seo } from "../components/shared";
+import { VeganImage, Layout, Seo, Message } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
 import { stringifyTheDates } from "../helper/stringify";
 import { useRubbers, useShoes } from "../hooks/custom";
@@ -27,7 +27,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
   const [similar, setSimilar] = useState<ShoeWithStringDates[]>([]);
   const { shoesData } = useShoes();
   const { rubbersData } = useRubbers();
-  console.log(similar);
+
   useEffect(() => {
     if (rubbersData && shoesData && shoe.volume !== "KIDS") {
       const rubberList = rubbersData.rubbers
@@ -46,7 +46,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
       const shoeList = shoesData.shoes.filter((item) => item.volume === "KIDS");
       setSimilar(shoeList.filter((item) => item.id !== shoe.id));
     }
-  }, [shoesData, rubbersData]);
+  }, [shoesData, rubbersData]); // eslint-disable-line
 
   const router = useRouter();
 
@@ -54,9 +54,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
     return (
       <>
         <Layout>
-          <h3 className="w-full text-xl text-slate-50 text-center">
-            Loading...
-          </h3>
+          <Message>Loading...</Message>
         </Layout>
       </>
     );
@@ -90,52 +88,62 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
     { title: "rubberBrand" as TFeatures, value: rubber.image, rubber: rubber },
   ];
 
+  if (shoe)
+    return (
+      <>
+        {/* <Seo templateTitle={templateTitle} />
+        <Layout>
+          <div className="container max-w-5xl mx-auto my-4">
+            <div className="flex items-center justify-between p-3">
+              <h2 className="text-olive-50 capitalize text-4xl text-center">
+                <span className="font-bold">{shoeBrand}</span> - {shoeName}{" "}
+              </h2>
+              <div className="cursor-pointer">
+                <GoBack />
+              </div>
+            </div>
+            <div className="relative flex flex-col md:flex-row justify-center">
+              <Image
+                width={500}
+                height={500}
+                layout="intrinsic"
+                src={image}
+                alt={`${veganToString(veganType)} - ${shoeBrand} - ${shoeName}`}
+                className="flex-auto m-auto rounded bg-slate-50"
+              />
+
+              {veganType && (
+                <div className="absolute left-4 top-4">
+                  {VeganImage(veganType)}
+                </div>
+              )}
+
+              <p className="mx-auto p-3 text-olive-50 text-base max-w-lg">
+                {description}
+              </p>
+            </div>
+            <div className="container">
+              <p className="p-3 text-olive-50 text-sm font-bold">
+                Up-to-date as of the {updatedAt}
+              </p>
+            </div>
+            <a href={url} target="_blank" rel="noreferrer">
+              <button className="btn btn-olive">more info</button>
+            </a>
+            <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
+              Price: {priceConverter(price)}
+            </h3>
+            <Features values={array} />
+            <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
+          </div>
+        </Layout> */}
+      </>
+    );
   return (
     <>
-      <Seo templateTitle={templateTitle} />
+      <Seo />
       <Layout>
-        <div className="container max-w-5xl mx-auto my-4">
-          <div className="flex items-center justify-between p-3">
-            <h2 className="text-olive-50 capitalize text-4xl text-center">
-              <span className="font-bold">{shoeBrand}</span> - {shoeName}{" "}
-            </h2>
-            <div className="cursor-pointer">
-              <GoBack />
-            </div>
-          </div>
-          <div className="relative flex flex-col md:flex-row justify-center">
-            <Image
-              width={500}
-              height={500}
-              layout="intrinsic"
-              src={image}
-              alt={`${veganToString(veganType)} - ${shoeBrand} - ${shoeName}`}
-            />
-
-            {veganType && (
-              <div className="absolute left-4 top-4">
-                {VeganImage(veganType)}
-              </div>
-            )}
-
-            <p className="mx-auto p-3 text-olive-50 text-base max-w-lg">
-              {description}
-            </p>
-          </div>
-          <div className="container">
-            <p className="p-3 text-olive-50 text-sm font-bold">
-              Up-to-date as of the {updatedAt}
-            </p>
-          </div>
-          <a href={url} target="_blank" rel="noreferrer">
-            <button className="btn btn-olive">more info</button>
-          </a>
-          <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
-            Price: {priceConverter(price)}
-          </h3>
-          <Features values={array} />
-          <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
-        </div>
+        <Message>Loading...</Message>
       </Layout>
     </>
   );
@@ -144,7 +152,9 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
 export default Product;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const shoes = await prisma.shoes.findMany({ select: { slug: true } });
+  const shoes = await prisma.shoes.findMany({
+    select: { slug: true },
+  });
   const paths = shoes.map((shoe) => {
     return { params: { slug: shoe.slug } };
   });

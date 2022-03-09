@@ -6,7 +6,7 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export const useShoes = (id = "") => {
   const { data, error, mutate } = useSWR<{ shoes: ShoeWithStringDates[] }, any>(

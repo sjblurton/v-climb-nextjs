@@ -16,7 +16,7 @@ export const Accordion = ({ title, content }: Props) => {
     if (title === "Filters" && innerWidth > breakpoint) {
       toggleAccordion();
     }
-  }, []);
+  }, []); // eslint-disable-line
 
   function toggleAccordion() {
     setActive((prevState) => !prevState);

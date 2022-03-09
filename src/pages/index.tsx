@@ -13,9 +13,9 @@ import prisma from "../lib/prisma";
 
 interface Props {
   fallback: {
-    "/api/v1/shoes": ShoeWithStringDates[];
-    "/api/v1/brands": RubberWithStringDates[];
-    "/api/v1/rubbers": BrandWithStringDates[];
+    "/api/v1/shoes": { shoes: ShoeWithStringDates[] };
+    "/api/v1/brands": { brands: BrandWithStringDates[] };
+    "/api/v1/rubbers": { rubbers: RubberWithStringDates[] };
   };
 }
 
@@ -39,7 +39,8 @@ const Home = ({ fallback }: Props) => {
         </article>
         <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
-            <Filters />
+            <div></div>
+            {/* <Filters /> */}
           </div>
           <ShoeGrid />
         </div>
@@ -65,11 +66,11 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const props = {
     fallback: {
-      "/api/v1/shoes": shoesDatesAsStrings,
-      "/api/v1/brands": brandsDatesAsStrings,
-      "/api/v1/rubbers": rubbersDatesAsStrings,
+      "/api/v1/shoes": { shoes: shoesDatesAsStrings },
+      "/api/v1/brands": { brands: brandsDatesAsStrings },
+      "/api/v1/rubbers": { rubbers: rubbersDatesAsStrings },
     },
   };
 
-  return { props: props, revalidate: 1000 };
+  return { props, revalidate: 1000 };
 };

@@ -19,7 +19,6 @@ export const RubbersFilter = () => {
           state.brands.filter((brand) => rubber.brandId === brand.id)[0].name +
           " - " +
           rubber.name;
-        console.log(title);
         return { title: title, ...rubber };
       });
       const sortedArray = array.sort((a, b) => {

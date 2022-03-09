@@ -4,6 +4,8 @@ import React from "react";
 import { Layout, Seo, VeganImage } from "../components/shared";
 import { RubberTable } from "../components/table";
 import { data } from "../data/about";
+import { stringifyTheDates } from "../helper/stringify";
+import { RubberWithStringDates } from "../interface";
 import prisma from "../lib/prisma";
 
 export type RubberWithBrandName = {
@@ -31,7 +33,7 @@ const About = ({ rubbers }: Props) => {
 
   return (
     <>
-      <Seo templateTitle="Guide on how to pick the right vegan climbing shoes" />
+      {/* <Seo templateTitle="Guide on how to pick the right vegan climbing shoes" />
       <Layout>
         <article className="px-2 my-6 max-w-4xl mx-auto flex flex-col gap-y-3">
           <h1 className="text-6xl text-slate-50 font-bold mb-6">
@@ -113,14 +115,20 @@ const About = ({ rubbers }: Props) => {
                 <h4 className="text-xl text-slate-100 font-bold py-2">
                   {`List of the ${item.type.toLocaleLowerCase()} rubbers.`}
                 </h4>
-                {item.type === "SOFT" && <RubberTable rubbers={soft} />}
-                {item.type === "AVERAGE" && <RubberTable rubbers={average} />}
-                {item.type === "STIFF" && <RubberTable rubbers={stiff} />}
+                {rubbers && item.type === "SOFT" && (
+                  <RubberTable rubbers={soft} />
+                )}
+                {rubbers && item.type === "AVERAGE" && (
+                  <RubberTable rubbers={average} />
+                )}
+                {rubbers && item.type === "STIFF" && (
+                  <RubberTable rubbers={stiff} />
+                )}
               </div>
             );
           })}
         </article>
-      </Layout>
+      </Layout> */}
     </>
   );
 };
@@ -133,7 +141,11 @@ export const getStaticProps = async () => {
     select: { id: true, name: true },
   });
 
-  const rubbersWithBrandNames = rubbers.map((item) => {
+  const rubbersDatesAsStrings = stringifyTheDates(
+    rubbers
+  ) as RubberWithStringDates[];
+
+  const rubbersWithBrandNames = rubbersDatesAsStrings.map((item) => {
     return {
       ...item,
       brand: brands.filter((brand) => brand.id === item.brandId)[0].name,
