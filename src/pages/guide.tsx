@@ -28,12 +28,12 @@ type Props = {
   };
 };
 
-const About = ({ rubbers }: Props) => {
+const Guide = ({ rubbers }: Props) => {
   const { average, soft, stiff } = rubbers;
 
   return (
     <>
-      {/* <Seo templateTitle="Guide on how to pick the right vegan climbing shoes" />
+      <Seo templateTitle="Guide on how to pick the right vegan climbing shoes" />
       <Layout>
         <article className="px-2 my-6 max-w-4xl mx-auto flex flex-col gap-y-3">
           <h1 className="text-6xl text-slate-50 font-bold mb-6">
@@ -45,6 +45,11 @@ const About = ({ rubbers }: Props) => {
           <h3 className="text-3xl text-slate-100 font-bold mb-6">
             Are they vegan?
           </h3>
+          <Link href={"/disclaimer"}>
+            <a className="text-lime-300 underline hover:text-lime-50">
+              Check The Disclaimer
+            </a>
+          </Link>
           {data.vegan.map((item, i) => (
             <div key={i} className="relative mb-3">
               <div className="absolute -top-8 right-2 z-10">
@@ -52,11 +57,6 @@ const About = ({ rubbers }: Props) => {
               </div>
               <h4 className="text-xl text-slate-100 font-bold">{item.title}</h4>
               <p className="text-slate-200 py-2">{item.body}</p>
-              <Link href={"/disclaimer"}>
-                <a className="text-lime-300 underline hover:text-lime-50">
-                  Check The Disclaimer
-                </a>
-              </Link>
             </div>
           ))}
           <h3 className="text-3xl text-slate-100 font-bold mb-6">
@@ -128,12 +128,12 @@ const About = ({ rubbers }: Props) => {
             );
           })}
         </article>
-      </Layout> */}
+      </Layout>
     </>
   );
 };
 
-export default About;
+export default Guide;
 
 export const getStaticProps = async () => {
   const rubbers = await prisma.rubber.findMany();
