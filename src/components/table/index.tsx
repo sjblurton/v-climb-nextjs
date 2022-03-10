@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { RubberWithBrandName } from "../../pages/guide";
+import { RubberWithBrandName } from "../../pages/about";
 
 type Props = { rubbers: RubberWithBrandName[] };
 

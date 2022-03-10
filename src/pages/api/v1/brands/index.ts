@@ -45,11 +45,10 @@ export default async function handler(
         }
       }
     } else {
-      res
-        .status(401)
-        .send(
-          "Must be logged in as ADMIN for anything other than a GET request"
-        );
+      console.log(
+        "Must be logged in as ADMIN for anything other than a GET request"
+      );
+      res.status(401);
     }
     res.end();
   }
