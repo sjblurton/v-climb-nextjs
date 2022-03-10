@@ -72,10 +72,11 @@ export default async function handler(
         }
       }
     } else {
-      console.log(
-        "Must be logged in as ADMIN for anything other than a GET request"
-      );
-      res.status(401);
+      res
+        .status(401)
+        .send(
+          "Must be logged in as ADMIN for anything other than a GET request"
+        );
     }
     res.end();
   }

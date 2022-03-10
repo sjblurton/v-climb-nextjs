@@ -39,8 +39,7 @@ const Home = ({ fallback }: Props) => {
         </article>
         <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
-            <div></div>
-            {/* <Filters /> */}
+            <Filters />
           </div>
           <ShoeGrid />
         </div>

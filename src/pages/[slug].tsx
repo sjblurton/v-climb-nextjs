@@ -91,7 +91,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
   if (shoe)
     return (
       <>
-        {/* <Seo templateTitle={templateTitle} />
+        <Seo templateTitle={templateTitle} />
         <Layout>
           <div className="container max-w-5xl mx-auto my-4">
             <div className="flex items-center justify-between p-3">
@@ -136,7 +136,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
             <Features values={array} />
             <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
           </div>
-        </Layout> */}
+        </Layout>
       </>
     );
   return (

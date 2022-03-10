@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Logo } from "../../../../assets/logo/logo";
 import Link from "next/link";
-import { SingedIn } from "../../../forms";
+import { SingedIn } from "./signed_in";
 
 export const Navbar = () => {
   const router = useRouter();
@@ -24,7 +24,7 @@ export const Navbar = () => {
               Contact Us
             </a>
           </Link>
-          <Link href="/about">
+          <Link href="/guide">
             <a className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200 cursor-pointer mr-8">
               Guide
             </a>
