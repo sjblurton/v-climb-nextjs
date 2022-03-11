@@ -11,13 +11,21 @@ export default async function handler(
   if (req.method === "GET") {
     const array = Object.keys(req.query);
     if (array.length > 0) {
-      const queryArray = array.map((item) => {
+      const baseQueryArray = array.map((item) => {
         if (item === "take" || item === "skip") {
           return { [item]: Number(req.query[item]) };
         }
       });
 
-      const prismaQuery = Object.assign({}, ...queryArray);
+      const whereQueryArray = array.map((item) => {
+        if (item !== "take" && item !== "skip") {
+          return { [item]: req.query[item] };
+        }
+      });
+      const whereQuery = Object.assign({}, ...whereQueryArray);
+      const baseQuery = Object.assign({}, ...baseQueryArray);
+
+      const prismaQuery = { ...baseQuery, ...{ where: whereQuery } };
 
       try {
         const shoes = await prisma.shoes.findMany(prismaQuery);

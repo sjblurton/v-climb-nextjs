@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ParsedUrlQuery } from "querystring";
 import useSWR from "swr";
 import {
   BrandWithStringDates,
@@ -6,7 +7,8 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 
-export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+export const fetcher = (url: string, params?: ParsedUrlQuery) =>
+  axios.get(url, params).then((res) => res.data);
 
 export const useShoes = (id = "") => {
   const { data, error, mutate } = useSWR<{ shoes: ShoeWithStringDates[] }, any>(
@@ -15,6 +17,19 @@ export const useShoes = (id = "") => {
   );
   return {
     shoesData: data,
+    isLoading: !error && !data,
+    isError: error,
+    mutate,
+  };
+};
+
+export const useShoeQuery = (query: ParsedUrlQuery) => {
+  const { data, error, mutate } = useSWR<{ shoes: ShoeWithStringDates[] }, any>(
+    { url: "/api/v1/shoes/", params: { query } },
+    fetcher
+  );
+  return {
+    shoesQueryData: data,
     isLoading: !error && !data,
     isError: error,
     mutate,

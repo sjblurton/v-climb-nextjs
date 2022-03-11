@@ -8,22 +8,43 @@ import { Features, SimilarTo } from "../components/product";
 import { VeganImage, Layout, Seo, Message } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
 import { stringifyTheDates } from "../helper/stringify";
-import { useBrands, useRubbers, useShoes } from "../hooks/custom";
+import { useBrands, useRubbers, useShoeQuery, useShoes } from "../hooks/custom";
 import {
   RubberWithStringDates,
   ShoeWithStringDates,
   TFeatures,
 } from "../interface";
 import prisma from "../lib/prisma";
+import { axiosGet } from "../service/axios";
 
 const Product: NextPage = () => {
+  const [query, setQuery] = useState<ParsedUrlQuery | undefined>(undefined);
+  const [similarShoes, setSimilarShoes] = useState<
+    ShoeWithStringDates[] | undefined
+  >(undefined);
   const router = useRouter();
-  const { shoesData, isLoading, isError } = useShoes(
-    router.query.slug as string
-  );
+  const { shoesData, isError } = useShoes(router.query.slug as string);
   const { brandsData } = useBrands(shoesData?.shoes[0].brandId);
   const { rubbersData } = useRubbers(shoesData?.shoes[0].rubberId);
-  console.log(shoesData);
+
+  useEffect(() => {
+    const getSimilar = async () => {
+      const shoes = await axiosGet.getShoes(query);
+      if (shoes.shoes)
+        setSimilarShoes(
+          shoes.shoes.filter((shoe) => shoe.slug !== shoesData?.shoes[0].slug)
+        );
+    };
+
+    if (query) getSimilar();
+  }, [query]);
+
+  useEffect(() => {
+    if (shoesData) {
+      const { asymmetry, profile, midsole } = shoesData.shoes[0];
+      setQuery({ midsole, profile, asymmetry });
+    }
+  }, [shoesData]);
 
   if (isError) {
     return (
@@ -114,10 +135,14 @@ const Product: NextPage = () => {
             <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
               Price: {priceConverter(price)}
             </h3>
-            {/* <Features values={array} />
-            {similar.length > 0 && (
-              <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
-            )} */}
+            <Features values={array} />
+            {similarShoes && similarShoes.length > 0 && (
+              <SimilarTo
+                shoes={similarShoes}
+                brand={shoeBrand}
+                name={shoeName}
+              />
+            )}
           </div>
         </Layout>
       </>
