@@ -8,7 +8,7 @@ import { Features, SimilarTo } from "../components/product";
 import { VeganImage, Layout, Seo, Message } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
 import { stringifyTheDates } from "../helper/stringify";
-import { useRubbers, useShoes } from "../hooks/custom";
+import { useBrands, useRubbers, useShoes } from "../hooks/custom";
 import {
   RubberWithStringDates,
   ShoeWithStringDates,
@@ -16,67 +16,63 @@ import {
 } from "../interface";
 import prisma from "../lib/prisma";
 
-type Props = {
-  shoe: ShoeWithStringDates;
-  rubber: RubberWithStringDates;
-  shoeBrand: string;
-  rubberBrand: string;
-  similar: ShoeWithStringDates[];
-};
-
-const Product: NextPage<Props> = (
-  {
-    // shoe,
-    // rubber,
-    // shoeBrand,
-    // rubberBrand,
-    // similar,
-  }
-) => {
+const Product: NextPage = () => {
   const router = useRouter();
+  const { shoesData, isLoading, isError } = useShoes(
+    router.query.slug as string
+  );
+  const { brandsData } = useBrands(shoesData?.shoes[0].brandId);
+  const { rubbersData } = useRubbers(shoesData?.shoes[0].rubberId);
+  console.log(shoesData);
 
-  if (router.isFallback) {
+  if (isError) {
     return (
       <>
-        <Layout>
-          <Message>Loading...</Message>
-        </Layout>
+        <Message>Ops... Something went wrong.</Message>
       </>
     );
   }
 
-  // const {
-  //   name: shoeName,
-  //   veganType,
-  //   image,
-  //   price,
-  //   description,
-  //   midsole,
-  //   profile,
-  //   rubber_thickness,
-  //   asymmetry,
-  //   volume,
-  //   updatedAt,
-  //   url,
-  // } = shoe;
+  if (shoesData && brandsData && rubbersData) {
+    const {
+      name: shoeName,
+      veganType,
+      image,
+      price,
+      description,
+      midsole,
+      profile,
+      rubber_thickness,
+      asymmetry,
+      volume,
+      updatedAt,
+      url,
+    } = shoesData?.shoes[0];
 
-  // const templateTitle = `${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
-  //   veganType
-  // )}`;
+    const shoeBrand = brandsData.brands[0].name;
 
-  // const array = [
-  //   { title: "profile" as TFeatures, value: profile },
-  //   { title: "midsole" as TFeatures, value: midsole },
-  //   { title: "rubber" as TFeatures, value: rubber_thickness },
-  //   { title: "asymmetry" as TFeatures, value: asymmetry },
-  //   { title: "volume" as TFeatures, value: volume },
-  //   { title: "rubberBrand" as TFeatures, value: rubber.image, rubber: rubber },
-  // ];
+    const rubber = rubbersData.rubbers[0];
 
-  // if (shoe)
-  return (
-    <>
-      {/* <Seo templateTitle={templateTitle} />
+    const templateTitle = `${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
+      veganType
+    )}`;
+
+    const array = [
+      { title: "profile" as TFeatures, value: profile },
+      { title: "midsole" as TFeatures, value: midsole },
+      { title: "rubber" as TFeatures, value: rubber_thickness },
+      { title: "asymmetry" as TFeatures, value: asymmetry },
+      { title: "volume" as TFeatures, value: volume },
+      {
+        title: "rubberBrand" as TFeatures,
+        value: rubber.image,
+        rubber: rubber,
+      },
+    ];
+
+    return (
+      <>
+        <Seo templateTitle={templateTitle} />
         <Layout>
           <div className="container max-w-5xl mx-auto my-4">
             <div className="flex items-center justify-between p-3">
@@ -118,22 +114,20 @@ const Product: NextPage<Props> = (
             <h3 className="p-3 text-olive-50 capitalize text-3xl font-bold">
               Price: {priceConverter(price)}
             </h3>
-            <Features values={array} />
+            {/* <Features values={array} />
             {similar.length > 0 && (
               <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
-            )}
+            )} */}
           </div>
-        </Layout> */}
+        </Layout>
+      </>
+    );
+  }
+  return (
+    <>
+      <Message>Loading...</Message>
     </>
   );
-  // return (
-  //   <>
-  //     <Seo />
-  //     <Layout>
-  //       <Message>Loading...</Message>
-  //     </Layout>
-  //   </>
-  // );
 };
 
 export default Product;
