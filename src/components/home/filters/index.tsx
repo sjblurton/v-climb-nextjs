@@ -23,46 +23,46 @@ export const Filters = () => {
   const router = useRouter();
 
   const handleApplyClick = async () => {
-    // dispatch({ type: ActionType.SetIsLoading, payload: true });
-    // const queryURLString = [
-    //   "?",
-    //   queryString("brandId", state.filters.brands),
-    //   queryString("rubberId", state.filters.rubbers),
-    //   queryString("midsole", state.filters.midsole),
-    //   queryString("veganType", state.filters.veganType),
-    //   queryString("asymmetry", state.filters.asymmetry),
-    //   queryString("closure", state.filters.closure),
-    //   queryString("hooking", state.filters.hooking),
-    //   queryString("price", state.filters.price),
-    //   queryString("profile", state.filters.profile),
-    //   queryString("profile", state.filters.profile),
-    //   queryString("volume", state.filters.volume),
-    //   queryString("rubber_thickness", state.filters.rubber_thickness),
-    // ].join("");
-    // router.push(queryURLString, undefined, {
-    //   shallow: true,
-    // });
-    // const shoes = await axiosGet.getShoes({
-    //   brandId: state.filters.brands,
-    //   rubberId: state.filters.rubbers,
-    //   midsole: state.filters.midsole,
-    //   veganType: state.filters.veganType,
-    //   asymmetry: state.filters.asymmetry,
-    //   closure: state.filters.closure,
-    //   hooking: state.filters.hooking,
-    //   price: state.filters.price,
-    //   profile: state.filters.profile,
-    //   volume: state.filters.volume,
-    //   rubber_thickness: state.filters.rubber_thickness,
-    // });
-    // if (shoes.shoes)
-    //   dispatch({
-    //     type: ActionType.SetFilteredShoes,
-    //     payload: {
-    //       filteredShoes: shoes.shoes,
-    //     },
-    //   });
-    // dispatch({ type: ActionType.SetIsLoading, payload: false });
+    dispatch({ type: ActionType.SetIsLoading, payload: true });
+    const queryURLString = [
+      "?",
+      queryString("brandId", state.filters.brands),
+      queryString("rubberId", state.filters.rubbers),
+      queryString("midsole", state.filters.midsole),
+      queryString("veganType", state.filters.veganType),
+      queryString("asymmetry", state.filters.asymmetry),
+      queryString("closure", state.filters.closure),
+      queryString("hooking", state.filters.hooking),
+      queryString("price", state.filters.price),
+      queryString("profile", state.filters.profile),
+      queryString("profile", state.filters.profile),
+      queryString("volume", state.filters.volume),
+      queryString("rubber_thickness", state.filters.rubber_thickness),
+    ].join("");
+    router.push(queryURLString, undefined, {
+      shallow: true,
+    });
+    const shoes = await axiosGet.getShoes({
+      brandId: state.filters.brands,
+      rubberId: state.filters.rubbers,
+      midsole: state.filters.midsole,
+      veganType: state.filters.veganType,
+      asymmetry: state.filters.asymmetry,
+      closure: state.filters.closure,
+      hooking: state.filters.hooking,
+      price: state.filters.price,
+      profile: state.filters.profile,
+      volume: state.filters.volume,
+      rubber_thickness: state.filters.rubber_thickness,
+    });
+    if (shoes.shoes)
+      dispatch({
+        type: ActionType.SetFilteredShoes,
+        payload: {
+          filteredShoes: shoes.shoes,
+        },
+      });
+    dispatch({ type: ActionType.SetIsLoading, payload: false });
   };
 
   const handleReset = () => {

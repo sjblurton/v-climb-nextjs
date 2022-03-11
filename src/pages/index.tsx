@@ -1,10 +1,11 @@
 import { GetStaticProps } from "next";
 import { useContext, useEffect } from "react";
-import { SearchBar } from "../components/home";
+import { Filters, SearchBar } from "../components/home";
 import { ShoeGrid } from "../components/home";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { stringifyTheDates } from "../helper/stringify";
+import { useRubbers } from "../hooks/custom";
 import { BrandWithStringDates, ShoeWithStringDates } from "../interface";
 import prisma from "../lib/prisma";
 import { ActionType } from "../reducer/actions";
@@ -17,6 +18,7 @@ interface Props {
 
 const Home = ({ shoes, brands, numberOfShoes }: Props) => {
   const { dispatch, state } = useContext(FilterContext);
+  const { rubbersData } = useRubbers();
 
   useEffect(() => {
     if (state.brands.length === 0)
@@ -30,6 +32,14 @@ const Home = ({ shoes, brands, numberOfShoes }: Props) => {
         payload: shoes,
       });
   }, []); //eslint-disable-line
+
+  useEffect(() => {
+    if (rubbersData)
+      dispatch({
+        type: ActionType.InitRubberData,
+        payload: rubbersData.rubbers,
+      });
+  }, [rubbersData]); //eslint-disable-line
 
   return (
     <>
@@ -54,7 +64,7 @@ const Home = ({ shoes, brands, numberOfShoes }: Props) => {
         <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
             <div></div>
-            {/* <Filters /> */}
+            <Filters />
           </div>
           <ShoeGrid />
         </div>

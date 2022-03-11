@@ -1,16 +1,8 @@
 import prisma from "../../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringifyTheDates } from "../../../../helper/stringify";
-import {
-  ApiError,
-  RubberPost,
-  RubberWithStringDates,
-} from "../../../../interface";
+import { RubberPost, RubberWithStringDates } from "../../../../interface";
 import { getSession } from "next-auth/react";
-
-type Data = {
-  rubbers: RubberWithStringDates[];
-};
 
 export default async function handler(
   req: NextApiRequest,

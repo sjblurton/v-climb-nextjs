@@ -4,10 +4,6 @@ import { stringifyTheDates } from "../../../../helper/stringify";
 import { ShoePost, ShoeWithStringDates } from "../../../../interface";
 import { getSession } from "next-auth/react";
 
-type Data = {
-  shoes: ShoeWithStringDates[];
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

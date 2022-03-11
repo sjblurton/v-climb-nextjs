@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../../context/context";
 import { RubberWithStringDates } from "../../../../interface";
 import { Checkbox } from "../checkbox";
-import { Tooltip } from "./tooltip";
 
 interface RubberFilter extends RubberWithStringDates {
   title: string;
@@ -45,16 +44,14 @@ export const RubbersFilter = () => {
             rubber.name;
 
           return (
-            <Tooltip key={rubber.id} rubber={rubber}>
-              <div>
-                <Checkbox
-                  key={rubber.id}
-                  filterGroup="rubber"
-                  id={rubber.id}
-                  label={title}
-                />
-              </div>
-            </Tooltip>
+            <div key={rubber.id}>
+              <Checkbox
+                key={rubber.id}
+                filterGroup="rubber"
+                id={rubber.id}
+                label={title}
+              />
+            </div>
           );
         })}
     </>
