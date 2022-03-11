@@ -13,20 +13,15 @@ import { ShoeWithStringDates, TFeatures } from "../interface";
 import prisma from "../lib/prisma";
 import { axiosGet } from "../service/axios";
 
-type Props = {
-  shoe: ShoeWithStringDates;
-};
-
-const Product: NextPage<Props> = ({ shoe }) => {
-  console.log(shoe);
+const Product: NextPage = () => {
   const [query, setQuery] = useState<ParsedUrlQuery | undefined>(undefined);
   const [similarShoes, setSimilarShoes] = useState<
     ShoeWithStringDates[] | undefined
   >(undefined);
   const router = useRouter();
-  // const { shoesData, isError } = useShoes(router.query.slug as string);
-  const { brandsData } = useBrands(shoe.brandId);
-  const { rubbersData } = useRubbers(shoe.rubberId);
+  const { shoesData, isError } = useShoes(router.query.slug as string);
+  const { brandsData } = useBrands(shoesData?.shoes[0].brandId);
+  const { rubbersData } = useRubbers(shoesData?.shoes[0].rubberId);
 
   useEffect(() => {
     const getSimilar = async () => {
@@ -39,8 +34,8 @@ const Product: NextPage<Props> = ({ shoe }) => {
   }, [query]); // eslint-disable-line
 
   useEffect(() => {
-    if (shoe) {
-      const { asymmetry, profile, midsole } = shoe;
+    if (shoesData) {
+      const { asymmetry, profile, midsole } = shoesData?.shoes[0];
       setQuery({
         midsole,
         profile,
@@ -50,7 +45,7 @@ const Product: NextPage<Props> = ({ shoe }) => {
     }
   }, []);
 
-  if (shoe && brandsData && rubbersData) {
+  if (shoesData && brandsData && rubbersData) {
     const {
       name: shoeName,
       veganType,
@@ -64,7 +59,7 @@ const Product: NextPage<Props> = ({ shoe }) => {
       volume,
       updatedAt,
       url,
-    } = shoe;
+    } = shoesData.shoes[0];
 
     const shoeBrand = brandsData.brands[0].name;
 
@@ -153,39 +148,39 @@ const Product: NextPage<Props> = ({ shoe }) => {
 
 export default Product;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const shoes = await prisma.shoes.findMany({
-    select: { slug: true },
-  });
-  const paths = shoes.map((shoe) => {
-    return { params: { slug: shoe.slug } };
-  });
-  return {
-    paths,
-    fallback: true,
-  };
-};
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const shoes = await prisma.shoes.findMany({
+//     select: { slug: true },
+//   });
+//   const paths = shoes.map((shoe) => {
+//     return { params: { slug: shoe.slug } };
+//   });
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
-interface IParams extends ParsedUrlQuery {
-  slug: string;
-}
+// interface IParams extends ParsedUrlQuery {
+//   slug: string;
+// }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { slug } = context.params as IParams;
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const { slug } = context.params as IParams;
 
-  let props = {};
+//   let props = {};
 
-  const shoe = await prisma.shoes.findUnique({ where: { slug } });
+//   const shoe = await prisma.shoes.findUnique({ where: { slug } });
 
-  if (shoe) {
-    const shoesDatesAsStrings = stringifyTheDates([
-      shoe,
-    ]) as ShoeWithStringDates[];
+//   if (shoe) {
+//     const shoesDatesAsStrings = stringifyTheDates([
+//       shoe,
+//     ]) as ShoeWithStringDates[];
 
-    props = {
-      shoe: shoesDatesAsStrings[0],
-    };
-  }
+//     props = {
+//       shoe: shoesDatesAsStrings[0],
+//     };
+//   }
 
-  return { props, revalidate: 1000 };
-};
+//   return { props, revalidate: 1000 };
+// };

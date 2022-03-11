@@ -7,7 +7,6 @@ import { LoadMore } from "../more";
 
 export const ShoeGrid = () => {
   const { state } = useContext(FilterContext);
-  console.log(state);
   const card = (
     shoes: ShoeWithStringDates[],
     brands: BrandWithStringDates[]
