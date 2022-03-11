@@ -189,31 +189,31 @@ export const getStaticProps: GetStaticProps = async (context) => {
         select: { name: true },
       });
 
-      const rubbersWithSameStiffness = await prisma.rubber.findMany({
-        where: { stiffness: rubber.stiffness },
-        select: { id: true },
-      });
+      // const rubbersWithSameStiffness = await prisma.rubber.findMany({
+      //   where: { stiffness: rubber.stiffness },
+      //   select: { id: true },
+      // });
 
-      const similarShoes =
-        rubbersWithSameStiffness &&
-        (await prisma.shoes.findMany({
-          where: {
-            midsole: shoe.midsole,
-            profile: shoe.profile,
-            asymmetry: shoe.asymmetry,
-            rubberId: {
-              in: [...rubbersWithSameStiffness.map((item) => item.id)],
-            },
-          },
-        }));
-      const shoesDatesAsStrings = stringifyTheDates([
-        ...similarShoes,
-      ]) as ShoeWithStringDates[];
+      // const similarShoes =
+      //   rubbersWithSameStiffness &&
+      //   (await prisma.shoes.findMany({
+      //     where: {
+      //       midsole: shoe.midsole,
+      //       profile: shoe.profile,
+      //       asymmetry: shoe.asymmetry,
+      //       rubberId: {
+      //         in: [...rubbersWithSameStiffness.map((item) => item.id)],
+      //       },
+      //     },
+      //   }));
+      // const shoesDatesAsStrings = stringifyTheDates([
+      //   ...similarShoes,
+      // ]) as ShoeWithStringDates[];
 
       props = {
         ...props,
         rubberBrand: rubberBrandRes?.name,
-        similar: shoesDatesAsStrings.filter((item) => item.id !== shoe.id),
+        // similar: shoesDatesAsStrings.filter((item) => item.id !== shoe.id),
       };
     }
 
