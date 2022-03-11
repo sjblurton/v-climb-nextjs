@@ -13,7 +13,7 @@ export const Square = ({ title, value, rubber }: Props) => {
   const selectSvg = () => {
     if (title === "volume")
       return (
-        <Tooltip key={title} type={title} value={value}>
+        <Tooltip type={title} value={value}>
           <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
             <h3 className="font-bold uppercase text-base text-gray-900">
               {title}
@@ -27,7 +27,7 @@ export const Square = ({ title, value, rubber }: Props) => {
       );
     if (title === "profile")
       return (
-        <Tooltip key={title} type={title} value={value}>
+        <Tooltip type={title} value={value}>
           <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
             <h3 className="font-bold uppercase text-base text-gray-900">
               {title}
@@ -55,7 +55,7 @@ export const Square = ({ title, value, rubber }: Props) => {
       );
     if (title === "rubber")
       return (
-        <Tooltip key={title} type={title} value={value}>
+        <Tooltip type={title} value={value}>
           <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
             <h3 className="font-bold uppercase text-base text-gray-900">
               {title}
@@ -69,7 +69,7 @@ export const Square = ({ title, value, rubber }: Props) => {
       );
     if (title === "midsole")
       return (
-        <Tooltip key={title} type={title} value={value}>
+        <Tooltip type={title} value={value}>
           <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
             <h3 className="font-bold uppercase text-base text-gray-900">
               {title}
@@ -83,7 +83,7 @@ export const Square = ({ title, value, rubber }: Props) => {
       );
     if (rubber) {
       return (
-        <Tooltip key={title} type={title} value={value} rubber={rubber}>
+        <Tooltip type={title} value={value} rubber={rubber}>
           <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
             <h3 className="font-bold uppercase text-base text-gray-900 text-center">
               rubber
@@ -102,7 +102,7 @@ export const Square = ({ title, value, rubber }: Props) => {
       );
     }
     return (
-      <Tooltip key={title} type={title} value={value}>
+      <Tooltip type={title} value={value}>
         <div className="w-36 h-36 bg-olive-50 rounded p-2 flex flex-col items-center justify-between">
           <h3 className="font-bold uppercase text-base text-gray-900">
             {title}

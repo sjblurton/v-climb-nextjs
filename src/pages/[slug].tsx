@@ -31,30 +31,6 @@ const Product: NextPage<Props> = ({
   rubberBrand,
   similar,
 }) => {
-  // const [similar, setSimilar] = useState<ShoeWithStringDates[]>([]);
-  // const { shoesData } = useShoes();
-  // const { rubbersData } = useRubbers();
-
-  // useEffect(() => {
-  //   if (rubbersData && shoesData && shoe.volume !== "KIDS") {
-  //     const rubberList = rubbersData.rubbers
-  //       .filter((item) => item.stiffness === rubber.stiffness)
-  //       .map((item) => item.id);
-  //     const shoeList = shoesData.shoes.filter(
-  //       (item) =>
-  //         item.asymmetry === shoe.asymmetry &&
-  //         item.midsole === shoe.midsole &&
-  //         item.profile === shoe.profile &&
-  //         rubberList.includes(item.rubberId)
-  //     );
-  //     setSimilar(shoeList.filter((item) => item.id !== shoe.id));
-  //   }
-  //   if (rubbersData && shoesData && shoe.volume === "KIDS") {
-  //     const shoeList = shoesData.shoes.filter((item) => item.volume === "KIDS");
-  //     setSimilar(shoeList.filter((item) => item.id !== shoe.id));
-  //   }
-  // }, [shoesData, rubbersData]); // eslint-disable-line
-
   const router = useRouter();
 
   if (router.isFallback) {
@@ -141,7 +117,9 @@ const Product: NextPage<Props> = ({
               Price: {priceConverter(price)}
             </h3>
             <Features values={array} />
-            <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
+            {similar.length > 0 && (
+              <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
+            )}
           </div>
         </Layout>
       </>
@@ -232,7 +210,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props = {
         ...props,
         rubberBrand: rubberBrandRes?.name,
-        similar: shoesDatesAsStrings,
+        similar: shoesDatesAsStrings.filter((item) => item.id !== shoe.id),
       };
     }
 

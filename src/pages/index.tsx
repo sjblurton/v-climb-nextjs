@@ -1,41 +1,38 @@
 import { GetStaticProps } from "next";
 import { useContext, useEffect } from "react";
-import { SWRConfig } from "swr";
 import { SearchBar } from "../components/home";
 import { ShoeGrid } from "../components/home";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { stringifyTheDates } from "../helper/stringify";
-import {
-  BrandWithStringDates,
-  RubberWithStringDates,
-  ShoeWithStringDates,
-} from "../interface";
+import { BrandWithStringDates, ShoeWithStringDates } from "../interface";
 import prisma from "../lib/prisma";
 import { ActionType } from "../reducer/actions";
 
 interface Props {
-  fallback: {
-    "/api/v1/shoes": { shoes: ShoeWithStringDates[] };
-    "/api/v1/brands": { brands: BrandWithStringDates[] };
-  };
+  shoes: ShoeWithStringDates[];
+  brands: BrandWithStringDates[];
+  numberOfShoes: number;
 }
 
-const Home = ({ fallback }: Props) => {
+const Home = ({ shoes, brands, numberOfShoes }: Props) => {
   const { dispatch, state } = useContext(FilterContext);
+
   useEffect(() => {
-    dispatch({
-      type: ActionType.InitBrandData,
-      payload: fallback["/api/v1/brands"].brands,
-    });
-    dispatch({
-      type: ActionType.InitShoeData,
-      payload: fallback["/api/v1/shoes"].shoes,
-    });
+    if (state.brands.length === 0)
+      dispatch({
+        type: ActionType.InitBrandData,
+        payload: brands,
+      });
+    if (state.shoes.length === 0)
+      dispatch({
+        type: ActionType.InitShoeData,
+        payload: shoes,
+      });
   }, []); //eslint-disable-line
 
   return (
-    <SWRConfig value={{ fallback }}>
+    <>
       <Seo />
       <Layout>
         <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
@@ -50,8 +47,8 @@ const Home = ({ fallback }: Props) => {
             and the animals.
           </p>
           <SearchBar />
-          <p>
-            showing {state.filteredShoes.length} shoes of {state.shoes.length}
+          <p className="text-slate-200">
+            showing {state.filteredShoes.length} shoes of {numberOfShoes}
           </p>
         </article>
         <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
@@ -62,7 +59,7 @@ const Home = ({ fallback }: Props) => {
           <ShoeGrid />
         </div>
       </Layout>
-    </SWRConfig>
+    </>
   );
 };
 
@@ -70,8 +67,9 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
   const brands = await prisma.brand.findMany();
-  const rubbers = await prisma.rubber.findMany();
-  const shoes = await prisma.shoes.findMany();
+  const numberOfShoes = (await prisma.shoes.findMany({ select: { id: true } }))
+    .length;
+  const shoes = await prisma.shoes.findMany({ take: 80 });
 
   const shoesDatesAsStrings = stringifyTheDates(shoes) as ShoeWithStringDates[];
   const brandsDatesAsStrings = stringifyTheDates(
@@ -79,10 +77,9 @@ export const getStaticProps: GetStaticProps = async () => {
   ) as BrandWithStringDates[];
 
   const props = {
-    fallback: {
-      "/api/v1/shoes": { shoes: shoesDatesAsStrings },
-      "/api/v1/brands": { brands: brandsDatesAsStrings },
-    },
+    shoes: shoesDatesAsStrings,
+    brands: brandsDatesAsStrings,
+    numberOfShoes,
   };
 
   return { props, revalidate: 1000 };

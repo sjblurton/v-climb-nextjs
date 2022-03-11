@@ -39,22 +39,20 @@ export const LoadMore = () => {
         show ? "flex w-full my-4 justify-center  col-span-full" : "hidden"
       }
     >
-      {loading && (
+      {loading ? (
         <div className="flex justify-center items-center">
           <div
-            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-slate-200"
             role="status"
           >
             <span className="visually-hidden"></span>
           </div>
         </div>
+      ) : (
+        <button className={"btn-olive"} onClick={handleClick}>
+          See More
+        </button>
       )}
-      <button
-        className={loading ? "hidden" : "btn-olive"}
-        onClick={handleClick}
-      >
-        See More
-      </button>
     </div>
   );
 };
