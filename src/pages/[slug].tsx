@@ -24,25 +24,23 @@ const Product: NextPage<Props> = ({ shoe }) => {
     ShoeWithStringDates[] | undefined
   >(undefined);
   const router = useRouter();
-  const { shoesData, isError } = useShoes(router.query.slug as string);
-  const { brandsData } = useBrands(shoesData?.shoes[0].brandId);
-  const { rubbersData } = useRubbers(shoesData?.shoes[0].rubberId);
+  // const { shoesData, isError } = useShoes(router.query.slug as string);
+  const { brandsData } = useBrands(shoe.brandId);
+  const { rubbersData } = useRubbers(shoe.rubberId);
 
   useEffect(() => {
     const getSimilar = async () => {
       const shoes = await axiosGet.getShoes(query);
       if (shoes.shoes)
-        setSimilarShoes(
-          shoes.shoes.filter((shoe) => shoe.slug !== shoesData?.shoes[0].slug)
-        );
+        setSimilarShoes(shoes.shoes.filter((shoe) => shoe.slug !== shoe.slug));
     };
 
     if (query) getSimilar();
   }, [query]); // eslint-disable-line
 
   useEffect(() => {
-    if (shoesData) {
-      const { asymmetry, profile, midsole } = shoesData.shoes[0];
+    if (shoe) {
+      const { asymmetry, profile, midsole } = shoe;
       setQuery({
         midsole,
         profile,
@@ -50,17 +48,9 @@ const Product: NextPage<Props> = ({ shoe }) => {
         veganType: ["VEGAN", "POSSIBLY"],
       });
     }
-  }, [shoesData]);
+  }, []);
 
-  if (isError) {
-    return (
-      <>
-        <Message>Ops... Something went wrong.</Message>
-      </>
-    );
-  }
-
-  if (shoesData && brandsData && rubbersData) {
+  if (shoe && brandsData && rubbersData) {
     const {
       name: shoeName,
       veganType,
@@ -74,7 +64,7 @@ const Product: NextPage<Props> = ({ shoe }) => {
       volume,
       updatedAt,
       url,
-    } = shoesData?.shoes[0];
+    } = shoe;
 
     const shoeBrand = brandsData.brands[0].name;
 
