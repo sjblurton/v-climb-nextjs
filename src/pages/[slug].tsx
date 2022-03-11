@@ -141,7 +141,7 @@ export default Product;
 export const getStaticPaths: GetStaticPaths = async () => {
   const shoes = await prisma.shoes.findMany({
     select: { slug: true },
-    take: 30,
+    take: 5,
   });
   const paths = shoes.map((shoe) => {
     return { params: { slug: shoe.slug } };
