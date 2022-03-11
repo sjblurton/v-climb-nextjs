@@ -138,18 +138,18 @@ const Product: NextPage<Props> = (
 
 export default Product;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const shoes = await prisma.shoes.findMany({
-    select: { slug: true },
-  });
-  const paths = shoes.map((shoe) => {
-    return { params: { slug: shoe.slug } };
-  });
-  return {
-    paths,
-    fallback: true,
-  };
-};
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const shoes = await prisma.shoes.findMany({
+//     select: { slug: true },
+//   });
+//   const paths = shoes.map((shoe) => {
+//     return { params: { slug: shoe.slug } };
+//   });
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
 interface IParams extends ParsedUrlQuery {
   slug: string;
