@@ -8,16 +8,17 @@ import { Features, SimilarTo } from "../components/product";
 import { VeganImage, Layout, Seo, Message } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
 import { stringifyTheDates } from "../helper/stringify";
-import { useBrands, useRubbers, useShoeQuery, useShoes } from "../hooks/custom";
-import {
-  RubberWithStringDates,
-  ShoeWithStringDates,
-  TFeatures,
-} from "../interface";
+import { useBrands, useRubbers, useShoes } from "../hooks/custom";
+import { ShoeWithStringDates, TFeatures } from "../interface";
 import prisma from "../lib/prisma";
 import { axiosGet } from "../service/axios";
 
-const Product: NextPage = () => {
+type Props = {
+  shoe: ShoeWithStringDates;
+};
+
+const Product: NextPage<Props> = ({ shoe }) => {
+  console.log(shoe);
   const [query, setQuery] = useState<ParsedUrlQuery | undefined>(undefined);
   const [similarShoes, setSimilarShoes] = useState<
     ShoeWithStringDates[] | undefined
@@ -37,12 +38,17 @@ const Product: NextPage = () => {
     };
 
     if (query) getSimilar();
-  }, [query]);
+  }, [query]); // eslint-disable-line
 
   useEffect(() => {
     if (shoesData) {
       const { asymmetry, profile, midsole } = shoesData.shoes[0];
-      setQuery({ midsole, profile, asymmetry });
+      setQuery({
+        midsole,
+        profile,
+        asymmetry,
+        veganType: ["VEGAN", "POSSIBLY"],
+      });
     }
   }, [shoesData]);
 
@@ -157,90 +163,39 @@ const Product: NextPage = () => {
 
 export default Product;
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const shoes = await prisma.shoes.findMany({
-//     select: { slug: true },
-//   });
-//   const paths = shoes.map((shoe) => {
-//     return { params: { slug: shoe.slug } };
-//   });
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// };
+export const getStaticPaths: GetStaticPaths = async () => {
+  const shoes = await prisma.shoes.findMany({
+    select: { slug: true },
+  });
+  const paths = shoes.map((shoe) => {
+    return { params: { slug: shoe.slug } };
+  });
+  return {
+    paths,
+    fallback: true,
+  };
+};
 
-// interface IParams extends ParsedUrlQuery {
-//   slug: string;
-// }
+interface IParams extends ParsedUrlQuery {
+  slug: string;
+}
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const { slug } = context.params as IParams;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { slug } = context.params as IParams;
 
-//   let props = {};
+  let props = {};
 
-//   const shoe = await prisma.shoes.findUnique({ where: { slug } });
+  const shoe = await prisma.shoes.findUnique({ where: { slug } });
 
-//   if (shoe) {
-//     const shoesDatesAsStrings = stringifyTheDates([
-//       shoe,
-//     ]) as ShoeWithStringDates[];
+  if (shoe) {
+    const shoesDatesAsStrings = stringifyTheDates([
+      shoe,
+    ]) as ShoeWithStringDates[];
 
-//     const brand = await prisma.brand.findUnique({
-//       where: { id: shoe.brandId },
-//       select: { name: true },
-//     });
+    props = {
+      shoe: shoesDatesAsStrings[0],
+    };
+  }
 
-//     const rubber = await prisma.rubber.findUnique({
-//       where: { id: shoe.rubberId },
-//     });
-
-//     if (rubber) {
-//       const rubbersDatesAsStrings = stringifyTheDates([
-//         rubber,
-//       ]) as RubberWithStringDates[];
-
-//       props = { ...props, rubber: rubbersDatesAsStrings[0] };
-
-//       const rubberBrandRes = await prisma.brand.findUnique({
-//         where: { id: rubber.brandId },
-//         select: { name: true },
-//       });
-
-// const rubbersWithSameStiffness = await prisma.rubber.findMany({
-//   where: { stiffness: rubber.stiffness },
-//   select: { id: true },
-// });
-
-// const similarShoes =
-//   rubbersWithSameStiffness &&
-//   (await prisma.shoes.findMany({
-//     where: {
-//       midsole: shoe.midsole,
-//       profile: shoe.profile,
-//       asymmetry: shoe.asymmetry,
-//       rubberId: {
-//         in: [...rubbersWithSameStiffness.map((item) => item.id)],
-//       },
-//     },
-//   }));
-// const shoesDatesAsStrings = stringifyTheDates([
-//   ...similarShoes,
-// ]) as ShoeWithStringDates[];
-
-//       props = {
-//         ...props,
-//         rubberBrand: rubberBrandRes?.name,
-//         // similar: shoesDatesAsStrings.filter((item) => item.id !== shoe.id),
-//       };
-//     }
-
-//     props = {
-//       ...props,
-//       shoe: shoesDatesAsStrings[0],
-//       shoeBrand: brand?.name,
-//     };
-//   }
-
-//   return { props, revalidate: 1000 };
-// };
+  return { props, revalidate: 1000 };
+};

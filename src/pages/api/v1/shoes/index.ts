@@ -10,6 +10,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const array = Object.keys(req.query);
+
     if (array.length > 0) {
       const baseQueryArray = array.map((item) => {
         if (item === "take" || item === "skip") {
@@ -19,6 +20,11 @@ export default async function handler(
 
       const whereQueryArray = array.map((item) => {
         if (item !== "take" && item !== "skip") {
+          if (/(\[\])/g.test(item)) {
+            return {
+              [item.replace(/(\[\])/g, "")]: { in: req.query[item] },
+            };
+          }
           return { [item]: req.query[item] };
         }
       });
