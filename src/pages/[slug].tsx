@@ -21,32 +21,39 @@ type Props = {
   rubber: RubberWithStringDates;
   shoeBrand: string;
   rubberBrand: string;
+  similar: ShoeWithStringDates[];
 };
 
-const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
-  const [similar, setSimilar] = useState<ShoeWithStringDates[]>([]);
-  const { shoesData } = useShoes();
-  const { rubbersData } = useRubbers();
+const Product: NextPage<Props> = ({
+  shoe,
+  rubber,
+  shoeBrand,
+  rubberBrand,
+  similar,
+}) => {
+  // const [similar, setSimilar] = useState<ShoeWithStringDates[]>([]);
+  // const { shoesData } = useShoes();
+  // const { rubbersData } = useRubbers();
 
-  useEffect(() => {
-    if (rubbersData && shoesData && shoe.volume !== "KIDS") {
-      const rubberList = rubbersData.rubbers
-        .filter((item) => item.stiffness === rubber.stiffness)
-        .map((item) => item.id);
-      const shoeList = shoesData.shoes.filter(
-        (item) =>
-          item.asymmetry === shoe.asymmetry &&
-          item.midsole === shoe.midsole &&
-          item.profile === shoe.profile &&
-          rubberList.includes(item.rubberId)
-      );
-      setSimilar(shoeList.filter((item) => item.id !== shoe.id));
-    }
-    if (rubbersData && shoesData && shoe.volume === "KIDS") {
-      const shoeList = shoesData.shoes.filter((item) => item.volume === "KIDS");
-      setSimilar(shoeList.filter((item) => item.id !== shoe.id));
-    }
-  }, [shoesData, rubbersData]); // eslint-disable-line
+  // useEffect(() => {
+  //   if (rubbersData && shoesData && shoe.volume !== "KIDS") {
+  //     const rubberList = rubbersData.rubbers
+  //       .filter((item) => item.stiffness === rubber.stiffness)
+  //       .map((item) => item.id);
+  //     const shoeList = shoesData.shoes.filter(
+  //       (item) =>
+  //         item.asymmetry === shoe.asymmetry &&
+  //         item.midsole === shoe.midsole &&
+  //         item.profile === shoe.profile &&
+  //         rubberList.includes(item.rubberId)
+  //     );
+  //     setSimilar(shoeList.filter((item) => item.id !== shoe.id));
+  //   }
+  //   if (rubbersData && shoesData && shoe.volume === "KIDS") {
+  //     const shoeList = shoesData.shoes.filter((item) => item.volume === "KIDS");
+  //     setSimilar(shoeList.filter((item) => item.id !== shoe.id));
+  //   }
+  // }, [shoesData, rubbersData]); // eslint-disable-line
 
   const router = useRouter();
 
@@ -91,7 +98,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
   if (shoe)
     return (
       <>
-        {/* <Seo templateTitle={templateTitle} />
+        <Seo templateTitle={templateTitle} />
         <Layout>
           <div className="container max-w-5xl mx-auto my-4">
             <div className="flex items-center justify-between p-3">
@@ -136,7 +143,7 @@ const Product: NextPage<Props> = ({ shoe, rubber, shoeBrand, rubberBrand }) => {
             <Features values={array} />
             <SimilarTo shoes={similar} brand={shoeBrand} name={shoe.name} />
           </div>
-        </Layout> */}
+        </Layout>
       </>
     );
   return (
@@ -201,7 +208,32 @@ export const getStaticProps: GetStaticProps = async (context) => {
         select: { name: true },
       });
 
-      props = { ...props, rubberBrand: rubberBrandRes?.name };
+      const rubbersWithSameStiffness = await prisma.rubber.findMany({
+        where: { stiffness: rubber.stiffness },
+        select: { id: true },
+      });
+
+      const similarShoes =
+        rubbersWithSameStiffness &&
+        (await prisma.shoes.findMany({
+          where: {
+            midsole: shoe.midsole,
+            profile: shoe.profile,
+            asymmetry: shoe.asymmetry,
+            rubberId: {
+              in: [...rubbersWithSameStiffness.map((item) => item.id)],
+            },
+          },
+        }));
+      const shoesDatesAsStrings = stringifyTheDates([
+        ...similarShoes,
+      ]) as ShoeWithStringDates[];
+
+      props = {
+        ...props,
+        rubberBrand: rubberBrandRes?.name,
+        similar: shoesDatesAsStrings,
+      };
     }
 
     props = {

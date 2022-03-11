@@ -18,7 +18,6 @@ interface Props {
   fallback: {
     "/api/v1/shoes": { shoes: ShoeWithStringDates[] };
     "/api/v1/brands": { brands: BrandWithStringDates[] };
-    "/api/v1/rubbers": { rubbers: RubberWithStringDates[] };
   };
 }
 
@@ -28,10 +27,6 @@ const Home = ({ fallback }: Props) => {
     dispatch({
       type: ActionType.InitBrandData,
       payload: fallback["/api/v1/brands"].brands,
-    });
-    dispatch({
-      type: ActionType.InitRubberData,
-      payload: fallback["/api/v1/rubbers"].rubbers,
     });
     dispatch({
       type: ActionType.InitShoeData,
@@ -76,21 +71,17 @@ export default Home;
 export const getStaticProps: GetStaticProps = async () => {
   const brands = await prisma.brand.findMany();
   const rubbers = await prisma.rubber.findMany();
-  const shoes = await prisma.shoes.findMany({ take: 80 });
+  const shoes = await prisma.shoes.findMany();
 
   const shoesDatesAsStrings = stringifyTheDates(shoes) as ShoeWithStringDates[];
   const brandsDatesAsStrings = stringifyTheDates(
     brands
   ) as BrandWithStringDates[];
-  const rubbersDatesAsStrings = stringifyTheDates(
-    rubbers
-  ) as RubberWithStringDates[];
 
   const props = {
     fallback: {
       "/api/v1/shoes": { shoes: shoesDatesAsStrings },
       "/api/v1/brands": { brands: brandsDatesAsStrings },
-      "/api/v1/rubbers": { rubbers: rubbersDatesAsStrings },
     },
   };
 

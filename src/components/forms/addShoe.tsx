@@ -83,14 +83,24 @@ export const AddShoe = () => {
           name="Shoes"
           setData={setData}
           setIsOpen={setIsOpen}
-          data={shoesData.shoes.map((item) => {
-            return {
-              id: item.id,
-              name: item.name,
-              slug: item.slug,
-              type: "SHOE",
-            };
-          })}
+          data={shoesData.shoes
+            .sort((a, b) => {
+              if (a.name < b.name) {
+                return -1;
+              }
+              if (a.name > b.name) {
+                return 1;
+              }
+              return 0;
+            })
+            .map((item) => {
+              return {
+                id: item.id,
+                name: item.name,
+                slug: item.slug,
+                type: "SHOE",
+              };
+            })}
         />
       </div>
     );

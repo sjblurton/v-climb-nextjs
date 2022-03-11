@@ -35,9 +35,9 @@ export const Tooltip = ({ type, value, rubber, children }: Props) => {
     }
   }, []); // eslint-disable-line
 
-  if (type === "volume") return <>{children}</>;
+  if (type === "volume") return <div key={type}>{children}</div>;
   const tooltipText = (
-    <>
+    <div key={type}>
       <span className="capitalize">{title}</span>
       <br />
       <span className="font-bold">Pros: </span>
@@ -56,7 +56,7 @@ export const Tooltip = ({ type, value, rubber, children }: Props) => {
           <br />
         </>
       ))}
-    </>
+    </div>
   );
   return <Tippy content={tooltipText}>{children}</Tippy>;
 };
