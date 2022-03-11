@@ -138,90 +138,91 @@ const Product: NextPage<Props> = (
 
 export default Product;
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const shoes = await prisma.shoes.findMany({
-//     select: { slug: true },
-//   });
-//   const paths = shoes.map((shoe) => {
-//     return { params: { slug: shoe.slug } };
-//   });
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// };
+export const getStaticPaths: GetStaticPaths = async () => {
+  const shoes = await prisma.shoes.findMany({
+    select: { slug: true },
+    take: 30,
+  });
+  const paths = shoes.map((shoe) => {
+    return { params: { slug: shoe.slug } };
+  });
+  return {
+    paths,
+    fallback: true,
+  };
+};
 
 interface IParams extends ParsedUrlQuery {
   slug: string;
 }
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const { slug } = context.params as IParams;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { slug } = context.params as IParams;
 
-//   let props = {};
+  let props = {};
 
-//   const shoe = await prisma.shoes.findUnique({ where: { slug } });
+  const shoe = await prisma.shoes.findUnique({ where: { slug } });
 
-//   if (shoe) {
-//     const shoesDatesAsStrings = stringifyTheDates([
-//       shoe,
-//     ]) as ShoeWithStringDates[];
+  if (shoe) {
+    const shoesDatesAsStrings = stringifyTheDates([
+      shoe,
+    ]) as ShoeWithStringDates[];
 
-//     const brand = await prisma.brand.findUnique({
-//       where: { id: shoe.brandId },
-//       select: { name: true },
-//     });
+    const brand = await prisma.brand.findUnique({
+      where: { id: shoe.brandId },
+      select: { name: true },
+    });
 
-//     const rubber = await prisma.rubber.findUnique({
-//       where: { id: shoe.rubberId },
-//     });
+    const rubber = await prisma.rubber.findUnique({
+      where: { id: shoe.rubberId },
+    });
 
-//     if (rubber) {
-//       const rubbersDatesAsStrings = stringifyTheDates([
-//         rubber,
-//       ]) as RubberWithStringDates[];
+    if (rubber) {
+      const rubbersDatesAsStrings = stringifyTheDates([
+        rubber,
+      ]) as RubberWithStringDates[];
 
-//       props = { ...props, rubber: rubbersDatesAsStrings[0] };
+      props = { ...props, rubber: rubbersDatesAsStrings[0] };
 
-//       const rubberBrandRes = await prisma.brand.findUnique({
-//         where: { id: rubber.brandId },
-//         select: { name: true },
-//       });
+      const rubberBrandRes = await prisma.brand.findUnique({
+        where: { id: rubber.brandId },
+        select: { name: true },
+      });
 
-//       const rubbersWithSameStiffness = await prisma.rubber.findMany({
-//         where: { stiffness: rubber.stiffness },
-//         select: { id: true },
-//       });
+      const rubbersWithSameStiffness = await prisma.rubber.findMany({
+        where: { stiffness: rubber.stiffness },
+        select: { id: true },
+      });
 
-//       const similarShoes =
-//         rubbersWithSameStiffness &&
-//         (await prisma.shoes.findMany({
-//           where: {
-//             midsole: shoe.midsole,
-//             profile: shoe.profile,
-//             asymmetry: shoe.asymmetry,
-//             rubberId: {
-//               in: [...rubbersWithSameStiffness.map((item) => item.id)],
-//             },
-//           },
-//         }));
-//       const shoesDatesAsStrings = stringifyTheDates([
-//         ...similarShoes,
-//       ]) as ShoeWithStringDates[];
+      const similarShoes =
+        rubbersWithSameStiffness &&
+        (await prisma.shoes.findMany({
+          where: {
+            midsole: shoe.midsole,
+            profile: shoe.profile,
+            asymmetry: shoe.asymmetry,
+            rubberId: {
+              in: [...rubbersWithSameStiffness.map((item) => item.id)],
+            },
+          },
+        }));
+      const shoesDatesAsStrings = stringifyTheDates([
+        ...similarShoes,
+      ]) as ShoeWithStringDates[];
 
-//       props = {
-//         ...props,
-//         rubberBrand: rubberBrandRes?.name,
-//         similar: shoesDatesAsStrings.filter((item) => item.id !== shoe.id),
-//       };
-//     }
+      props = {
+        ...props,
+        rubberBrand: rubberBrandRes?.name,
+        similar: shoesDatesAsStrings.filter((item) => item.id !== shoe.id),
+      };
+    }
 
-//     props = {
-//       ...props,
-//       shoe: shoesDatesAsStrings[0],
-//       shoeBrand: brand?.name,
-//     };
-//   }
+    props = {
+      ...props,
+      shoe: shoesDatesAsStrings[0],
+      shoeBrand: brand?.name,
+    };
+  }
 
-//   return { props, revalidate: 1000 };
-// };
+  return { props, revalidate: 1000 };
+};
