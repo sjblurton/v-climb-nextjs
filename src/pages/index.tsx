@@ -1,8 +1,10 @@
 import { GetStaticProps } from "next";
+import { useContext, useEffect } from "react";
 import { SWRConfig } from "swr";
-import { Filters, SearchBar } from "../components/home";
+import { SearchBar } from "../components/home";
 import { ShoeGrid } from "../components/home";
 import { Layout, Seo } from "../components/shared";
+import { FilterContext } from "../context/context";
 import { stringifyTheDates } from "../helper/stringify";
 import {
   BrandWithStringDates,
@@ -10,6 +12,7 @@ import {
   ShoeWithStringDates,
 } from "../interface";
 import prisma from "../lib/prisma";
+import { ActionType } from "../reducer/actions";
 
 interface Props {
   fallback: {
@@ -20,6 +23,22 @@ interface Props {
 }
 
 const Home = ({ fallback }: Props) => {
+  const { dispatch, state } = useContext(FilterContext);
+  useEffect(() => {
+    dispatch({
+      type: ActionType.InitBrandData,
+      payload: fallback["/api/v1/brands"].brands,
+    });
+    dispatch({
+      type: ActionType.InitRubberData,
+      payload: fallback["/api/v1/rubbers"].rubbers,
+    });
+    dispatch({
+      type: ActionType.InitShoeData,
+      payload: fallback["/api/v1/shoes"].shoes,
+    });
+  }, []); //eslint-disable-line
+
   return (
     <SWRConfig value={{ fallback }}>
       <Seo />
@@ -36,6 +55,9 @@ const Home = ({ fallback }: Props) => {
             and the animals.
           </p>
           <SearchBar />
+          <p>
+            showing {state.filteredShoes.length} shoes of {state.shoes.length}
+          </p>
         </article>
         <div className="grid grid-cols-1 px-1 sm:grid-cols-12 gap-2">
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">

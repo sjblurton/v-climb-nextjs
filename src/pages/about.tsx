@@ -33,7 +33,7 @@ const About = ({ rubbers }: Props) => {
 
   return (
     <>
-      {/* <Seo templateTitle="Guide on how to pick the right vegan climbing shoes" />
+      <Seo templateTitle="Guide on how to pick the right vegan climbing shoes" />
       <Layout>
         <article className="px-2 my-6 max-w-4xl mx-auto flex flex-col gap-y-3">
           <h1 className="text-6xl text-slate-50 font-bold mb-6">
@@ -128,7 +128,7 @@ const About = ({ rubbers }: Props) => {
             );
           })}
         </article>
-      </Layout> */}
+      </Layout>
     </>
   );
 };

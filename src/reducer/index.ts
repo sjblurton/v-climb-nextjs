@@ -220,6 +220,16 @@ export function filterReducer(state: AppState, action: AppActions): AppState {
       return { ...state };
     }
 
+    case ActionType.AddMoreShoes: {
+      return {
+        ...state,
+        skip: action.payload.skip,
+        limit: action.payload.limit,
+        shoes: [...state.shoes, ...action.payload.shoes],
+        filteredShoes: [...state.shoes, ...action.payload.shoes],
+      };
+    }
+
     default:
       return state;
   }

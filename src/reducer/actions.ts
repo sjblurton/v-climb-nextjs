@@ -23,6 +23,7 @@ export enum ActionType {
   AddProfileFilter,
   AddRubberThicknessFilter,
   AddVolumeFilter,
+  AddMoreShoes,
 }
 
 export interface InitShoeData {
@@ -106,6 +107,11 @@ export interface AddVolumeFilter {
   payload: string;
 }
 
+export interface AddMoreShoes {
+  type: ActionType.AddMoreShoes;
+  payload: { limit: number; skip: number; shoes: ShoeWithStringDates[] };
+}
+
 export type AppActions =
   | InitShoeData
   | InitBrandData
@@ -124,4 +130,5 @@ export type AppActions =
   | AddPriceFilter
   | AddProfileFilter
   | AddRubberThicknessFilter
-  | AddVolumeFilter;
+  | AddVolumeFilter
+  | AddMoreShoes;

@@ -16,23 +16,42 @@ export const LoadMore = () => {
     }
   }, [state]);
 
-  // const handleClick = async () => {
-  //   setLoading(true);
-  //   const res = await axiosGet.getInitShoes({
-  //     skip: state.limit,
-  //     take: state.limit * 2,
-  //   });
-  //   dispatch({
-  //     type: ActionType.AddMoreShoes,
-  //     payload: { limit: state.limit * 2, skip: state.limit, shoes: res.shoes },
-  //   });
-  //   setLoading(false);
-  // };
+  const handleClick = async () => {
+    setLoading(true);
+    const res = await axiosGet.getShoes({
+      skip: state.limit.toString(),
+      take: (state.limit * 2).toString(),
+    });
+    if (res.shoes)
+      dispatch({
+        type: ActionType.AddMoreShoes,
+        payload: {
+          limit: state.limit * 2,
+          skip: state.limit,
+          shoes: res.shoes,
+        },
+      });
+    setLoading(false);
+  };
   return (
-    <div className={show ? "flex w-full my-4 justify-center" : "hidden"}>
+    <div
+      className={
+        show ? "flex w-full my-4 justify-center  col-span-full" : "hidden"
+      }
+    >
+      {loading && (
+        <div className="flex justify-center items-center">
+          <div
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+            role="status"
+          >
+            <span className="visually-hidden"></span>
+          </div>
+        </div>
+      )}
       <button
-        className={loading ? "btn-olive disabled-btn" : "btn-olive"}
-        // onClick={handleClick}
+        className={loading ? "hidden" : "btn-olive"}
+        onClick={handleClick}
       >
         See More
       </button>
