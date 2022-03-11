@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
@@ -7,10 +7,8 @@ import { GoBack } from "../assets/icons";
 import { Features, SimilarTo } from "../components/product";
 import { VeganImage, Layout, Seo, Message } from "../components/shared";
 import { priceConverter, veganToString } from "../helper/helper";
-import { stringifyTheDates } from "../helper/stringify";
 import { useBrands, useRubbers, useShoes } from "../hooks/custom";
 import { ShoeWithStringDates, TFeatures } from "../interface";
-import prisma from "../lib/prisma";
 import { axiosGet } from "../service/axios";
 
 const Product: NextPage = () => {
@@ -27,7 +25,9 @@ const Product: NextPage = () => {
     const getSimilar = async () => {
       const shoes = await axiosGet.getShoes(query);
       if (shoes.shoes)
-        setSimilarShoes(shoes.shoes.filter((shoe) => shoe.slug !== shoe.slug));
+        setSimilarShoes(
+          shoes.shoes.filter((shoe) => shoe.slug !== shoesData?.shoes[0].slug)
+        );
     };
 
     if (query) getSimilar();
@@ -43,7 +43,15 @@ const Product: NextPage = () => {
         veganType: ["VEGAN", "POSSIBLY"],
       });
     }
-  }, []);
+  }, [shoesData]);
+
+  if (isError) {
+    return (
+      <>
+        <Message>Ops... Something went wrong.</Message>
+      </>
+    );
+  }
 
   if (shoesData && brandsData && rubbersData) {
     const {
@@ -147,40 +155,3 @@ const Product: NextPage = () => {
 };
 
 export default Product;
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const shoes = await prisma.shoes.findMany({
-//     select: { slug: true },
-//   });
-//   const paths = shoes.map((shoe) => {
-//     return { params: { slug: shoe.slug } };
-//   });
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// };
-
-// interface IParams extends ParsedUrlQuery {
-//   slug: string;
-// }
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const { slug } = context.params as IParams;
-
-//   let props = {};
-
-//   const shoe = await prisma.shoes.findUnique({ where: { slug } });
-
-//   if (shoe) {
-//     const shoesDatesAsStrings = stringifyTheDates([
-//       shoe,
-//     ]) as ShoeWithStringDates[];
-
-//     props = {
-//       shoe: shoesDatesAsStrings[0],
-//     };
-//   }
-
-//   return { props, revalidate: 1000 };
-// };
