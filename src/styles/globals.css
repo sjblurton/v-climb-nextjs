@@ -10,7 +10,7 @@ body {
   @apply font-bold py-2 px-4 rounded-lg uppercase  shadow-sm text-sm;
 } */
 .btn-olive {
-  @apply inline-flex justify-center px-4 py-2 text-sm uppercase font-medium text-olive-900 bg-olive-100 border border-transparent rounded-md hover:bg-olive-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-olive-500;
+  @apply h-fit inline-flex justify-center px-4 py-2 text-sm uppercase font-medium text-olive-900 bg-olive-100 border border-transparent rounded-md hover:bg-olive-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-olive-500;
 }
 
 .btn-disabled {

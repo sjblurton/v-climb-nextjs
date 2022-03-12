@@ -9,6 +9,10 @@ export const LoadMore = () => {
   const { dispatch, state } = useContext(FilterContext);
 
   useEffect(() => {
+    handleClick();
+  }, []); //eslint-disable-line
+
+  useEffect(() => {
     if (state.shoes.length === state.limit) {
       setShow(true);
     } else {
@@ -33,6 +37,7 @@ export const LoadMore = () => {
       });
     setLoading(false);
   };
+
   return (
     <div
       className={

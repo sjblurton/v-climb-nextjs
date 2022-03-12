@@ -8,9 +8,7 @@ import {
 import { Tab } from "@headlessui/react";
 import { Layout, Seo } from "../../components/shared";
 
-type Props = {};
-
-const Admin = (props: Props) => {
+const Admin = () => {
   const { data: session } = useSession();
 
   if (session) {

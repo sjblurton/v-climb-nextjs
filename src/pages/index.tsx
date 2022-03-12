@@ -21,24 +21,25 @@ const Home = ({ shoes, brands, numberOfShoes }: Props) => {
   const { rubbersData } = useRubbers();
 
   useEffect(() => {
-    if (state.brands.length === 0)
-      dispatch({
-        type: ActionType.InitBrandData,
-        payload: brands,
-      });
     if (state.shoes.length === 0)
       dispatch({
         type: ActionType.InitShoeData,
         payload: shoes,
       });
+    dispatch({
+      type: ActionType.InitBrandData,
+      payload: brands,
+    });
   }, []); //eslint-disable-line
 
   useEffect(() => {
-    if (rubbersData)
-      dispatch({
-        type: ActionType.InitRubberData,
-        payload: rubbersData.rubbers,
-      });
+    if (rubbersData) {
+      if (state.brands.length === 0)
+        dispatch({
+          type: ActionType.InitRubberData,
+          payload: rubbersData.rubbers,
+        });
+    }
   }, [rubbersData]); //eslint-disable-line
 
   return (
@@ -46,7 +47,7 @@ const Home = ({ shoes, brands, numberOfShoes }: Props) => {
       <Seo />
       <Layout>
         <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
-          <h1 className="text-6xl text-slate-50 font-bold">V-CLIMB</h1>
+          <h1 className="text-6xl text-slate-50 font-bold">VCLIMB</h1>
           <h3 className="text-3xl text-slate-100">Vegan Rock Climbing Shoes</h3>
           <p className="text-slate-200">
             Trying to select the most ethical, environmentally friendly, cruelty
