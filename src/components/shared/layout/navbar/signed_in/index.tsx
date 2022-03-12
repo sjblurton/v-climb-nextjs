@@ -1,5 +1,4 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import { Button } from "../../../../shared";
 
 export const SingedIn = () => {
   const { data: session } = useSession();
