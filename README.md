@@ -8,13 +8,13 @@ VClimb is a database of all the confirmed vegan climbing shoes there is on the m
 
 ## Demo
 
-> > ![screen-gif](https://github.com/sjblurton/v-climb-nextjs/blob/main/assets/readme/demo.gif)
+> > ![screen-gif](https://github.com/sjblurton/v-climb-nextjs/blob/main/src/assets/readme/demo.gif)
 
 ## Screenshots
 
-> ![Mobile-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/assets/readme/mobile.png)
+> ![Mobile-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/src/assets/readme/mobile.png)
 
-> ![desktop-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/assets/readme/product.png)
+> ![desktop-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/src/assets/readme/product.png)
 
 ## Getting started
 
