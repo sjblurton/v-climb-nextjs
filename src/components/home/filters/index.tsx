@@ -76,7 +76,7 @@ export const Filters = () => {
       content={
         <>
           <Accordion title="Brands" content={<BrandsFilter />} />
-          <Accordion title="Rubber Brand" content={<RubbersFilter />} />
+          {/* <Accordion title="Rubber Brand" content={<RubbersFilter />} /> */}
           <Accordion
             title="Rubber Stiffness"
             content={<RubberStiffnessFilter />}
