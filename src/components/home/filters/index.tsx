@@ -77,10 +77,10 @@ export const Filters = () => {
         <>
           <Accordion title="Brands" content={<BrandsFilter />} />
           <Accordion title="Rubber Brand" content={<RubbersFilter />} />
-          {/* <Accordion
+          <Accordion
             title="Rubber Stiffness"
             content={<RubberStiffnessFilter />}
-          /> */}
+          />
           <Accordion title="Midsole" content={<MidsoleFilter />} />
           <Accordion title="Vegan" content={<VeganFilter />} />
           <Accordion title="Asymmetry" content={<AsymmetryFilter />} />

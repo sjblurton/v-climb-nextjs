@@ -34,11 +34,12 @@ const Home = ({ shoes, brands, numberOfShoes }: Props) => {
 
   useEffect(() => {
     if (rubbersData) {
-      if (state.brands.length === 0)
+      if (state.brands.length === 0) {
         dispatch({
           type: ActionType.InitRubberData,
           payload: rubbersData.rubbers,
         });
+      }
     }
   }, [rubbersData]); //eslint-disable-line
 

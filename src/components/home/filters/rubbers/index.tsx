@@ -31,7 +31,7 @@ export const RubbersFilter = () => {
       });
       setRubberList(sortedArray);
     }
-  }, [state.filteredRubbers, state.brands]);
+  }, [state]);
 
   return (
     <>

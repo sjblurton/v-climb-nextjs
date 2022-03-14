@@ -29,6 +29,7 @@ const nextConfig = {
       "imgcdn.ukc2.com",
       "goma2.net",
       "i.vimeocdn.com",
+      "tenaya.net",
     ],
   },
 };
