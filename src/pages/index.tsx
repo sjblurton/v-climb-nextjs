@@ -53,7 +53,7 @@ const Home = ({ shoes, brands, numberOfShoes }: Props) => {
           <p className="text-slate-200">
             Trying to select the most ethical, environmentally friendly, cruelty
             free shoes for climbing while also not sacrificing the performance
-            of our climbing can be tricky. Here at V-Climb we have done the hard
+            of our climbing can be tricky. Here at VClimb we have done the hard
             work for you with all the confirmed vegan rock climbing shoes in one
             place to help you make the best choice easier for you, the planet,
             and the animals.

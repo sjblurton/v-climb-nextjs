@@ -14,7 +14,7 @@ export const Navbar = () => {
           <div className="flex cursor-pointer">
             <Logo />
             <span className="self-center text-2xl font-bold whitespace-nowrap text-slate-50 hover:text-slate-200">
-              V-CLIMB
+              VCLIMB
             </span>
           </div>
         </Link>

@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import { openGraph } from "../../../helper/openGraph";
 
 const defaultMeta = {
-  title: "V-Climb | Vegan climbing shoes",
-  siteName: "V-Climb | Vegan climbing shoes",
+  title: "VClimb | Vegan climbing shoes",
+  siteName: "VClimb | Vegan climbing shoes",
   description:
-    "V-Climb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
+    "VClimb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
 
-  url: "v-climb-nextjs.vercel.app",
+  url: "https://vclimb.vercel.app/",
   type: "website",
   robots: "follow, index",
   /** No need to be filled, will be populated with openGraph function */

@@ -1,31 +1,31 @@
 ![logo](https://raw.githubusercontent.com/sjblurton/v-climb-nextjs/main/src/assets/logo/logo.png)
 
-# V-Climb
+# VClimb
 
-> V-Climb an interactive guide to buying vegan climbing shoes
+> VClimb an interactive guide to buying vegan climbing shoes
 
-V-Climb is a database of all the confirmed vegan climbing shoes there is on the market today. This is my first full Typescript project, and I'm now only going to be using Typescript going forward. The database is built in PostgreSQL using Prisma.io to interact with the CRUD frontend.
+VClimb is a database of all the confirmed vegan climbing shoes there is on the market today. This is my first full Typescript project, and I'm now only going to be using Typescript going forward. The database is built in PostgreSQL using Prisma.io to interact with the CRUD frontend.
 
 ## Demo
 
-> TBA
+> > ![screen-gif](https://github.com/sjblurton/v-climb-nextjs/blob/main/assets/readme/demo.gif)
 
 ## Screenshots
 
-> TBA
+> ![Mobile-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/assets/readme/mobile.png)
 
-> TBA
+> ![desktop-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/assets/readme/product.png)
 
 ## Getting started
 
-link to the live site... TBA
+[link to the live site...](https://vclimb.vercel.app/)
 
 ## Features
 
 - Next.js
 - Single page, static SEO, speed optimized, also some client side dynamic API get requests.
-- PostgreSQL REST, and relational database.
-- CRUD from end with Admin login for anything but a GET request.
+- PostgreSQL REST, and relational database, hosted on heroku.
+- CRUD database manipulation with Admin login. No login needed to read data.
 - Typescript
 - Tailwind CSS
 - Formik
@@ -36,11 +36,11 @@ link to the live site... TBA
 
 ## Links
 
-<!-- - Project homepage: https://big-6-next-js.vercel.app -->
+- Project homepage: https://vclimb.vercel.app/
 
 - Repository: https://github.com/sjblurton/v-climb-nextjs
 
-<!-- - Figma: https://www.figma.com/file/2bjSoKqP1rj1mDrlMOTuWp/The-Big-6-Calisthenics?node-id=7%3A11 -->
+- Figma: https://www.figma.com/file/yljLci7qpCfoS9YVnAE7Wk/vegan-climbing-shoes?node-id=10%3A0
 
 ## Licensing
 
