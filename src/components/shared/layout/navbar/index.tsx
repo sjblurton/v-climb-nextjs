@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { Logo } from "../../../../assets/logo/logo";
 import Link from "next/link";
-import { SingedIn } from "../../../forms";
+import { SingedIn } from "./signed_in";
 
 export const Navbar = () => {
   const router = useRouter();
