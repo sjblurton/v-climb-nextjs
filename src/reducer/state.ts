@@ -52,6 +52,6 @@ export const initialAppState: AppState = {
   filteredBrands: [],
   filteredRubbers: [],
   isLoading: false,
-  limit: 80,
+  limit: 50,
   skip: 0,
 };

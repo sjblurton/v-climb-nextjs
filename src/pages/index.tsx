@@ -22,9 +22,8 @@ interface Props {
 }
 
 const Home = ({ shoes, brands, numberOfShoes, rubbers }: Props) => {
-  console.log(rubbers);
   const { dispatch, state } = useContext(FilterContext);
-  const { rubbersData } = useRubbers();
+  // const { rubbersData } = useRubbers();
 
   useEffect(() => {
     if (state.shoes.length === 0)
@@ -82,7 +81,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const brands = await prisma.brand.findMany();
   const numberOfShoes = (await prisma.shoes.findMany({ select: { id: true } }))
     .length;
-  const shoes = await prisma.shoes.findMany({ take: 80 });
+  const shoes = await prisma.shoes.findMany({ take: 50 });
   const rubbers = await prisma.rubber.findMany();
   const shoesDatesAsStrings = stringifyTheDates(shoes) as ShoeWithStringDates[];
   const brandsDatesAsStrings = stringifyTheDates(

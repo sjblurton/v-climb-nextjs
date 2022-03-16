@@ -30,8 +30,8 @@ export const LoadMore = () => {
       dispatch({
         type: ActionType.AddMoreShoes,
         payload: {
-          limit: state.limit * 2,
-          skip: state.limit,
+          limit: state.limit + 90,
+          skip: state.skip + state.limit,
           shoes: res.shoes,
         },
       });
