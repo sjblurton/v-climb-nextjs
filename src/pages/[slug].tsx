@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetStaticPropsContext, NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
@@ -12,7 +12,13 @@ import { ShoeWithStringDates, TFeatures } from "../interface";
 import prisma from "../lib/prisma";
 import { axiosGet } from "../service/axios";
 
-const Product: NextPage = () => {
+type Props = {
+  params: {
+    slug: string;
+  };
+};
+
+const Product: NextPage<Props> = ({ params }) => {
   const { state } = useContext(FilterContext);
   const router = useRouter();
   const shoe = state.shoes.filter((item) => item.slug === router.query.slug)[0];
@@ -142,9 +148,15 @@ export default Product;
 
 export async function getStaticPaths() {
   const params = await prisma.shoes.findMany({ select: { slug: true } });
-
   return {
     paths: [params],
     fallback: true,
+  };
+}
+
+export async function getStaticProps({ params }: GetStaticPropsContext) {
+  return {
+    props: { params },
+    revalidate: 1000,
   };
 }
