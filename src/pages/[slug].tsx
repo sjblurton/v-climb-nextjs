@@ -36,14 +36,16 @@ const Product: NextPage = () => {
   }, [query]); // eslint-disable-line
 
   useEffect(() => {
-    const { asymmetry, profile, midsole } = shoe;
-    setQuery({
-      midsole,
-      profile,
-      asymmetry,
-      veganType: ["VEGAN", "POSSIBLY"],
-    });
-  }, []); //eslint-disable-line
+    if (shoe) {
+      const { asymmetry, profile, midsole } = shoe;
+      setQuery({
+        midsole,
+        profile,
+        asymmetry,
+        veganType: ["VEGAN", "POSSIBLY"],
+      });
+    }
+  }, [shoe]); //eslint-disable-line
 
   const {
     name: shoeName,
