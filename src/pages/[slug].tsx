@@ -13,12 +13,10 @@ import prisma from "../lib/prisma";
 import { axiosGet } from "../service/axios";
 
 type Props = {
-  params: {
-    slug: string;
-  };
+  slug: string;
 };
 
-const Product: NextPage<Props> = ({ params }) => {
+const Product: NextPage<Props> = ({ slug }) => {
   const { state } = useContext(FilterContext);
   const router = useRouter();
   const shoe = state.shoes.filter((item) => item.slug === router.query.slug)[0];
@@ -155,8 +153,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
+  const props = { slug: params?.slug || "" };
   return {
-    props: { params },
+    props,
     revalidate: 1000,
   };
 }
