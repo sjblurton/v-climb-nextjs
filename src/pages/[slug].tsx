@@ -9,6 +9,7 @@ import { VeganImage, Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { priceConverter, veganToString } from "../helper/helper";
 import { ShoeWithStringDates, TFeatures } from "../interface";
+import prisma from "../lib/prisma";
 import { axiosGet } from "../service/axios";
 
 const Product: NextPage = () => {
@@ -79,6 +80,10 @@ const Product: NextPage = () => {
     },
   ];
 
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Seo templateTitle={templateTitle} />
@@ -134,3 +139,12 @@ const Product: NextPage = () => {
 };
 
 export default Product;
+
+export async function getStaticPaths() {
+  const params = await prisma.shoes.findMany({ select: { slug: true } });
+
+  return {
+    paths: [params],
+    fallback: true,
+  };
+}
