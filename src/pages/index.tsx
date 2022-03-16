@@ -36,18 +36,13 @@ const Home = ({ shoes, brands, numberOfShoes, rubbers }: Props) => {
       type: ActionType.InitBrandData,
       payload: brands,
     });
-  }, []); //eslint-disable-line
-
-  useEffect(() => {
-    if (rubbersData) {
-      if (state.brands.length === 0) {
-        dispatch({
-          type: ActionType.InitRubberData,
-          payload: rubbersData.rubbers,
-        });
-      }
+    if (state.brands.length === 0) {
+      dispatch({
+        type: ActionType.InitRubberData,
+        payload: rubbers,
+      });
     }
-  }, [rubbersData]); //eslint-disable-line
+  }, []); //eslint-disable-line
 
   return (
     <>
