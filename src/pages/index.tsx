@@ -6,17 +6,23 @@ import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { stringifyTheDates } from "../helper/stringify";
 import { useRubbers } from "../hooks/custom";
-import { BrandWithStringDates, ShoeWithStringDates } from "../interface";
+import {
+  BrandWithStringDates,
+  RubberWithStringDates,
+  ShoeWithStringDates,
+} from "../interface";
 import prisma from "../lib/prisma";
 import { ActionType } from "../reducer/actions";
 
 interface Props {
   shoes: ShoeWithStringDates[];
   brands: BrandWithStringDates[];
+  rubbers: RubberWithStringDates[];
   numberOfShoes: number;
 }
 
-const Home = ({ shoes, brands, numberOfShoes }: Props) => {
+const Home = ({ shoes, brands, numberOfShoes, rubbers }: Props) => {
+  console.log(rubbers);
   const { dispatch, state } = useContext(FilterContext);
   const { rubbersData } = useRubbers();
 
@@ -82,15 +88,19 @@ export const getStaticProps: GetStaticProps = async () => {
   const numberOfShoes = (await prisma.shoes.findMany({ select: { id: true } }))
     .length;
   const shoes = await prisma.shoes.findMany({ take: 80 });
-
+  const rubbers = await prisma.rubber.findMany();
   const shoesDatesAsStrings = stringifyTheDates(shoes) as ShoeWithStringDates[];
   const brandsDatesAsStrings = stringifyTheDates(
     brands
   ) as BrandWithStringDates[];
+  const rubbersDatesAsStrings = stringifyTheDates(
+    rubbers
+  ) as RubberWithStringDates[];
 
   const props = {
     shoes: shoesDatesAsStrings,
     brands: brandsDatesAsStrings,
+    rubbers: rubbersDatesAsStrings,
     numberOfShoes,
   };
 
