@@ -147,7 +147,7 @@ export default Product;
 export async function getStaticPaths() {
   const params = await prisma.shoes.findMany({ select: { slug: true } });
   return {
-    paths: [params],
+    paths: params,
     fallback: true,
   };
 }
