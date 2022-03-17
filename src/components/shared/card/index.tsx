@@ -31,9 +31,9 @@ export const Card = ({ shoe, brand }: Props) => {
             <h4 className="text-slate-50 font-bold text-xl mb-2 capitalize">
               {name}
             </h4>
-            <h6 className="text-slate-200 font-bold text-xl mb-2 capitalize">
+            <h5 className="text-slate-200 font-bold text-xl mb-2 capitalize">
               price: {priceConverter(price)}
-            </h6>
+            </h5>
           </div>
         </div>
       </div>

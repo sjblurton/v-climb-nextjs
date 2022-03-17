@@ -30,7 +30,7 @@ const Home = ({ shoes, brands, numberOfShoes, rubbers }: Props) => {
       <Layout>
         <article className="px-2 my-6 max-w-lg mx-auto flex flex-col gap-y-3">
           <h1 className="text-6xl text-slate-50 font-bold">VCLIMB</h1>
-          <h3 className="text-3xl text-slate-100">Vegan Rock Climbing Shoes</h3>
+          <h2 className="text-3xl text-slate-100">Vegan Rock Climbing Shoes</h2>
           <p className="text-slate-200">
             Trying to select the most ethical, environmentally friendly, cruelty
             free shoes for climbing while also not sacrificing the performance

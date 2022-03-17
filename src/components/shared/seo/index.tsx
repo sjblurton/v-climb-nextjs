@@ -14,6 +14,7 @@ const defaultMeta = {
   robots: "follow, index",
   /** No need to be filled, will be populated with openGraph function */
   image: "",
+  lang: "en",
 };
 
 type SeoProps = {
