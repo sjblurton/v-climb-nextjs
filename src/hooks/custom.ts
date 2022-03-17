@@ -65,7 +65,13 @@ export const useBrands = (id = "") => {
   };
 };
 
-export const useInitState = () => {
+type Args = {
+  shoes?: ShoeWithStringDates[];
+  brands?: BrandWithStringDates[];
+  rubbers?: RubberWithStringDates[];
+};
+
+export const useInitState = (args: Args) => {
   const { state, dispatch } = useContext(FilterContext);
   const { data: shoes } = useSWR<{ shoes: ShoeWithStringDates[] }, any>(
     `/api/v1/shoes`,
@@ -81,16 +87,24 @@ export const useInitState = () => {
   );
 
   useEffect(() => {
+    if (args.shoes && state.shoes.length === 0) {
+      dispatch({ type: ActionType.InitShoeData, payload: args.shoes });
+    }
     if (shoes && state.shoes.length === 0)
       dispatch({ type: ActionType.InitShoeData, payload: shoes?.shoes });
   }, [shoes]);
 
   useEffect(() => {
+    if (args.rubbers && state.rubbers.length === 0) {
+      dispatch({ type: ActionType.InitRubberData, payload: args.rubbers });
+    }
     if (rubber && state.rubbers.length === 0)
       dispatch({ type: ActionType.InitRubberData, payload: rubber?.rubbers });
   }, [rubber]);
 
   useEffect(() => {
+    if (args.brands && state.brands.length === 0)
+      dispatch({ type: ActionType.InitBrandData, payload: args.brands });
     if (brands && state.brands.length === 0)
       dispatch({ type: ActionType.InitBrandData, payload: brands?.brands });
   }, [brands]);

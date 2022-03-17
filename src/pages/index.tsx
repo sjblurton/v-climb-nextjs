@@ -1,18 +1,17 @@
 import { GetStaticProps } from "next";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Filters, SearchBar } from "../components/home";
 import { ShoeGrid } from "../components/home";
 import { Layout, Seo } from "../components/shared";
 import { FilterContext } from "../context/context";
 import { stringifyTheDates } from "../helper/stringify";
-import { useRubbers } from "../hooks/custom";
+import { useInitState } from "../hooks/custom";
 import {
   BrandWithStringDates,
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
 import prisma from "../lib/prisma";
-import { ActionType } from "../reducer/actions";
 
 interface Props {
   shoes: ShoeWithStringDates[];
@@ -22,26 +21,8 @@ interface Props {
 }
 
 const Home = ({ shoes, brands, numberOfShoes, rubbers }: Props) => {
-  const { dispatch, state } = useContext(FilterContext);
-  // const { rubbersData } = useRubbers();
-
-  useEffect(() => {
-    if (state.shoes.length === 0)
-      dispatch({
-        type: ActionType.InitShoeData,
-        payload: shoes,
-      });
-    dispatch({
-      type: ActionType.InitBrandData,
-      payload: brands,
-    });
-    if (state.brands.length === 0) {
-      dispatch({
-        type: ActionType.InitRubberData,
-        payload: rubbers,
-      });
-    }
-  }, []); //eslint-disable-line
+  const { state } = useContext(FilterContext);
+  useInitState({ shoes, brands, rubbers });
 
   return (
     <>

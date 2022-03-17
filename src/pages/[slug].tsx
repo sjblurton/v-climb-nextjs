@@ -20,7 +20,7 @@ type Props = {
 const Product: NextPage<Props> = ({ slug }) => {
   const { state } = useContext(FilterContext);
   const router = useRouter();
-  useInitState();
+  useInitState({});
   const [shoe, setShoe] = useState<ShoeWithStringDates | undefined>(
     state.shoes.filter((shoe) => shoe.slug === slug)[0] || undefined
   );
