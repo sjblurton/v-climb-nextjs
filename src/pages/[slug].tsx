@@ -163,8 +163,10 @@ const Product: NextPage<Props> = ({ slug }) => {
     );
   }
 
+  const templateTitle = `vegan ${slug.replace("-", " ")} climbing shoes`;
   return (
     <>
+      <Seo templateTitle={templateTitle} />
       <Layout>
         <Message>Loading...</Message>
       </Layout>
