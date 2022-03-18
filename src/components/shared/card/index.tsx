@@ -16,14 +16,16 @@ export const Card = ({ shoe, brand }: Props) => {
           {VeganImage(veganType)}
         </div>
         <div className="gap-1 flex items-center">
-          <Image
-            width={140}
-            height={140}
-            layout="fixed"
-            src={image}
-            alt={name}
-            className="flex-auto m-auto rounded bg-slate-50"
-          />
+          <div className="w-36 rounded bg-slate-50 p-1">
+            <Image
+              width={140}
+              height={140}
+              layout="responsive"
+              src={image}
+              alt={name}
+              className="flex-auto m-auto rounded bg-slate-50"
+            />
+          </div>
           <div className="flex-auto my-auto">
             <h3 className="text-slate-50 font-bold text-2xl mb-2 capitalize">
               {brand}
