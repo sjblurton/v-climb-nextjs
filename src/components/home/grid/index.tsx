@@ -5,7 +5,12 @@ import { BrandWithStringDates, ShoeWithStringDates } from "../../../interface";
 import { Card } from "../../shared";
 import { LoadMore } from "../more";
 
-export const ShoeGrid = () => {
+type Props = {
+  shoes: ShoeWithStringDates[];
+  brands: BrandWithStringDates[];
+};
+
+export const ShoeGrid = ({ shoes, brands }: Props) => {
   const { state } = useContext(FilterContext);
   const card = (
     shoes: ShoeWithStringDates[],
@@ -22,10 +27,20 @@ export const ShoeGrid = () => {
     });
   };
 
+  if (state.shoes.length > 0) {
+    return (
+      <>
+        <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
+          {card(state.filteredShoes, state.brands)}
+          <LoadMore />
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 my-4">
-        {state.shoes && card(state.filteredShoes, state.brands)}
+        {card(shoes, brands)}
         <LoadMore />
       </div>
     </>

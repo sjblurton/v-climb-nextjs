@@ -2,6 +2,11 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { FilterContext } from "../../../context/context";
 import { queryString } from "../../../helper/stringify";
+import {
+  BrandWithStringDates,
+  RubberWithStringDates,
+  ShoeWithStringDates,
+} from "../../../interface";
 import { ActionType } from "../../../reducer/actions";
 import { axiosGet } from "../../../service/axios";
 import { Accordion } from "./accordion";
@@ -18,7 +23,13 @@ import { RubberThicknessFilter } from "./rubberThickness";
 import { VeganFilter } from "./vegan";
 import { VolumeFilter } from "./volume";
 
-export const Filters = () => {
+type Props = {
+  shoes: ShoeWithStringDates[];
+  brands: BrandWithStringDates[];
+  rubbers: RubberWithStringDates[];
+};
+
+export const Filters = ({ brands, rubbers, shoes }: Props) => {
   const { state, dispatch } = useContext(FilterContext);
   const router = useRouter();
 
@@ -75,12 +86,18 @@ export const Filters = () => {
       title="Filters"
       content={
         <>
-          <Accordion title="Brands" content={<BrandsFilter />} />
-          {/* <Accordion title="Rubber Brand" content={<RubbersFilter />} /> */}
-          {/* <Accordion
-          title="Rubber Stiffness"
-          content={<RubberStiffnessFilter />}
-        /> */}
+          <Accordion
+            title="Brands"
+            content={<BrandsFilter brands={brands} />}
+          />
+          <Accordion
+            title="Rubber Brand"
+            content={<RubbersFilter rubbers={rubbers} brands={brands} />}
+          />
+          <Accordion
+            title="Rubber Stiffness"
+            content={<RubberStiffnessFilter />}
+          />
           <Accordion title="Midsole" content={<MidsoleFilter />} />
           <Accordion title="Vegan" content={<VeganFilter />} />
           <Accordion title="Asymmetry" content={<AsymmetryFilter />} />

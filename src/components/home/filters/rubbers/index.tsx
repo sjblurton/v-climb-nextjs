@@ -1,13 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../../context/context";
-import { RubberWithStringDates } from "../../../../interface";
+import {
+  BrandWithStringDates,
+  RubberWithStringDates,
+} from "../../../../interface";
 import { Checkbox } from "../checkbox";
 
 interface RubberFilter extends RubberWithStringDates {
   title: string;
 }
 
-export const RubbersFilter = () => {
+type Props = {
+  rubbers: RubberWithStringDates[];
+  brands: BrandWithStringDates[];
+};
+
+export const RubbersFilter = ({ rubbers, brands }: Props) => {
   const [rubberList, setRubberList] = useState<RubberFilter[]>([]);
   const { state } = useContext(FilterContext);
 
@@ -33,10 +41,10 @@ export const RubbersFilter = () => {
     }
   }, [state]);
 
-  return (
-    <>
-      {rubberList.length > 0 &&
-        rubberList.map((rubber) => {
+  if (rubberList.length > 0) {
+    return (
+      <>
+        {rubberList.map((rubber) => {
           const title =
             state.brands.filter((brand) => rubber.brandId === brand.id)[0]
               .name +
@@ -54,6 +62,28 @@ export const RubbersFilter = () => {
             </div>
           );
         })}
+      </>
+    );
+  }
+  return (
+    <>
+      {rubbers.map((rubber) => {
+        const title =
+          brands.filter((brand) => rubber.brandId === brand.id)[0].name +
+          " - " +
+          rubber.name;
+
+        return (
+          <div key={rubber.id}>
+            <Checkbox
+              key={rubber.id}
+              filterGroup="rubber"
+              id={rubber.id}
+              label={title}
+            />
+          </div>
+        );
+      })}
     </>
   );
 };
