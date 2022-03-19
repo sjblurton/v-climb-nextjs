@@ -4,6 +4,8 @@ import { brandNameFromId } from "../../../helper/stringify";
 import { BrandWithStringDates, ShoeWithStringDates } from "../../../interface";
 import { Card } from "../../shared";
 import { LoadMore } from "../more";
+import { AutoSizer, List } from "react-virtualized";
+import "react-virtualized/styles.css";
 
 type Props = {
   shoes: ShoeWithStringDates[];

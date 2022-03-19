@@ -108,4 +108,7 @@ export const useInitState = (args: Args) => {
     if (brands && state.brands.length === 0)
       dispatch({ type: ActionType.InitBrandData, payload: brands?.brands });
   }, [brands]);
+  useEffect(() => {
+    if (brands && rubber && shoes) dispatch({ type: ActionType.ResetForm });
+  }, [brands, rubber, shoes]);
 };
