@@ -7,7 +7,7 @@ const defaultMeta = {
   title: "VClimb | Vegan climbing shoes",
   siteName: "VClimb | Vegan climbing shoes",
   description:
-    "VClimb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
+    "VClimb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes. Climb hard, and hurt no one.",
 
   url: "https://vclimb.vercel.app/",
   type: "website",
