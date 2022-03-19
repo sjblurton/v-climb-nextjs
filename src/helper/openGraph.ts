@@ -9,7 +9,7 @@ export function openGraph({
   siteName,
   templateTitle,
   description,
-  logo = "/images/logo.svg",
+  logo = "https://vclimb.vercel.app/images/logo.svg",
 }: OpenGraphType): string {
   const ogLogo = encodeURIComponent(logo);
   const ogSiteName = encodeURIComponent(siteName.trim());
