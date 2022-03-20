@@ -2,9 +2,7 @@ import React from "react";
 import { ContactForm } from "../components/forms/contact";
 import { Layout, Seo } from "../components/shared";
 
-type Props = {};
-
-const Contact = (props: Props) => {
+const Contact = () => {
   return (
     <>
       <Seo />
