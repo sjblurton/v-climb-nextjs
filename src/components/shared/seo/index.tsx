@@ -14,7 +14,6 @@ const defaultMeta = {
   robots: "follow, index",
   /** No need to be filled, will be populated with openGraph function */
   image: "",
-  lang: "en",
 };
 
 type SeoProps = {
@@ -43,6 +42,7 @@ export const Seo = (props: SeoProps) => {
   return (
     <Head>
       <title>{meta.title}</title>
+      <html lang="en" />
       <meta name="robots" content={meta.robots} />
       <meta content={meta.description} name="description" />
       <meta property="og:url" content={`${meta.url}${router.asPath}`} />
