@@ -3,8 +3,12 @@ import Link from "next/link";
 import { priceConverter } from "../../../helper/helper";
 import { ShoesCard } from "../../../interface";
 import { VeganImage } from "../";
+import { MutableRefObject } from "react";
 
-type Props = { shoe: ShoesCard; brand: string };
+type Props = {
+  shoe: ShoesCard;
+  brand: string;
+};
 
 export const Card = ({ shoe, brand }: Props) => {
   const { image, slug, name, price, veganType } = shoe;
