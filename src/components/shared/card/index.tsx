@@ -3,7 +3,6 @@ import Link from "next/link";
 import { priceConverter } from "../../../helper/helper";
 import { ShoesCard } from "../../../interface";
 import { VeganImage } from "../";
-import { MutableRefObject } from "react";
 
 type Props = {
   shoe: ShoesCard;
