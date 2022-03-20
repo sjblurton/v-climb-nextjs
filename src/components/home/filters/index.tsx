@@ -1,3 +1,13 @@
+import {
+  AsymmetryType,
+  ClosureType,
+  HookingType,
+  PriceType,
+  ProfileType,
+  RubberThicknessType,
+  StiffnessType,
+  VolumeType,
+} from "@prisma/client";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { FilterContext } from "../../../context/context";
@@ -10,18 +20,10 @@ import {
 import { ActionType } from "../../../reducer/actions";
 import { axiosGet } from "../../../service/axios";
 import { Accordion } from "./accordion";
-import { AsymmetryFilter } from "./asymmetry";
 import { BrandsFilter } from "./brands";
-import { ClosureFilter } from "./closure";
-import { HookingFilter } from "./hooking";
-import { MidsoleFilter } from "./midsole";
-import { PriceFilter } from "./price";
-import { ProfileFilter } from "./profile";
+import { Filter } from "./filter";
 import { RubbersFilter } from "./rubbers";
-import { RubberStiffnessFilter } from "./rubberStiffness";
-import { RubberThicknessFilter } from "./rubberThickness";
 import { VeganFilter } from "./vegan";
-import { VolumeFilter } from "./volume";
 
 type Props = {
   shoes: ShoeWithStringDates[];
@@ -96,20 +98,44 @@ export const Filters = ({ brands, rubbers, shoes }: Props) => {
           />
           <Accordion
             title="Rubber Stiffness"
-            content={<RubberStiffnessFilter />}
+            content={Filter("rubberStiffness", Object.keys(StiffnessType))}
           />
-          <Accordion title="Midsole" content={<MidsoleFilter />} />
+          <Accordion
+            title="Midsole"
+            content={Filter("midsole", Object.keys(StiffnessType))}
+          />
           <Accordion title="Vegan" content={<VeganFilter />} />
-          <Accordion title="Asymmetry" content={<AsymmetryFilter />} />
-          <Accordion title="Closure" content={<ClosureFilter />} />
-          <Accordion title="Hooking" content={<HookingFilter />} />
-          <Accordion title="Price" content={<PriceFilter />} />
-          <Accordion title="Profile" content={<ProfileFilter />} />
+          <Accordion
+            title="Asymmetry"
+            content={Filter("asymmetry", Object.keys(AsymmetryType))}
+          />
+          <Accordion
+            title="Closure"
+            content={Filter("closure", Object.keys(ClosureType))}
+          />
+          <Accordion
+            title="Hooking"
+            content={Filter("hooking", Object.keys(HookingType))}
+          />
+          <Accordion
+            title="Price"
+            content={Filter("price", Object.keys(PriceType))}
+          />
+          <Accordion
+            title="Profile"
+            content={Filter("profile", Object.keys(ProfileType))}
+          />
           <Accordion
             title="Rubber Thickness"
-            content={<RubberThicknessFilter />}
+            content={Filter(
+              "rubberThickness",
+              Object.keys(RubberThicknessType)
+            )}
           />
-          <Accordion title="Volume" content={<VolumeFilter />} />
+          <Accordion
+            title="Volume"
+            content={Filter("volume", Object.keys(VolumeType))}
+          />
 
           <button
             disabled={state.isLoading}
