@@ -1,7 +1,15 @@
-import { useRouter } from "next/router";
+import {
+  AsymmetryType,
+  ClosureType,
+  HookingType,
+  PriceType,
+  ProfileType,
+  RubberThicknessType,
+  StiffnessType,
+  VolumeType,
+} from "@prisma/client";
 import React, { useContext } from "react";
 import { FilterContext } from "../../../context/context";
-import { queryString } from "../../../helper/stringify";
 import {
   BrandWithStringDates,
   RubberWithStringDates,
@@ -10,18 +18,10 @@ import {
 import { ActionType } from "../../../reducer/actions";
 import { axiosGet } from "../../../service/axios";
 import { Accordion } from "./accordion";
-import { AsymmetryFilter } from "./asymmetry";
 import { BrandsFilter } from "./brands";
-import { ClosureFilter } from "./closure";
-import { HookingFilter } from "./hooking";
-import { MidsoleFilter } from "./midsole";
-import { PriceFilter } from "./price";
-import { ProfileFilter } from "./profile";
+import { Filter } from "./filter";
 import { RubbersFilter } from "./rubbers";
-import { RubberStiffnessFilter } from "./rubberStiffness";
-import { RubberThicknessFilter } from "./rubberThickness";
 import { VeganFilter } from "./vegan";
-import { VolumeFilter } from "./volume";
 
 type Props = {
   shoes: ShoeWithStringDates[];
@@ -31,28 +31,9 @@ type Props = {
 
 export const Filters = ({ brands, rubbers, shoes }: Props) => {
   const { state, dispatch } = useContext(FilterContext);
-  const router = useRouter();
 
   const handleApplyClick = async () => {
     dispatch({ type: ActionType.SetIsLoading, payload: true });
-    const queryURLString = [
-      "?",
-      queryString("brandId", state.filters.brands),
-      queryString("rubberId", state.filters.rubbers),
-      queryString("midsole", state.filters.midsole),
-      queryString("veganType", state.filters.veganType),
-      queryString("asymmetry", state.filters.asymmetry),
-      queryString("closure", state.filters.closure),
-      queryString("hooking", state.filters.hooking),
-      queryString("price", state.filters.price),
-      queryString("profile", state.filters.profile),
-      queryString("profile", state.filters.profile),
-      queryString("volume", state.filters.volume),
-      queryString("rubber_thickness", state.filters.rubber_thickness),
-    ].join("");
-    router.push(queryURLString, undefined, {
-      shallow: true,
-    });
     const shoes = await axiosGet.getShoes({
       brandId: state.filters.brands,
       rubberId: state.filters.rubbers,
@@ -77,7 +58,6 @@ export const Filters = ({ brands, rubbers, shoes }: Props) => {
   };
 
   const handleReset = () => {
-    router.push(`/`);
     dispatch({ type: ActionType.ResetForm });
   };
 
@@ -96,20 +76,44 @@ export const Filters = ({ brands, rubbers, shoes }: Props) => {
           />
           <Accordion
             title="Rubber Stiffness"
-            content={<RubberStiffnessFilter />}
+            content={Filter("rubberStiffness", Object.keys(StiffnessType))}
           />
-          <Accordion title="Midsole" content={<MidsoleFilter />} />
+          <Accordion
+            title="Midsole"
+            content={Filter("midsole", Object.keys(StiffnessType))}
+          />
           <Accordion title="Vegan" content={<VeganFilter />} />
-          <Accordion title="Asymmetry" content={<AsymmetryFilter />} />
-          <Accordion title="Closure" content={<ClosureFilter />} />
-          <Accordion title="Hooking" content={<HookingFilter />} />
-          <Accordion title="Price" content={<PriceFilter />} />
-          <Accordion title="Profile" content={<ProfileFilter />} />
+          <Accordion
+            title="Asymmetry"
+            content={Filter("asymmetry", Object.keys(AsymmetryType))}
+          />
+          <Accordion
+            title="Closure"
+            content={Filter("closure", Object.keys(ClosureType))}
+          />
+          <Accordion
+            title="Hooking"
+            content={Filter("hooking", Object.keys(HookingType))}
+          />
+          <Accordion
+            title="Price"
+            content={Filter("price", Object.keys(PriceType))}
+          />
+          <Accordion
+            title="Profile"
+            content={Filter("profile", Object.keys(ProfileType))}
+          />
           <Accordion
             title="Rubber Thickness"
-            content={<RubberThicknessFilter />}
+            content={Filter(
+              "rubberThickness",
+              Object.keys(RubberThicknessType)
+            )}
           />
-          <Accordion title="Volume" content={<VolumeFilter />} />
+          <Accordion
+            title="Volume"
+            content={Filter("volume", Object.keys(VolumeType))}
+          />
 
           <button
             disabled={state.isLoading}
