@@ -16,11 +16,12 @@ export const Card = ({ shoe, brand }: Props) => {
           {VeganImage(veganType)}
         </div>
         <div className="gap-1 flex items-center">
-          <div className="w-36 h-36 rounded bg-slate-50 p-1 block">
+          <div className="relative w-36 h-36 rounded bg-slate-50 p-1 block">
             <Image
               width={"140px"}
               height={"140px"}
-              layout="fixed"
+              layout={"fill"}
+              objectFit={"contain"}
               src={image}
               alt={name}
               className="flex-auto m-auto rounded bg-slate-50"
