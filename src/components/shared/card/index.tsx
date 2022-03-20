@@ -3,12 +3,8 @@ import Link from "next/link";
 import { priceConverter } from "../../../helper/helper";
 import { ShoesCard } from "../../../interface";
 import { VeganImage } from "../";
-import { MutableRefObject } from "react";
 
-type Props = {
-  shoe: ShoesCard;
-  brand: string;
-};
+type Props = { shoe: ShoesCard; brand: string };
 
 export const Card = ({ shoe, brand }: Props) => {
   const { image, slug, name, price, veganType } = shoe;
@@ -20,12 +16,11 @@ export const Card = ({ shoe, brand }: Props) => {
           {VeganImage(veganType)}
         </div>
         <div className="gap-1 flex items-center">
-          <div className="w-36 h-36 rounded bg-slate-50 p-1 relative">
+          <div className="w-36 h-36 rounded bg-slate-50 p-1 block">
             <Image
               width={"140px"}
               height={"140px"}
-              layout={"fill"}
-              objectFit={"contain"}
+              layout="fixed"
               src={image}
               alt={name}
               className="flex-auto m-auto rounded bg-slate-50"

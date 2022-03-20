@@ -28,6 +28,7 @@ export const ContactForm = () => {
             setSubmitting(false);
             resetForm();
           } catch (error) {
+            console.log(error);
             alert.show(`Oops... Something when wrong. Please try again.`, {
               type: "error",
             });

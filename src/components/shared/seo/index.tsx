@@ -7,13 +7,14 @@ const defaultMeta = {
   title: "VClimb | Vegan climbing shoes",
   siteName: "VClimb | Vegan climbing shoes",
   description:
-    "VClimb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes. Climb hard, and hurt no one.",
+    "VClimb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
 
   url: "https://vclimb.vercel.app/",
   type: "website",
   robots: "follow, index",
   /** No need to be filled, will be populated with openGraph function */
   image: "",
+  lang: "en",
 };
 
 type SeoProps = {
@@ -42,7 +43,6 @@ export const Seo = (props: SeoProps) => {
   return (
     <Head>
       <title>{meta.title}</title>
-      <html lang="en" />
       <meta name="robots" content={meta.robots} />
       <meta content={meta.description} name="description" />
       <meta property="og:url" content={`${meta.url}${router.asPath}`} />
