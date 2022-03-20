@@ -28,7 +28,7 @@ type Props = {
   };
 };
 
-const Guide = ({ rubbers }: Props) => {
+const About = ({ rubbers }: Props) => {
   const { average, soft, stiff } = rubbers;
 
   return (
@@ -133,7 +133,7 @@ const Guide = ({ rubbers }: Props) => {
   );
 };
 
-export default Guide;
+export default About;
 
 export const getStaticProps = async () => {
   const rubbers = await prisma.rubber.findMany();

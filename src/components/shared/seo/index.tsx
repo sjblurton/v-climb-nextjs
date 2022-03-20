@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { ReactNode } from "react";
 
 import { openGraph } from "../../../helper/openGraph";
 
@@ -17,6 +18,7 @@ const defaultMeta = {
 };
 
 type SeoProps = {
+  description?: string;
   date?: string;
   templateTitle?: string;
 } & Partial<typeof defaultMeta>;
@@ -40,7 +42,12 @@ export const Seo = (props: SeoProps) => {
   return (
     <Head>
       <title>{meta.title}</title>
-      <html lang="en" />
+      <meta
+        name="description"
+        content={
+          props.description ? props.description : defaultMeta.description
+        }
+      ></meta>
       <meta name="robots" content={meta.robots} />
       <meta content={meta.description} name="description" />
       <meta property="og:url" content={`${meta.url}${router.asPath}`} />
@@ -72,7 +79,6 @@ export const Seo = (props: SeoProps) => {
           />
         </>
       )}
-
       {/* Favicons */}
       {favicons.map((linkProps) => (
         <link key={linkProps.href} {...linkProps} />

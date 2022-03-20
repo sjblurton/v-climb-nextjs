@@ -5,7 +5,10 @@ import { Layout, Seo } from "../components/shared";
 const Contact = () => {
   return (
     <>
-      <Seo />
+      <Seo
+        templateTitle="VCLIMB | Contact us."
+        description="Contact us if you have any questions, or if you believe any of the data to be wrong."
+      />
       <Layout>
         <div className="flex items-center justify-center h-screen w-full">
           <ContactForm />

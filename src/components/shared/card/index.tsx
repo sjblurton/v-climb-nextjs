@@ -18,8 +18,6 @@ export const Card = ({ shoe, brand }: Props) => {
         <div className="gap-1 flex items-center">
           <div className="relative w-36 h-36 rounded bg-slate-50 p-1 block">
             <Image
-              width={"140px"}
-              height={"140px"}
               layout={"fill"}
               objectFit={"contain"}
               src={image}

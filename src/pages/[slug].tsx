@@ -101,13 +101,17 @@ const Product: NextPage<Props> = ({ slug }) => {
       },
     ];
 
-    const templateTitle = `${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
+    const templateTitle = `VCLIMB | ${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
       veganType
     )}`;
 
+    const metaDescription = `${shoeName} climbing shoe by ${shoeBrand} are ${veganToString(
+      veganType
+    )}, they have a ${midsole.toLocaleLowerCase()} midsole, a ${profile.toLocaleLowerCase()} profile, and a ${asymmetry.toLocaleLowerCase()} asymmetry.`;
+
     return (
       <>
-        <Seo templateTitle={templateTitle} />
+        <Seo templateTitle={templateTitle} description={metaDescription} />
         <Layout>
           <div className="container max-w-5xl mx-auto my-4">
             <div className="flex items-center justify-between p-3">
@@ -119,14 +123,17 @@ const Product: NextPage<Props> = ({ slug }) => {
               </div>
             </div>
             <div className="relative flex flex-col md:flex-row justify-center">
-              <Image
-                width={500}
-                height={500}
-                layout="intrinsic"
-                src={image}
-                alt={`${veganToString(veganType)} - ${shoeBrand} - ${shoeName}`}
-                className="flex-auto m-auto rounded bg-slate-50"
-              />
+              <div className="relative h-96 w-96">
+                <Image
+                  layout={"fill"}
+                  objectFit={"contain"}
+                  src={image}
+                  alt={`${veganToString(
+                    veganType
+                  )} - ${shoeBrand} - ${shoeName}`}
+                  className="flex-auto m-auto rounded bg-slate-50"
+                />
+              </div>
 
               {veganType && (
                 <div className="absolute left-4 top-4">
@@ -163,7 +170,10 @@ const Product: NextPage<Props> = ({ slug }) => {
     );
   }
 
-  const templateTitle = `vegan ${slug.replace("-", " ")} climbing shoes`;
+  const templateTitle = `VCLIMB | vegan ${slug.replace(
+    "-",
+    " "
+  )} climbing shoes`;
   return (
     <>
       <Seo templateTitle={templateTitle} />
