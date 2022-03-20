@@ -10,7 +10,7 @@ import {
   VolumeType,
 } from "@prisma/client";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
-import { DeleteByID } from "../interface";
+import { DeleteByID, ShoeWithStringDates } from "../interface";
 
 export const priceConverter = (price: PriceType) => {
   if (price === "ECONOMIC") return "$";
