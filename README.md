@@ -16,6 +16,8 @@ VClimb is a database of all the confirmed vegan climbing shoes there is on the m
 
 > ![desktop-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/src/assets/readme/product.png)
 
+> ![performance-Screenshot](https://github.com/sjblurton/v-climb-nextjs/blob/main/src/assets/readme/performance.png)
+
 ## Getting started
 
 [link to the live site...](https://vclimb.vercel.app/)
