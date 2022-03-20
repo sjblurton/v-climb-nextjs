@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { BrandWithStringDates, ShoeWithStringDates } from "../../../interface";
 import { Card } from "../../shared";
 import { FilterContext } from "../../../context/context";
@@ -28,7 +28,7 @@ export const ShoeGrid = ({ shoes, brands }: Props) => {
     <div className="sm:col-span-8 md:col-span-9 gap-4 lg:col-span-10 my-4 h-screen">
       <Masonry
         columnGutter={8}
-        columnWidth={330}
+        columnWidth={320}
         items={state.filteredShoes.length === 0 ? shoes : state.filteredShoes}
         render={MasonryCard}
       />
