@@ -123,7 +123,7 @@ const Product: NextPage<Props> = ({ slug }) => {
               </div>
             </div>
             <div className="relative flex flex-col md:flex-row justify-center">
-              <div className="relative h-96 w-96">
+              <div className="relative w-[80vw] h-[80vw] max-h-96 max-w-96 mx-auto">
                 <Image
                   layout={"fill"}
                   objectFit={"contain"}
