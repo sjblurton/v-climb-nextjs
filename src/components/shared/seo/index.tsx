@@ -5,15 +5,14 @@ import { openGraph } from "../../../helper/openGraph";
 
 const defaultMeta = {
   title: "VClimb | Vegan climbing shoes",
-  siteName: "VClimb | Vegan climbing shoes",
+  siteName: "VClimb",
   description:
-    "VClimb | Find environmentally friendly, cruelty free, and still with the performance you're use to. Vegan Climbing Shoes climb hard, and make you feel good about yourself.",
+    "VClimb | Find environmentally friendly, cruelty free, vegan climbing shoes. It's the future of sustainability in rock climbing.",
 
   url: "https://vclimb.vercel.app/",
   type: "website",
   robots: "follow, index",
-  /** No need to be filled, will be populated with openGraph function */
-  image: "",
+  image: "https://vclimb.vercel.app/images/logo.svg",
   lang: "en",
 };
 
@@ -32,8 +31,6 @@ export const Seo = (props: SeoProps) => {
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
 
-  // Use siteName if there is templateTitle
-  // but show full title if there is none
   meta["image"] = openGraph({
     description: meta.description,
     siteName: props.templateTitle ? meta.siteName : meta.title,
@@ -43,6 +40,7 @@ export const Seo = (props: SeoProps) => {
   return (
     <Head>
       <title>{meta.title}</title>
+      <html lang="en" />
       <meta name="robots" content={meta.robots} />
       <meta content={meta.description} name="description" />
       <meta property="og:url" content={`${meta.url}${router.asPath}`} />
