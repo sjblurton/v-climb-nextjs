@@ -1,3 +1,5 @@
+import React, { useContext } from "react";
+import { FilterContext } from "../../../context/context";
 import { useBrands } from "../../../hooks/custom";
 import { ShoeWithStringDates } from "../../../interface";
 import { Card } from "../../shared";

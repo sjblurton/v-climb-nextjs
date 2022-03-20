@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../../context/context";
 import { ActionType } from "../../../../reducer/actions";
 
-export type FilterGroup =
+type FilterGroup =
   | "brand"
   | "rubber"
   | "midsole"
