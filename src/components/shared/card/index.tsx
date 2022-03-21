@@ -11,7 +11,7 @@ export const Card = ({ shoe, brand }: Props) => {
 
   return (
     <Link href={`/${slug}`} passHref>
-      <div className="h-44 w-80 gap-1 relative cursor-pointer flex mx-auto flex-1 lg:border-l-0 lg:border-t lg:border-olive-500 bg-olive-800 rounded p-4 justify-center flex-col">
+      <div className="h-44 w-full max-w-xs gap-1 relative cursor-pointer flex mx-auto flex-1 lg:border-l-0 lg:border-t lg:border-olive-500 bg-olive-800 rounded p-4 justify-center flex-col">
         <div className="absolute top-2 left-2 z-10">
           {VeganImage(veganType)}
         </div>
