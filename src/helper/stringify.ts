@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { BrandList } from "../interface";
+import { BrandWithStringDates } from "../interface";
 
 const stringifyDate = (date: Date) => format(new Date(date), "do MMMM yyyy");
 
@@ -26,7 +26,10 @@ export const envString = (string: string) =>
     ? process.env[string]
     : undefined && console.error("environmental variable is undefined");
 
-export const brandNameFromId = (brands: BrandList[], id: string): string => {
+export const brandNameFromId = (
+  brands: BrandWithStringDates[],
+  id: string
+): string => {
   const brand = brands.filter((item) => item.id === id)[0].name;
   return brand;
 };

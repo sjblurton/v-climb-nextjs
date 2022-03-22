@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { Dispatch, MouseEvent, SetStateAction } from "react";
-import { deleteById } from "../../../helper/helper";
+import { deleteById } from "../../../helper/main";
 import { DeleteByID } from "../../../interface";
 
 interface Props {

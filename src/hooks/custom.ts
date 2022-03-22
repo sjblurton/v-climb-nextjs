@@ -8,7 +8,7 @@ import {
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../interface";
-import { ActionType } from "../reducer/actions";
+import { ActionType } from "../reducer";
 
 export const fetcher = (url: string, params?: ParsedUrlQuery) =>
   axios.get(url, params).then((res) => res.data);
@@ -92,7 +92,7 @@ export const useInitState = (args: Args) => {
     }
     if (shoes && state.shoes.length === 0)
       dispatch({ type: ActionType.InitShoeData, payload: shoes?.shoes });
-  }, [shoes]);
+  }, [shoes]); // eslint-disable-line
 
   useEffect(() => {
     if (args.rubbers && state.rubbers.length === 0) {
@@ -100,15 +100,16 @@ export const useInitState = (args: Args) => {
     }
     if (rubber && state.rubbers.length === 0)
       dispatch({ type: ActionType.InitRubberData, payload: rubber?.rubbers });
-  }, [rubber]);
+  }, [rubber]); // eslint-disable-line
 
   useEffect(() => {
     if (args.brands && state.brands.length === 0)
       dispatch({ type: ActionType.InitBrandData, payload: args.brands });
     if (brands && state.brands.length === 0)
       dispatch({ type: ActionType.InitBrandData, payload: brands?.brands });
-  }, [brands]);
+  }, [brands]); // eslint-disable-line
+
   useEffect(() => {
     if (brands && rubber && shoes) dispatch({ type: ActionType.ResetForm });
-  }, [brands, rubber, shoes]);
+  }, [brands, rubber, shoes]); // eslint-disable-line
 };

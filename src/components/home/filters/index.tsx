@@ -1,14 +1,5 @@
 import React, { useContext } from "react";
-import {
-  AsymmetryType,
-  ClosureType,
-  HookingType,
-  PriceType,
-  ProfileType,
-  RubberThicknessType,
-  StiffnessType,
-  VolumeType,
-} from "@prisma/client";
+import * as Types from "@prisma/client";
 import { useRouter } from "next/router";
 import { FilterContext } from "../../../context/context";
 import { queryString } from "../../../helper/stringify";
@@ -17,7 +8,7 @@ import {
   RubberWithStringDates,
   ShoeWithStringDates,
 } from "../../../interface";
-import { ActionType } from "../../../reducer/actions";
+import { ActionType } from "../../../reducer";
 import { axiosGet } from "../../../service/axios";
 import { Accordion } from "./accordion";
 import { BrandsFilter } from "./brands";
@@ -98,43 +89,46 @@ export const Filters = ({ brands, rubbers, shoes }: Props) => {
           />
           <Accordion
             title="Rubber Stiffness"
-            content={Filter("rubberStiffness", Object.keys(StiffnessType))}
+            content={Filter(
+              "rubberStiffness",
+              Object.keys(Types.StiffnessType)
+            )}
           />
           <Accordion
             title="Midsole"
-            content={Filter("midsole", Object.keys(StiffnessType))}
+            content={Filter("midsole", Object.keys(Types.StiffnessType))}
           />
           <Accordion title="Vegan" content={<VeganFilter />} />
           <Accordion
             title="Asymmetry"
-            content={Filter("asymmetry", Object.keys(AsymmetryType))}
+            content={Filter("asymmetry", Object.keys(Types.AsymmetryType))}
           />
           <Accordion
             title="Closure"
-            content={Filter("closure", Object.keys(ClosureType))}
+            content={Filter("closure", Object.keys(Types.ClosureType))}
           />
           <Accordion
             title="Hooking"
-            content={Filter("hooking", Object.keys(HookingType))}
+            content={Filter("hooking", Object.keys(Types.HookingType))}
           />
           <Accordion
             title="Price"
-            content={Filter("price", Object.keys(PriceType))}
+            content={Filter("price", Object.keys(Types.PriceType))}
           />
           <Accordion
             title="Profile"
-            content={Filter("profile", Object.keys(ProfileType))}
+            content={Filter("profile", Object.keys(Types.ProfileType))}
           />
           <Accordion
             title="Rubber Thickness"
             content={Filter(
               "rubberThickness",
-              Object.keys(RubberThicknessType)
+              Object.keys(Types.RubberThicknessType)
             )}
           />
           <Accordion
             title="Volume"
-            content={Filter("volume", Object.keys(VolumeType))}
+            content={Filter("volume", Object.keys(Types.VolumeType))}
           />
 
           <button

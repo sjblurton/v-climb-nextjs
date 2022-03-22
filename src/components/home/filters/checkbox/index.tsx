@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../../context/context";
-import { ActionType } from "../../../../reducer/actions";
+import { ActionType } from "../../../../reducer";
 
 export type FilterGroup =
   | "brand"

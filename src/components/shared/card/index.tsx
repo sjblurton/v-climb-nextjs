@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { priceConverter } from "../../../helper/helper";
-import { ShoesCard } from "../../../interface";
+import { priceConverter } from "../../../helper/main";
 import { VeganImage } from "../";
+import { ShoeWithStringDates } from "../../../interface";
 
-type Props = { shoe: ShoesCard; brand: string };
+type Props = { shoe: ShoeWithStringDates; brand: string };
 
 export const Card = ({ shoe, brand }: Props) => {
   const { image, slug, name, price, veganType } = shoe;

@@ -1,7 +1,10 @@
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
-import { filterReducer } from "../reducer";
-import { AppActions } from "../reducer/actions";
-import { AppState, initialAppState } from "../reducer/state";
+import {
+  filterReducer,
+  AppActions,
+  AppState,
+  initialAppState,
+} from "../reducer";
 
 export const FilterContext = createContext<{
   state: AppState;

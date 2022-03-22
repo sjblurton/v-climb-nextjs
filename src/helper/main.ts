@@ -1,23 +1,13 @@
-import {
-  AsymmetryType,
-  ClosureType,
-  HookingType,
-  PriceType,
-  ProfileType,
-  RubberThicknessType,
-  StiffnessType,
-  VeganType,
-  VolumeType,
-} from "@prisma/client";
+import * as Types from "@prisma/client";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
 import { DeleteByID } from "../interface";
 
-export const priceConverter = (price: PriceType) => {
+export const priceConverter = (price: Types.PriceType) => {
   if (price === "ECONOMIC") return "$";
   if (price === "AVERAGE") return "$$";
   return "$$$";
 };
-export const veganToString = (vegan: VeganType) => {
+export const veganToString = (vegan: Types.VeganType) => {
   if (vegan === "VEGAN") return "confirmed vegan";
   if (vegan === "POSSIBLY") return "possibly vegan";
   return "not vegan";
@@ -35,55 +25,55 @@ export const deleteById = (
 };
 
 export const selectLists = {
-  stiffness: Object.keys(StiffnessType).map((item) => {
+  stiffness: Object.keys(Types.StiffnessType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  vegan: Object.keys(VeganType).map((item) => {
+  vegan: Object.keys(Types.VeganType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  price: Object.keys(PriceType).map((item) => {
+  price: Object.keys(Types.PriceType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  volume: Object.keys(VolumeType).map((item) => {
+  volume: Object.keys(Types.VolumeType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  closure: Object.keys(ClosureType).map((item) => {
+  closure: Object.keys(Types.ClosureType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  hooking: Object.keys(HookingType).map((item) => {
+  hooking: Object.keys(Types.HookingType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  asymmetry: Object.keys(AsymmetryType).map((item) => {
+  asymmetry: Object.keys(Types.AsymmetryType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  profile: Object.keys(ProfileType).map((item) => {
+  profile: Object.keys(Types.ProfileType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),
     };
   }),
-  rubber_thickness: Object.keys(RubberThicknessType).map((item) => {
+  rubber_thickness: Object.keys(Types.RubberThicknessType).map((item) => {
     return {
       value: item,
       name: item.toLocaleLowerCase(),

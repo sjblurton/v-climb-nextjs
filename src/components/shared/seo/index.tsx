@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
 
 import { openGraph } from "../../../helper/openGraph";
 

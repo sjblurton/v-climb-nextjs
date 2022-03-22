@@ -7,7 +7,7 @@ import { GoBack } from "../assets/icons";
 import { Features, SimilarTo } from "../components/product";
 import { VeganImage, Layout, Seo, Message } from "../components/shared";
 import { FilterContext } from "../context/context";
-import { priceConverter, veganToString } from "../helper/helper";
+import { priceConverter, veganToString } from "../helper/main";
 import { useInitState } from "../hooks/custom";
 import { ShoeWithStringDates, TFeatures } from "../interface";
 import prisma from "../lib/prisma";

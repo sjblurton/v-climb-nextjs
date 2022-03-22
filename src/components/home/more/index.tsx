@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../../context/context";
-import { ActionType } from "../../../reducer/actions";
+import { ActionType } from "../../../reducer";
 import { axiosGet } from "../../../service/axios";
 
 export const LoadMore = () => {
