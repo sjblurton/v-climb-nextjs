@@ -1,6 +1,8 @@
 import { format } from "date-fns";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { FilterContext } from "../../../context/context";
 
 const defaultMeta = {
   title: "VClimb | Vegan climbing shoes",
@@ -28,6 +30,7 @@ type SeoProps = {
 } & Partial<typeof defaultMeta>;
 
 export const Seo = (props: SeoProps) => {
+  const { state } = useContext(FilterContext);
   const router = useRouter();
   const meta = {
     ...defaultMeta,
@@ -36,6 +39,10 @@ export const Seo = (props: SeoProps) => {
   meta["title"] = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
+
+  meta[
+    "description"
+  ] = `${meta.description} | Currently we have ${state.shoes.length} confirmed, or probably vegan shoes in the database that we'll be adding to as we get more confirmed vegan shoes.`;
 
   return (
     <Head>
@@ -48,9 +55,9 @@ export const Seo = (props: SeoProps) => {
       ></meta>
       <meta name="robots" content={meta.robots} />
       <meta content={meta.description} name="description" />
-      <meta property="og:url" content={`${meta.url}${router.asPath}`} />
       <link rel="canonical" href={`${meta.url}${router.asPath}`} />
       {/* Open Graph */}
+      <meta property="og:url" content={`${meta.url}${router.asPath}`} />
       <meta property="og:type" content={meta.type} />
       <meta property="og:site_name" content={meta.siteName} />
       <meta property="og:description" content={meta.description} />
