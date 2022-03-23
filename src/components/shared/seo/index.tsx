@@ -1,7 +1,6 @@
 import { format } from "date-fns";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { openGraph } from "../../../helper/openGraph";
 
 const defaultMeta = {
   title: "VClimb | Vegan climbing shoes",
