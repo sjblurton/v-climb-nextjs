@@ -18,7 +18,7 @@ const defaultMeta = {
     twitter: "https://vclimb.vercel.app/images/twitter.png",
   },
   lang: "en",
-  date: format(new Date(2022, 3, 22), "do MMM YYYY"),
+  date: format(new Date(2022, 3, 22), "do MMM yyyy"),
 };
 
 type SeoProps = {
