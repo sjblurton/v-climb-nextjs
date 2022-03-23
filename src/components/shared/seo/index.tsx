@@ -1,6 +1,6 @@
+import { format } from "date-fns";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
 import { openGraph } from "../../../helper/openGraph";
 
 const defaultMeta = {
@@ -12,8 +12,14 @@ const defaultMeta = {
   url: "https://vclimb.vercel.app/",
   type: "website",
   robots: "follow, index",
-  image: "https://vclimb.vercel.app/images/logo.svg",
+  image: {
+    default: "https://vclimb.vercel.app/images/logo.png",
+    svg: "https://vclimb.vercel.app/images/logo.svg",
+    facebook: "https://vclimb.vercel.app/images/facebook.png",
+    twitter: "https://vclimb.vercel.app/images/twitter.png",
+  },
   lang: "en",
+  date: format(new Date(2022, 3, 22), "do MMM YYYY"),
 };
 
 type SeoProps = {
@@ -31,12 +37,6 @@ export const Seo = (props: SeoProps) => {
   meta["title"] = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
-
-  meta["image"] = openGraph({
-    description: meta.description,
-    siteName: props.templateTitle ? meta.siteName : meta.title,
-    templateTitle: props.templateTitle,
-  });
 
   return (
     <Head>
@@ -56,13 +56,17 @@ export const Seo = (props: SeoProps) => {
       <meta property="og:site_name" content={meta.siteName} />
       <meta property="og:description" content={meta.description} />
       <meta property="og:title" content={meta.title} />
-      <meta name="image" property="og:image" content={meta.image} />
+      <meta name="image" property="og:image" content={meta.image.facebook} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content="@SimonBlurton" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
-      <meta name="twitter:image" content={meta.image} />
+      <meta name="twitter:image" content={meta.image.twitter} />
+      <meta property="twitter:image:alt" content={meta.siteName} />
+      <meta property="twitter:site" content="@SimonBlurton" />
       {meta.date && (
         <>
           <meta property="article:published_time" content={meta.date} />
